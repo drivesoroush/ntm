@@ -6,6 +6,7 @@ return [
         'addresses'  => 'addresses',
         'host_names' => 'host_names',
         'ports'      => 'ports',
+        'scans'      => 'scans',
     ],
 
     'scan' => [
