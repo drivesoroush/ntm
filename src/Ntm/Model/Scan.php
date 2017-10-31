@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
-class Address extends Model {
+class Scan extends Model {
 
     /**
      * The attributes that are mass assignable.
@@ -16,10 +16,19 @@ class Address extends Model {
      */
     protected $fillable = [
         'id',
-        'address',
-        'type',
-        'vendor',
-        'host_id',
+        'total_discovered',
+        'start',
+        'end',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'start',
+        'end',
     ];
 
     /**
@@ -36,7 +45,7 @@ class Address extends Model {
      */
     public function getTable()
     {
-        return table_name('addresses');
+        return table_name('scans');
     }
 
 }

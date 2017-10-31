@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Port extends Model {
 
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
 
     /**
      * @return boolean
@@ -25,7 +31,6 @@ class Port extends Model {
     {
         //
     }
-
 
     /**
      * Get the table associated with the model.

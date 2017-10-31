@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model {
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Get the table associated with the model.
      *
      * @return string

@@ -23,7 +23,6 @@ class CreateHostsTable extends Migration {
 
             $table->integer('start');
             $table->integer('end');
-
         });
     }
 
