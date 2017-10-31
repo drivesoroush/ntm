@@ -18,8 +18,6 @@ class CreateHostsTable extends Migration {
     public function up()
     {
         Schema::create($this->getTable(), function (Blueprint $table) {
-            $table->engine = "innoDB";
-
             $table->unsignedBigInteger('id', true);
             $table->string('state');
 

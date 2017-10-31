@@ -17,7 +17,7 @@ class CreateHostNamesTable extends Migration {
      */
     public function up()
     {
-        $hostsTable = config('ntm.tables.hosts', 'mapper_hosts');
+        $hostsTable = config('ntm.tables.hosts', 'hosts');
 
         Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
             $table->unsignedBigInteger('id', true);

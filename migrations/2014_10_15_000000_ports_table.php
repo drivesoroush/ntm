@@ -3,11 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateHostNamesTable extends Migration {
+class CreatePortsTable extends Migration {
 
     function getTable()
     {
-        return config('ntm.tables.host_names', 'host_names');
+        return config('ntm.tables.ports', 'ports');
     }
 
     /**
@@ -17,12 +17,18 @@ class CreateHostNamesTable extends Migration {
      */
     public function up()
     {
-        $hostsTable = config('ntm.tables.hosts', 'mapper_hosts');
+        $hostsTable = config('ntm.tables.hosts', 'hosts');
 
         Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
             $table->unsignedBigInteger('id', true);
-            $table->string('name');
-            $table->string('type');
+
+            $table->string('protocol');
+            $table->string('port_id');
+            $table->string('state');
+            $table->string('reason');
+            $table->string('service');
+            $table->string('method');
+            $table->string('conf');
 
             $table->unsignedBigInteger('host_id')->nullable();
             $table->foreign('host_id')
