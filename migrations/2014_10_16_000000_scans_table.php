@@ -23,7 +23,7 @@ class CreateScansTable extends Migration {
 
             $table->integer('total_discovered')->default(0);
             $table->datetime('start');
-            $table->datetime('finish');
+            $table->datetime('end');
         });
     }
 

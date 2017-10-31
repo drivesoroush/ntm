@@ -2,28 +2,21 @@
 
 namespace Ntm\Model;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
-class Hostname {
+class Hostname extends Model {
 
-    private $name;
-
-    private $type;
-
-    public function __construct($name, $type)
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
     {
-        $this->name = $name;
-        $this->type = $type;
+        return table_name('host_names');
     }
 
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getType()
-    {
-        return $this->type;
-    }
 }

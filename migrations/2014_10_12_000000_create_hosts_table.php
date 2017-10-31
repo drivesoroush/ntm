@@ -21,8 +21,8 @@ class CreateHostsTable extends Migration {
             $table->unsignedBigInteger('id', true);
             $table->string('state');
 
-            $table->integer('starttime');
-            $table->integer('endtime');
+            $table->integer('start');
+            $table->integer('end');
 
         });
     }

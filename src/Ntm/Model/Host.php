@@ -2,118 +2,74 @@
 
 namespace Ntm\Model;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
-class Host {
-
-    const STATE_UP = 'up';
-
-    const STATE_DOWN = 'down';
-
-    private $addresses;
-
-    private $state;
-
-    private $hostnames;
-
-    private $ports;
-
-    public function __construct($addresses, $state, array $hostnames = [], array $ports = [])
-    {
-        $this->addresses = $addresses;
-        $this->state = $state;
-        $this->hostnames = $hostnames;
-        $this->ports = $ports;
-    }
+class Host extends Model {
 
     /**
-     * @return string
+     * The attributes that are mass assignable.
      *
-     * @deprecated The Host::getAddress() method is deprecated since 0.4 version. Use Host::getIpv4Addresses() instead.
+     * @var array
      */
-    public function getAddress()
-    {
-        return current($this->getIpv4Addresses())->getAddress();
-    }
+    protected $fillable = [
+        'id',
+        'state',
+        'start',
+        'end',
+    ];
 
     /**
-     * @return Address[]
-     */
-    public function getAddresses()
-    {
-        return $this->addresses;
-    }
-
-    /**
-     * @param string $type
+     * The attributes that should be mutated to dates.
      *
-     * @return Address[]
+     * @var array
      */
-    private function getAddressesByType($type)
-    {
-        return array_filter($this->addresses, function (Address $address) use ($type) {
-            return $address->getType() === $type;
-        });
-    }
+    protected $dates = [
+        'start',
+        'end',
+    ];
 
     /**
-     * @return Address[]
+     * Indicates if the model should be timestamped.
+     *
+     * @var boolean
      */
-    public function getIpv4Addresses()
-    {
-        return $this->getAddressesByType(Address::TYPE_IPV4);
-    }
+    public $timestamps = false;
 
     /**
-     * @return Address[]
-     */
-    public function getMacAddresses()
-    {
-        return $this->getAddressesByType(Address::TYPE_MAC);
-    }
-
-    /**
+     * Get the table associated with the model.
+     *
      * @return string
      */
-    public function getState()
+    public function getTable()
     {
-        return $this->state;
+        return table_name('hosts');
     }
 
     /**
-     * @return Hostname[]
+     * @return HasMany
      */
-    public function getHostnames()
+    public function addresses()
     {
-        return $this->hostnames;
+        return $this->hasMany(Address::class);
     }
 
     /**
-     * @return Port[]
+     * @return HasMany
      */
-    public function getPorts()
+    public function hostnames()
     {
-        return $this->ports;
+        return $this->hasMany(Hostname::class);
     }
 
     /**
-     * @return Port[]
+     * @return HasMany
      */
-    public function getOpenPorts()
+    public function ports()
     {
-        return array_filter($this->ports, function ($port) {
-            return $port->isOpen();
-        });
-    }
-
-    /**
-     * @return Port[]
-     */
-    public function getClosedPorts()
-    {
-        return array_filter($this->ports, function ($port) {
-            return $port->isClosed();
-        });
+        return $this->hasMany(Port::class);
     }
 }

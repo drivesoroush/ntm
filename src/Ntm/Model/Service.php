@@ -2,36 +2,21 @@
 
 namespace Ntm\Model;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
-class Service {
+class Service extends Model {
 
-    private $name;
-
-    private $product;
-
-    private $version;
-
-    public function __construct($name, $product, $version)
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
     {
-        $this->name = $name;
-        $this->product = $product;
-        $this->version = $version;
+        return table_name('services');
     }
 
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
 }
