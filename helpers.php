@@ -1,8 +1,9 @@
 <?php
 
 if( ! function_exists('table_name')) {
+
     /**
-     * Get boolean value of variable. These will return true: "1", "true"
+     * Get table name.
      *
      * @param string $name
      *
