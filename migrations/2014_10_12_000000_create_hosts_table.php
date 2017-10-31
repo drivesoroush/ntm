@@ -17,12 +17,21 @@ class CreateHostsTable extends Migration {
      */
     public function up()
     {
-        Schema::create($this->getTable(), function (Blueprint $table) {
+        $scansTable = config('ntm.tables.scans', 'scans');
+
+        Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable) {
             $table->unsignedBigInteger('id', true);
             $table->string('state');
 
             $table->integer('start');
             $table->integer('end');
+
+            $table->unsignedBigInteger('scan_id')->nullable();
+            $table->foreign('scan_id')
+                  ->references('id')
+                  ->on($scansTable)
+                  ->onDelete('set null')
+                  ->onUpdate('set null');
         });
     }
 

@@ -9,6 +9,18 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Port extends Model {
 
+    protected $fillable = [
+        'id',
+        'protocol',
+        'port_id',
+        'state',
+        'reason',
+        'service',
+        'method',
+        'conf',
+        'host_id',
+    ];
+
     /**
      * Indicates if the model should be timestamped.
      *

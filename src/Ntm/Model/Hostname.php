@@ -10,6 +10,18 @@ use Illuminate\Database\Eloquent\Model;
 class Hostname extends Model {
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'id',
+        'name',
+        'type',
+        'host_id',
+    ];
+
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var boolean

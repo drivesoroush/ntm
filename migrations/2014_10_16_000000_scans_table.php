@@ -22,6 +22,8 @@ class CreateScansTable extends Migration {
             $table->unsignedBigInteger('id', true);
 
             $table->integer('total_discovered')->default(0);
+            $table->integer('state')->default(0);
+
             $table->datetime('start');
             $table->datetime('end');
         });
