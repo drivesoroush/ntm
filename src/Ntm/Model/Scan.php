@@ -3,7 +3,7 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Ntm\Scope\ScanScope;
+use Ntcm\Ntm\Scope\ScanScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>

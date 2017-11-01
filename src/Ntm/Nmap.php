@@ -2,7 +2,7 @@
 
 namespace Ntcm\Ntm;
 
-use Ntm\Util\ProcessExecutor;
+use Ntcm\Ntm\Util\ProcessExecutor;
 use Symfony\Component\Process\ProcessUtils;
 
 /**

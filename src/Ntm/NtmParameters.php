@@ -7,18 +7,39 @@ namespace Ntcm\Ntm;
  */
 trait NtmParameters {
 
+    /**
+     * @var boolean
+     */
     protected $osDetection = true;
 
+    /**
+     * @var boolean
+     */
     protected $serviceInfo = true;
 
+    /**
+     * @var boolean
+     */
     protected $verbose = true;
 
+    /**
+     * @var boolean
+     */
     protected $treatHostsAsOnline = true;
 
+    /**
+     * @var boolean
+     */
     protected $portScan = true;
 
+    /**
+     * @var boolean
+     */
     protected $reverseDns = true;
 
+    /**
+     * @var boolean
+     */
     protected $traceroute = true;
 
     /**

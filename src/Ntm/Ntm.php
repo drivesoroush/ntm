@@ -3,12 +3,12 @@
 namespace Ntcm\Ntm;
 
 use Exception;
-use Ntm\Model\Address;
-use Ntm\Model\Host;
-use Ntm\Model\Hostname;
-use Ntm\Model\Port;
-use Ntm\Model\Scan;
-use Ntm\Util\ProcessExecutor;
+use Ntcm\Ntm\Model\Address;
+use Ntcm\Ntm\Model\Host;
+use Ntcm\Ntm\Model\Hostname;
+use Ntcm\Ntm\Model\Port;
+use Ntcm\Ntm\Model\Scan;
+use Ntcm\Ntm\Util\ProcessExecutor;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
