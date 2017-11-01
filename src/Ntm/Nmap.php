@@ -1,6 +1,6 @@
 <?php
 
-namespace Ntm;
+namespace Ntcm\Ntm;
 
 use Ntm\Util\ProcessExecutor;
 use Symfony\Component\Process\ProcessUtils;

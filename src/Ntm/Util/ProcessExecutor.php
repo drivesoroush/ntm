@@ -1,7 +1,8 @@
 <?php
 
-namespace Ntm\Util;
+namespace Ntcm\Ntm\Util;
 
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -10,21 +11,26 @@ use Symfony\Component\Process\Process;
 class ProcessExecutor {
 
     /**
-     * @param string $command The command to execute.
+     * Executes a process.
+     *
+     * @param string  $command The command to execute.
+     * @param integer $timeout
      *
      * @return integer
      */
-    public function execute($command)
+    public function execute($command, $timeout)
     {
-        $process = new Process($command);
+        $process = new Process($command, null, null, null, $timeout);
         $process->run();
 
         if( ! $process->isSuccessful()) {
-            throw new \RuntimeException(sprintf(
-                'Failed to execute "%s"' . PHP_EOL . '%s',
-                $command,
-                $process->getErrorOutput()
-            ));
+            throw new RuntimeException(
+                sprintf(
+                    'Failed to execute "%s"' . PHP_EOL . '%s',
+                    $command,
+                    $process->getErrorOutput()
+                )
+            );
         }
 
         return $process->getExitCode();

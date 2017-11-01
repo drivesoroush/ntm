@@ -1,11 +1,11 @@
 <?php
 
-namespace Ntm;
+namespace Ntcm\Ntm;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
-class NtmProvider extends ServiceProvider {
+class NtmServiceProvider extends ServiceProvider {
 
     /**
      * Indicates if loading of the provider is deferred.

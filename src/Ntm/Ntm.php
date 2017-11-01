@@ -1,35 +1,40 @@
 <?php
 
-namespace Ntm;
+namespace Ntcm\Ntm;
 
+use Exception;
 use Ntm\Model\Address;
 use Ntm\Model\Host;
 use Ntm\Model\Hostname;
 use Ntm\Model\Port;
 use Ntm\Model\Scan;
+use Ntm\Util\ProcessExecutor;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Ntm {
 
-    protected $osDetection = true;
+    use NtmParameters, ProcessParameters;
 
-    protected $serviceInfo = true;
-
-    protected $verbose = true;
-
-    protected $treatHostsAsOnline = true;
-
-    protected $portScan = true;
-
-    protected $reverseDns = true;
-
-    protected $executable = "nmap";
-
-    protected $outputFile = "/output.xml";
-
+    /**
+     * This class is responsible for executing a single command process.
+     *
+     * @var ProcessExecutor
+     */
     protected $executor;
+
+    /**
+     * Unique scan code.
+     *
+     * @var string
+     */
+    protected $scanCode;
+
+    /**
+     * @var array
+     */
+    protected $ports;
 
     /**
      * @return Ntm
@@ -40,62 +45,61 @@ class Ntm {
     }
 
     /**
+     * Create instance of class
+     */
+    public function __construct()
+    {
+        // get last scan id...
+        try {
+            $this->setScanCode(Scan::last()->id + 1);
+        } catch(Exception $e) {
+            $this->setScanCode(1);
+        }
+
+        $this->executor = new ProcessExecutor();
+    }
+
+    /**
      * Starts new scan with input targets and ports.
      *
-     * @param array $targets
-     * @param array $ports
+     * @param array | string $targets
+     * @param array          $ports
+     *
+     * @return $this
      */
-    public function scan(array $targets, array $ports = [])
+    public function scan($targets, array $ports = [])
     {
+        $this->ports = $ports;
+
+        // for non-array inputs...
+        if(is_string($targets)) {
+            $targets = [$targets];
+        }
+
         $targets = implode(' ', array_map(function ($target) {
             return escapeshellarg($target);
         }, $targets));
 
-        $options = [];
-        if($this->osDetection) {
-            $options[] = '-O';
-        }
-
-        if($this->serviceInfo) {
-            $options[] = '-sV';
-        }
-
-        if($this->verbose) {
-            $options[] = '-v';
-        }
-
-        if($this->portScan) {
-            $options[] = '-sn';
-        } elseif( ! empty($ports)) {
-            $options[] = '-p ' . implode(',', $ports);
-        }
-
-        if($this->reverseDns) {
-            $options[] = '-n';
-        }
-
-        if($this->treatHostsAsOnline) {
-            $options[] = '-Pn';
-        }
-
-        $options[] = '-oX';
-
         $command = sprintf('%s %s %s %s',
-            $this->executable,
-            implode(' ', $options),
-            escapeshellarg(storage_path($this->outputFile)),
+            $this->getExecutable(),
+            implode(' ', $this->getParameters()),
+            escapeshellarg($this->getOutputFile()),
             $targets
         );
 
-        $this->executor->execute($command);
+        $this->executor->execute($command, $this->getTimeout());
 
+        return $this;
     }
 
-    private function parseOutputFile($xmlFile)
+    public function parseOutputFile()
     {
-        $xml = simplexml_load_file($xmlFile);
+        $xml = simplexml_load_file(
+            $this->getOutputFile()
+        );
 
         $scan = Scan::create([
+            'id'               => $this->getScanCode(),
             'total_discovered' => $xml->runstats->hosts->attributes()->up,
             'start'            => $xml->attributes()->start,
             'end'              => $xml->runstats->finished->attributes()->time,
@@ -140,6 +144,22 @@ class Ntm {
             }
 
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getScanCode()
+    {
+        return $this->scanCode;
+    }
+
+    /**
+     * @param string $scanCode
+     */
+    public function setScanCode($scanCode)
+    {
+        $this->scanCode = $scanCode;
     }
 
 }

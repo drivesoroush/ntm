@@ -1,6 +1,6 @@
 <?php
 
-namespace NtmTest;
+namespace Ntcm\NtmTest;
 
 use Ntm\Nmap;
 use PHPUnit_Framework_TestCase;

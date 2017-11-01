@@ -1,13 +1,16 @@
 <?php
 
-namespace Ntm\Model;
+namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Ntm\Scope\ScanScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Scan extends Model {
+
+    use ScanScope;
 
     /**
      * The attributes that are mass assignable.

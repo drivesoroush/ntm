@@ -1,6 +1,6 @@
 <?php
 
-namespace Ntm\Enums;
+namespace Ntcm\Ntm\Enums;
 
 class ScanEnum {
 

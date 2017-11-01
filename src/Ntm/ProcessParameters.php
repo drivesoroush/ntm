@@ -1,108 +1,58 @@
 <?php
 
-namespace Ntm;
+namespace Ntcm\Ntm;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
-trait NtmParameters {
+trait ProcessParameters {
 
-    protected $osDetection = true;
+    protected $executable = "nmap";
 
-    protected $serviceInfo = true;
-
-    protected $verbose = true;
-
-    protected $treatHostsAsOnline = true;
-
-    protected $portScan = true;
-
-    protected $reverseDns = true;
-
-    protected $traceroute = true;
+    protected $timeout = 60;
 
     /**
-     * @param bool $traceroute
+     * @param integer $timeout
      *
      * @return $this
      */
-    public function setTraceroute($traceroute)
+    public function setTimeout($timeout)
     {
-        $this->traceroute = $traceroute;
+        $this->timeout = $timeout;
 
         return $this;
     }
 
     /**
-     * @param bool $reverseDns
-     *
-     * @return $this
+     * @return integer
      */
-    public function setReverseDns($reverseDns)
+    public function getTimeout()
     {
-        $this->reverseDns = $reverseDns;
-
-        return $this;
+        return $this->timeout;
     }
 
     /**
-     * @param bool $portScan
-     *
-     * @return $this
+     * @return string
      */
-    public function setPortScan($portScan)
+    public function getOutputFile()
     {
-        $this->portScan = $portScan;
-
-        return $this;
+        return scans_path($this->getScanCode());
     }
 
     /**
-     * @param bool $osDetection
-     *
-     * @return $this
+     * @return string
      */
-    public function setOsDetection($osDetection)
+    public function getExecutable()
     {
-        $this->osDetection = $osDetection;
-
-        return $this;
+        return $this->executable;
     }
 
     /**
-     * @param bool $serviceInfo
-     *
-     * @return $this
+     * @param string $executable
      */
-    public function setServiceInfo($serviceInfo)
+    public function setExecutable($executable)
     {
-        $this->serviceInfo = $serviceInfo;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $verbose
-     *
-     * @return $this
-     */
-    public function setVerbose($verbose)
-    {
-        $this->verbose = $verbose;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $treatHostsAsOnline
-     *
-     * @return $this
-     */
-    public function setTreatHostsAsOnline($treatHostsAsOnline)
-    {
-        $this->treatHostsAsOnline = $treatHostsAsOnline;
-
-        return $this;
+        $this->executable = $executable;
     }
 
 }

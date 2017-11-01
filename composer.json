@@ -17,8 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Ntm\\": "src/",
-            "NtmTest\\": "tests/"
+            "Ntcm\\Ntm\\": "src/",
+            "Ntcm\\NtmTest\\": "tests/"
         }
     },
     "config": {
