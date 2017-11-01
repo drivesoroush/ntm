@@ -7,9 +7,19 @@ namespace Ntcm\Ntm;
  */
 trait ProcessParameters {
 
+    /**
+     * Nmap executable command.
+     *
+     * @var string
+     */
     protected $executable = "nmap";
 
-    protected $timeout = 60;
+    /**
+     * Process execution timeout.
+     *
+     * @var integer
+     */
+    protected $timeout;
 
     /**
      * @param integer $timeout
