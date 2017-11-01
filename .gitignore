@@ -21,3 +21,4 @@ Homestead.json
 .rocketeer/
 .DS_Store
 bin/
+*.out
