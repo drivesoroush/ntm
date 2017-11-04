@@ -20,8 +20,8 @@ class NtmServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $config = __DIR__ . '/../config/ntm.php';
-        $migrations = __DIR__ . '/../migrations/';
+        $config = __DIR__ . '/../../config/ntm.php';
+        $migrations = __DIR__ . '/../../migrations/';
 
         $this->publishes([
             $config => config_path('ntm.php'),
