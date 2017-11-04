@@ -55,7 +55,7 @@ class Ntm {
 
         // get last scan id...
         try {
-            $this->setScanCode(Scan::last()->id);
+            $this->setScanCode(intval(Scan::last()->id));
         } catch(Exception $e) {
             $this->setScanCode(0);
         }
@@ -75,7 +75,7 @@ class Ntm {
     {
         $this->ports = $ports;
 
-        // for non-array inputs...
+        // for non-array targets...
         if(is_string($targets)) {
             $targets = [$targets];
         }
@@ -84,6 +84,15 @@ class Ntm {
             return escapeshellarg($target);
         }, $targets));
 
+        // create a new scan...
+        $scan = Scan::create([
+            'id' => $this->getScanCode() + 1,
+        ]);
+
+        // update the current scan code...
+        $this->setScanCode($scan->id);
+
+        // build the scan command...
         $command = sprintf('%s %s %s %s',
             $this->getExecutable(),
             implode(' ', $this->getParameters()),
@@ -91,8 +100,10 @@ class Ntm {
             $targets
         );
 
+        // run the scan...
         $this->executor->execute($command, $this->getTimeout());
 
+        // continue chaining...
         return $this;
     }
 
@@ -104,7 +115,7 @@ class Ntm {
     public function parseOutputFile()
     {
         // check if any scan found...
-        if($this->getScanCode() === 0) {
+        if( ! $scan = Scan::find($this->getScanCode())) {
             throw new ScanNotFoundException();
         }
 
@@ -112,16 +123,6 @@ class Ntm {
         $xml = simplexml_load_file(
             $this->getOutputFile()
         );
-
-        // find or create a new scan...
-        if( ! $scan = Scan::find($this->getScanCode())) {
-            $scan = Scan::create([
-                'id'               => $this->getScanCode(),
-                'total_discovered' => $xml->runstats->hosts->attributes()->up,
-                'start'            => $xml->attributes()->start,
-                'end'              => $xml->runstats->finished->attributes()->time,
-            ]);
-        }
 
         foreach($xml->host as $xmlHost) {
             $host = Host::create([
@@ -165,7 +166,7 @@ class Ntm {
     }
 
     /**
-     * @return string
+     * @return integer
      */
     public function getScanCode()
     {
@@ -173,7 +174,7 @@ class Ntm {
     }
 
     /**
-     * @param string $scanCode
+     * @param integer $scanCode
      */
     public function setScanCode($scanCode)
     {
