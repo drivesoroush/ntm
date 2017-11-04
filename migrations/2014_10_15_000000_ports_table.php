@@ -13,7 +13,7 @@ class CreatePortsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.ports', 'ports');
+        return config('ntm.tables.ports', 'mapper_ports');
     }
 
     /**
@@ -23,7 +23,7 @@ class CreatePortsTable extends Migration {
      */
     public function up()
     {
-        $hostsTable = config('ntm.tables.hosts', 'hosts');
+        $hostsTable = config('ntm.tables.hosts', 'mapper_hosts');
 
         Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
             $table->unsignedBigInteger('id', true);

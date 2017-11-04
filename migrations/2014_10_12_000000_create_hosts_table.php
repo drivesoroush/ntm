@@ -23,7 +23,7 @@ class CreateHostsTable extends Migration {
      */
     public function up()
     {
-        $scansTable = config('ntm.tables.scans', 'scans');
+        $scansTable = config('ntm.tables.scans', 'mapper_scans');
 
         Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable) {
             $table->unsignedBigInteger('id', true);
