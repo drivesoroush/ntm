@@ -3,6 +3,7 @@
 namespace Ntcm\Ntm;
 
 use Exception;
+use Ntcm\Exceptions\ScanNotFoundException;
 use Ntcm\Ntm\Model\Address;
 use Ntcm\Ntm\Model\Host;
 use Ntcm\Ntm\Model\Hostname;
@@ -54,9 +55,9 @@ class Ntm {
 
         // get last scan id...
         try {
-            $this->setScanCode(Scan::last()->id + 1);
+            $this->setScanCode(Scan::last()->id);
         } catch(Exception $e) {
-            $this->setScanCode(1);
+            $this->setScanCode(0);
         }
 
         $this->executor = new ProcessExecutor();
@@ -97,16 +98,25 @@ class Ntm {
 
     public function parseOutputFile()
     {
+        // check if any scan found...
+        if($this->getScanCode() === 0) {
+            throw new ScanNotFoundException();
+        }
+
+        // parse xml file into xml object variable...
         $xml = simplexml_load_file(
             $this->getOutputFile()
         );
 
-        $scan = Scan::create([
-            'id'               => $this->getScanCode(),
-            'total_discovered' => $xml->runstats->hosts->attributes()->up,
-            'start'            => $xml->attributes()->start,
-            'end'              => $xml->runstats->finished->attributes()->time,
-        ]);
+        // find or create a new scan...
+        if( ! $scan = Scan::find($this->getScanCode())) {
+            $scan = Scan::findOrNew([
+                'id'               => $this->getScanCode(),
+                'total_discovered' => $xml->runstats->hosts->attributes()->up,
+                'start'            => $xml->attributes()->start,
+                'end'              => $xml->runstats->finished->attributes()->time,
+            ]);
+        }
 
         foreach($xml->host as $xmlHost) {
             $host = Host::create([
