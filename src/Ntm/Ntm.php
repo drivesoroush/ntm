@@ -96,6 +96,11 @@ class Ntm {
         return $this;
     }
 
+    /**
+     * Parses the latest scanned and persists it into the database.
+     *
+     * @throws ScanNotFoundException
+     */
     public function parseOutputFile()
     {
         // check if any scan found...
