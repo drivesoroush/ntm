@@ -27,11 +27,11 @@ class NtmServiceProvider extends ServiceProvider {
             $config => config_path('ntm.php'),
         ], 'config');
 
-        //$this->loadMigrationsFrom($migrations);
+        $this->loadMigrationsFrom($migrations);
 
-        $this->publishes([
-            $migrations => base_path('database/migrations')
-        ], 'migrations');
+        //$this->publishes([
+        //    $migrations => base_path('database/migrations')
+        //], 'migrations');
     }
 
     /**
