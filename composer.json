@@ -18,13 +18,13 @@
         "orchestra/testbench": "^3.5"
     },
     "autoload": {
+        "files": [
+            "src/Ntm/helpers.php"
+        ],
         "psr-4": {
             "Ntcm\\Ntm\\": "src/",
             "Ntcm\\NtmTest\\": "tests/"
-        },
-        "files": [
-            "src/Ntm/helpers.php"
-        ]
+        }
     },
     "config": {
         "bin-dir": "bin"
