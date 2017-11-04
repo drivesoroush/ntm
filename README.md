@@ -6,9 +6,7 @@ Network topology mapper with Laravel 5.
 $ php artisan vendor:publish --provider=Ntcm\Ntm\NtmServiceProvider --tag=config
 ```
 
-```
-$ php artisan vendor:publish --provider=Ntcm\Ntm\NtmServiceProvider --tag=migrations
-```
+Add provider into your `app.php` config file.
 
 ```php
     'providers' => [
