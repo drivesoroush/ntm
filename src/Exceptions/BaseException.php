@@ -1,6 +1,6 @@
 <?php
 
-namespace Ntcm\Ntm\Exceptions;
+namespace Ntcm\Exceptions;
 
 use Exception;
 

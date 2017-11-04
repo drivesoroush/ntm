@@ -22,7 +22,7 @@
             "src/Ntm/helpers.php"
         ],
         "psr-4": {
-            "Ntcm\\Ntm\\": "src/",
+            "Ntcm\\": "src/",
             "Ntcm\\NtmTest\\": "tests/"
         }
     },

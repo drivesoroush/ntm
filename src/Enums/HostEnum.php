@@ -1,6 +1,6 @@
 <?php
 
-namespace Ntcm\Ntm\Enums;
+namespace Ntcm\Enums;
 
 class HostEnum {
 
