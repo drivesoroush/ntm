@@ -29,8 +29,8 @@ class CreateHostsTable extends Migration {
             $table->unsignedBigInteger('id', true);
             $table->string('state');
 
-            $table->integer('start');
-            $table->integer('end');
+            $table->integer('start')->nullable();
+            $table->integer('end')->nullable();
 
             $table->unsignedBigInteger('scan_id')->nullable();
             $table->foreign('scan_id')

@@ -20,16 +20,7 @@ class Host extends Model {
         'state',
         'start',
         'end',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'start',
-        'end',
+        'scan_id'
     ];
 
     /**

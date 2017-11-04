@@ -30,8 +30,8 @@ class CreateScansTable extends Migration {
             $table->integer('total_discovered')->default(0);
             $table->integer('state')->default(0);
 
-            $table->datetime('start')->nullable();
-            $table->datetime('end')->nullable();
+            $table->integer('start')->nullable();
+            $table->integer('end')->nullable();
         });
     }
 
