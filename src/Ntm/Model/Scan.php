@@ -25,16 +25,6 @@ class Scan extends Model {
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'start',
-        'end',
-    ];
-
-    /**
      * Indicates if the model should be timestamped.
      *
      * @var boolean
