@@ -21,7 +21,7 @@
             "Ntcm\\NtmTest\\": "tests/"
         },
         "files": [
-            "helpers.php"
+            "ntm/helpers.php"
         ]
     },
     "config": {
