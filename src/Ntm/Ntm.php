@@ -110,7 +110,7 @@ class Ntm {
 
         // find or create a new scan...
         if( ! $scan = Scan::find($this->getScanCode())) {
-            $scan = Scan::findOrNew([
+            $scan = Scan::create([
                 'id'               => $this->getScanCode(),
                 'total_discovered' => $xml->runstats->hosts->attributes()->up,
                 'start'            => $xml->attributes()->start,
