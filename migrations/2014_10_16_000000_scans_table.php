@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateScansTable extends Migration {
 
+    /**
+     * Get table name.
+     *
+     * @return string
+     */
     function getTable()
     {
         return config('ntm.tables.scans', 'scans');

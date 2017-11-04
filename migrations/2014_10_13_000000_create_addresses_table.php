@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAddressesTable extends Migration {
 
+    /**
+     * Get table name.
+     *
+     * @return string
+     */
     function getTable()
     {
         return config('ntm.tables.addresses', 'mapper_addresses');

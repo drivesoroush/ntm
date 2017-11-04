@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateHostsTable extends Migration {
 
+    /**
+     * Get table name.
+     *
+     * @return string
+     */
     function getTable()
     {
         return config('ntm.tables.hosts', 'mapper_hosts');
