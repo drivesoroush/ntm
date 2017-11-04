@@ -14,3 +14,18 @@ if( ! function_exists('table_name')) {
         return config("ntm.tables.{$name}", $name);
     }
 }
+
+if( ! function_exists('scans_path')) {
+
+    /**
+     * Get directory path to newly scanned xml files.
+     *
+     * @param string $scan
+     *
+     * @return string
+     */
+    function scans_path($scan)
+    {
+        return storage_path("scans/{$scan}");
+    }
+}
