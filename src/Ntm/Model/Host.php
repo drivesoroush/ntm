@@ -72,4 +72,14 @@ class Host extends Model {
     {
         return $this->hasMany(Port::class);
     }
+
+    /**
+     * Get address for this host.
+     *
+     * @return string
+     */
+    public function getAddressAttribute()
+    {
+        return $this->addresses()->firstOrFail()->address;
+    }
 }
