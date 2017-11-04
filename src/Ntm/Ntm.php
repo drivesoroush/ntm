@@ -49,6 +49,9 @@ class Ntm {
      */
     public function __construct()
     {
+        // set default timeout...
+        $this->timeout = config('ntm.scan.timeout');
+
         // get last scan id...
         try {
             $this->setScanCode(Scan::last()->id + 1);
