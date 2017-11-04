@@ -2,7 +2,6 @@
 
 namespace Ntcm\Ntm;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
 class NtmServiceProvider extends ServiceProvider {
@@ -33,4 +32,17 @@ class NtmServiceProvider extends ServiceProvider {
         ], 'migrations');
     }
 
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->singleton(Ntm::class, function () {
+            return new Ntm();
+        });
+
+        $this->app->alias(Ntm::class, 'ntm');
+    }
 }

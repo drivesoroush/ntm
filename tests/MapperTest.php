@@ -2,14 +2,13 @@
 
 namespace Ntcm\NtmTest;
 
-use Ntm\Nmap;
-use PHPUnit_Framework_TestCase;
+use Ntcm\Ntm\Ntm;
 
-class MapperTest extends PHPUnit_Framework_TestCase {
+class MapperTest extends TestCase {
 
     /** @test */
     public function it_tests_hosts_list_retrieve()
     {
-        Nmap::create()->scan('scanme.nmap.org');
+        // ...
     }
 }
