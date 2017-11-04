@@ -46,7 +46,7 @@ trait ProcessParameters {
      */
     public function getOutputFile()
     {
-        return scans_path($this->getScanCode());
+        return scans_path($this->getScanCode()) . ".xml";
     }
 
     /**
