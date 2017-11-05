@@ -49,7 +49,7 @@ class CreateHopsTable extends Migration {
     public function down()
     {
         Schema::table($this->getTable(), function (Blueprint $table) {
-            $table->dropForeign(['host_id']);
+            $table->dropForeign(['scan_id']);
         });
 
         Schema::drop($this->getTable());
