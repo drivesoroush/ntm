@@ -4,11 +4,14 @@ namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Ntcm\Ntm\Scope\HostScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Host extends Model {
+
+    use HostScope;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +23,8 @@ class Host extends Model {
         'state',
         'start',
         'end',
-        'scan_id'
+        'scan_id',
+        'address',
     ];
 
     /**
@@ -64,13 +68,4 @@ class Host extends Model {
         return $this->hasMany(Port::class);
     }
 
-    /**
-     * Get address for this host.
-     *
-     * @return string
-     */
-    public function getAddressAttribute()
-    {
-        return $this->addresses()->firstOrFail()->address;
-    }
 }

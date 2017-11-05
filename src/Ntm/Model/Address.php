@@ -3,11 +3,14 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Ntcm\Ntm\Scope\AddressScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Address extends Model {
+
+    use AddressScope;
 
     /**
      * The attributes that are mass assignable.

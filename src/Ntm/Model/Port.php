@@ -3,11 +3,14 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Ntcm\Ntm\Scope\PortScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Port extends Model {
+
+    use PortScope;
 
     /**
      * The attributes that are mass assignable.

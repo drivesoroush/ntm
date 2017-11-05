@@ -3,11 +3,14 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Ntcm\Ntm\Scope\HostScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Hostname extends Model {
+
+    use HostScope;
 
     /**
      * The attributes that are mass assignable.

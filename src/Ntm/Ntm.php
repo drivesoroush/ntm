@@ -126,8 +126,11 @@ class Ntm {
         );
 
         foreach($xml->host as $xmlHost) {
+            $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
+
             // parse and persist hosts...
-            $host = Host::create([
+            $host = Host::findOrCreate([
+                'address' => $mainAddress,
                 'state'   => (string)$xmlHost->status->attributes()->state,
                 'start'   => (integer)$xmlHost->attributes()->starttime,
                 'end'     => (integer)$xmlHost->attributes()->endtime,
@@ -136,7 +139,7 @@ class Ntm {
 
             // parse and persist addresses...
             foreach($xmlHost->address as $xmlAddress) {
-                Address::create([
+                Address::findOrCreate([
                     'address' => (string)$xmlAddress->attributes()->addr,
                     'type'    => (string)$xmlAddress->attributes()->addrtype,
                     'vendor'  => (string)$xmlAddress->attributes()->vendor,
@@ -146,7 +149,7 @@ class Ntm {
 
             // parse and persist host names...
             foreach($xmlHost->hostnames->hostname as $xmlHostname) {
-                Hostname::create([
+                Hostname::findOrCreate([
                     'name'    => (string)$xmlHostname->attributes()->name,
                     'type'    => (string)$xmlHostname->attributes()->type,
                     'host_id' => $host->id,
@@ -155,7 +158,7 @@ class Ntm {
 
             // parse and persist ports...
             foreach($xmlHost->ports->port as $xmlPort) {
-                Port::create([
+                Port::findOrCreate([
                     'protocol' => (string)$xmlPort->attributes()->protocol,
                     'port_id'  => (integer)$xmlPort->attributes()->portid,
                     'state'    => (string)$xmlPort->state->attributes()->state,
@@ -169,23 +172,12 @@ class Ntm {
 
             // parse and persist hops...
             foreach($xmlHost->trace->hop as $xmlHop) {
-                $rtt = (float)$xmlHop->rtt;
-                $first = $host->address;
-                $second = (string)$xmlHop->attributes()->ipaddr;
-
-                // check if the hop exists...
-                if( ! $hop = Hop::findByAddresses($first, $second)) {
-                    // hop does not exists then create one...
-                    Hop::create([
-                        'address_first'  => $first,
-                        'address_second' => $second,
-                        'scan_id'        => $scan->id,
-                        'rtt'            => $rtt,
-                    ]);
-                } else {
-                    // update the round trip time...
-                    $hop->update(['rtt' => $rtt]);
-                }
+                Hop::findOrCreate([
+                    'address_first'  => $host->address,
+                    'address_second' => (string)$xmlHop->attributes()->ipaddr,
+                    'scan_id'        => $scan->id,
+                    'rtt'            => (float)$xmlHop->rtt,
+                ]);
             }
 
         }

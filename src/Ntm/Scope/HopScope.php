@@ -2,6 +2,8 @@
 
 namespace Ntcm\Ntm\Scope;
 
+use Ntcm\Ntm\Model\Hop;
+
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
@@ -11,22 +13,32 @@ trait HopScope {
      * Check whether this hop exists in the database or not.
      *
      * @param        $query
-     *
-     * @param string $firstAddress
-     * @param string $secondAddress
+     * @param array  $attributes
      *
      * @return mixed
      */
-    public function scopeFindByAddresses($query, $firstAddress, $secondAddress)
+    public function scopeFindOrCreate($query, $attributes)
     {
-        return $query
-                ->where(function ($query) use ($firstAddress, $secondAddress) {
-                    $query->where('address_first', $firstAddress)
-                          ->andWhere('address_second', $secondAddress);
-                })->OrWhere(function ($query) use ($firstAddress, $secondAddress) {
-                    $query->where('address_first', $secondAddress)
-                          ->andWhere('address_second', $firstAddress);
-                })->count() != 0;
+        $hop = $query
+            ->where(function ($query) use ($attributes) {
+                $query->where('address_first', $attributes['address_first'])
+                      ->where('address_second', $attributes['address_second'])
+                      ->where('scan_id', $attributes['scan_id']);
+            })
+            ->OrWhere(function ($query) use ($attributes) {
+                $query->where('address_first', $attributes['address_second'])
+                      ->where('address_second', $attributes['address_first'])
+                      ->where('scan_id', $attributes['scan_id']);
+            })
+            ->first();
+
+        if($hop) {
+            $hop->update(['rtt' => $attributes['rtt']]);
+        } else {
+            $hop = Hop::create($attributes);
+        }
+
+        return $hop;
     }
 
 }

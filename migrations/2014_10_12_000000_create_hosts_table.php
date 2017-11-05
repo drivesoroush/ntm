@@ -29,6 +29,7 @@ class CreateHostsTable extends Migration {
             $table->unsignedBigInteger('id', true);
             $table->string('state');
 
+            $table->string('address')->nullable();
             $table->integer('start')->nullable();
             $table->integer('end')->nullable();
 
