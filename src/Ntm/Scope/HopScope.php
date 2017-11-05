@@ -17,7 +17,7 @@ trait HopScope {
      *
      * @return mixed
      */
-    public function scopeExists($query, $firstAddress, $secondAddress)
+    public function scopeFindByAddresses($query, $firstAddress, $secondAddress)
     {
         return $query
                 ->where(function ($query) use ($firstAddress, $secondAddress) {

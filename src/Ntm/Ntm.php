@@ -173,7 +173,7 @@ class Ntm {
                 $first = $host->address;
                 $second = (string)$xmlHop->attributes()->ipaddr;
 
-                if( ! $hop = Hop::exists($first, $second)) {
+                if( ! $hop = Hop::findByAddresses($first, $second)) {
                     Hop::create([
                         'address_first'  => $first,
                         'address_second' => $second,
