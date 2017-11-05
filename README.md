@@ -2,11 +2,8 @@
 
 Network topology mapper with Laravel 5.
 
-```
-$ php artisan vendor:publish --provider=Ntcm\Ntm\NtmServiceProvider --tag=config
-```
 
-Add provider into your `app.php` config file.
+First of all you must add provider into your `app.php` config file.
 
 ```php
     'providers' => [
@@ -14,4 +11,14 @@ Add provider into your `app.php` config file.
         Ntcm\Ntm\NtmServiceProvider::class
         ...
     ]
+```
+
+Now you must publish config files.
+```
+$ php artisan vendor:publish
+```
+
+Now do the migration.
+```
+$ php artisan migrate
 ```
