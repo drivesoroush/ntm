@@ -3,14 +3,14 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Ntcm\Ntm\Scope\ScanScope;
+use Ntcm\Ntm\Scope\HopScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Hop extends Model {
 
-    use ScanScope;
+    use HopScope;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +23,15 @@ class Hop extends Model {
         'address_second',
         'scan_id',
         'rtt',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'rtt' => 'float'
     ];
 
     /**
@@ -39,7 +48,7 @@ class Hop extends Model {
      */
     public function getTable()
     {
-        return table_name('scans');
+        return table_name('hops');
     }
 
 }
