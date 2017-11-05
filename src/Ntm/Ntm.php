@@ -170,14 +170,20 @@ class Ntm {
                 ]);
             }
 
+            $first = $host->address;
+
             // parse and persist hops...
             foreach($xmlHost->trace->hop as $xmlHop) {
+                $second = (string)$xmlHop->attributes()->ipaddr;
+
                 Hop::findOrCreate([
-                    'address_first'  => $host->address,
-                    'address_second' => (string)$xmlHop->attributes()->ipaddr,
+                    'address_first'  => $first,
+                    'address_second' => $second,
                     'scan_id'        => $scan->id,
                     'rtt'            => (float)$xmlHop->rtt,
                 ]);
+
+                $first = $second;
             }
 
         }
