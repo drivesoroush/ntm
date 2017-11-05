@@ -20,13 +20,13 @@ trait HopScope {
     public function scopeExists($query, $firstAddress, $secondAddress)
     {
         return $query
-                ->whereColumn(
-                    ['address_first', $firstAddress],
-                    ['address_second', $secondAddress]
-                )->OrWhereColumn(
-                    ['address_first', $secondAddress],
-                    ['address_second', $firstAddress]
-                )->count() == 0;
+                ->where(function ($query) use ($firstAddress, $secondAddress) {
+                    $query->where('address_first', $firstAddress)
+                          ->andWhere('address_second', $secondAddress);
+                })->OrWhere(function ($query) use ($firstAddress, $secondAddress) {
+                    $query->where('address_first', $secondAddress)
+                          ->andWhere('address_second', $firstAddress);
+                })->count() == 0;
     }
 
 }

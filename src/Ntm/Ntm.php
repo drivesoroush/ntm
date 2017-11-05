@@ -172,7 +172,7 @@ class Ntm {
                 $rtt = (float)$xmlHop->rtt;
                 $first = $host->address;
                 $second = (string)$xmlHop->attributes()->ipaddr;
-                
+
                 if( ! $hop = Hop::exists($first, $second)) {
                     Hop::create([
                         'address_first'  => $first,
