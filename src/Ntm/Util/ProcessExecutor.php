@@ -2,7 +2,7 @@
 
 namespace Ntcm\Ntm\Util;
 
-use RuntimeException;
+use Ntcm\Exceptions\ScanFailedException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -17,6 +17,7 @@ class ProcessExecutor {
      * @param integer $timeout
      *
      * @return integer
+     * @throws ScanFailedException
      */
     public function execute($command, $timeout)
     {
@@ -24,7 +25,7 @@ class ProcessExecutor {
         $process->run();
 
         if( ! $process->isSuccessful()) {
-            throw new RuntimeException(
+            throw new ScanFailedException(
                 sprintf(
                     'Failed to execute "%s"' . PHP_EOL . '%s',
                     $command,
