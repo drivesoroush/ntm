@@ -11,7 +11,7 @@ if( ! function_exists('table_name')) {
      */
     function table_name($name)
     {
-        return config("ntm.tables.{$name}", $name);
+        return config("ntm.tables.{$name}", "mapper_{$name}");
     }
 }
 
