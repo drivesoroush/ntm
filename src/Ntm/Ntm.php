@@ -173,7 +173,9 @@ class Ntm {
                 $first = $host->address;
                 $second = (string)$xmlHop->attributes()->ipaddr;
 
+                // check if the hop exists...
                 if( ! $hop = Hop::findByAddresses($first, $second)) {
+                    // hop does not exists then create one...
                     Hop::create([
                         'address_first'  => $first,
                         'address_second' => $second,
@@ -181,6 +183,7 @@ class Ntm {
                         'rtt'            => $rtt,
                     ]);
                 } else {
+                    // update the round trip time...
                     $hop->update(['rtt' => $rtt]);
                 }
             }
