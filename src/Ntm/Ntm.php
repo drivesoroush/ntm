@@ -102,8 +102,15 @@ class Ntm {
             $targets
         );
 
-        // run the scan...
-        $this->executor->execute($command, $this->getTimeout());
+        try {
+            // run the scan...
+            $this->executor->execute($command, $this->getTimeout());
+        } catch(Exception $e) {
+            // scan is failed...
+            $scan->update([
+                'state' => ScanEnum::FATAL
+            ]);
+        }
 
         // continue chaining...
         return $this;
