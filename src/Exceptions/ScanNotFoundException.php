@@ -18,6 +18,6 @@ class ScanNotFoundException extends Exception {
      */
     public function __construct($message = "No scan results found, you must scan a network first.")
     {
-        parent::__construct($this->code, $message);
+        parent::__construct($message, $this->code);
     }
 }
