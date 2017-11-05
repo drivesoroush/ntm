@@ -26,7 +26,7 @@ trait HopScope {
                 })->OrWhere(function ($query) use ($firstAddress, $secondAddress) {
                     $query->where('address_first', $secondAddress)
                           ->andWhere('address_second', $firstAddress);
-                })->count() == 0;
+                })->count() != 0;
     }
 
 }
