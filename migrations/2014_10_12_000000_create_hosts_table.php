@@ -48,6 +48,10 @@ class CreateHostsTable extends Migration {
      */
     public function down()
     {
+        Schema::table($this->getTable(), function (Blueprint $table) {
+            $table->dropForeign(['scan_id']);
+        });
+
         Schema::drop($this->getTable());
     }
 }
