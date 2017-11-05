@@ -186,6 +186,13 @@ class Ntm {
                 $first = $second;
             }
 
+            // update scan info...
+            $scan->update([
+                'total_discovered' => $xml->runstats->hosts->attributes()->up,
+                'start'            => $xml->attributes()->start,
+                'end'              => $xml->runstats->finished->attributes()->time,
+            ]);
+
         }
     }
 
