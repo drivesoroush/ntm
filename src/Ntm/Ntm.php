@@ -3,6 +3,7 @@
 namespace Ntcm\Ntm;
 
 use Exception;
+use Ntcm\Enums\ScanEnum;
 use Ntcm\Exceptions\ScanNotFoundException;
 use Ntcm\Ntm\Model\Address;
 use Ntcm\Ntm\Model\Hop;
@@ -191,6 +192,7 @@ class Ntm {
                 'total_discovered' => $xml->runstats->hosts->attributes()->up,
                 'start'            => $xml->attributes()->start,
                 'end'              => $xml->runstats->finished->attributes()->time,
+                'state'            => ScanEnum::DONE
             ]);
 
         }
