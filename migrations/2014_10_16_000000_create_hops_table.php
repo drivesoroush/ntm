@@ -13,7 +13,7 @@ class CreateHopsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.ports', 'mapper_hops');
+        return config('ntm.tables.hops', 'mapper_hops');
     }
 
     /**
