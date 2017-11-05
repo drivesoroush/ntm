@@ -8,7 +8,7 @@ use Ntcm\Ntm\Scope\ScanScope;
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
-class Scan extends Model {
+class Hop extends Model {
 
     use ScanScope;
 
@@ -19,9 +19,10 @@ class Scan extends Model {
      */
     protected $fillable = [
         'id',
-        'total_discovered',
-        'start',
-        'end',
+        'address_first',
+        'address_second',
+        'scan_id',
+        'rtt',
     ];
 
     /**

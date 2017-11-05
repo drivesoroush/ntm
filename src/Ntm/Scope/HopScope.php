@@ -2,18 +2,28 @@
 
 namespace Ntcm\Ntm\Scope;
 
-trait ScanScope {
+trait HopScope {
 
     /**
-     * Get reserved ticket types query.
+     * Check whether this hop exists in the database or not.
      *
-     * @param $query
+     * @param        $query
+     *
+     * @param string $firstAddress
+     * @param string $secondAddress
      *
      * @return mixed
      */
-    public function scopeLast($query)
+    public function scopeExists($query, $firstAddress, $secondAddress)
     {
-        return $query->orderBy('id', 'desc')->first();
+        return $query
+                ->whereColumn(
+                    ['address_first', $firstAddress],
+                    ['address_second', $secondAddress]
+                )->OrWhereColumn(
+                    ['address_first', $secondAddress],
+                    ['address_second', $firstAddress]
+                )->count() == 0;
     }
 
 }

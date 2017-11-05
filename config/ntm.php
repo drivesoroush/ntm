@@ -7,6 +7,7 @@ return [
         'host_names' => 'host_names',
         'ports'      => 'ports',
         'scans'      => 'scans',
+        'hops'       => 'hops',
     ],
 
     'scan' => [

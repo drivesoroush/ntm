@@ -13,7 +13,7 @@ class CreatePortsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.ports', 'mapper_ports');
+        return config('ntm.tables.ports', 'mapper_hops');
     }
 
     /**
@@ -23,23 +23,19 @@ class CreatePortsTable extends Migration {
      */
     public function up()
     {
-        $hostsTable = config('ntm.tables.hosts', 'mapper_hosts');
+        $scansTable = config('ntm.tables.scans', 'mapper_scans');
 
-        Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
+        Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable) {
             $table->unsignedBigInteger('id', true);
 
-            $table->string('protocol');
-            $table->string('port_id');
-            $table->string('state');
-            $table->string('reason');
-            $table->string('service');
-            $table->string('method');
-            $table->string('conf');
+            $table->string('address_first');
+            $table->string('address_second');
+            $table->string('rtt');
 
-            $table->unsignedBigInteger('host_id')->nullable();
-            $table->foreign('host_id')
+            $table->unsignedBigInteger('scan_id')->nullable();
+            $table->foreign('scan_id')
                   ->references('id')
-                  ->on($hostsTable)
+                  ->on($scansTable)
                   ->onDelete('set null')
                   ->onUpdate('set null');
         });

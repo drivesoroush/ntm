@@ -5,6 +5,7 @@ namespace Ntcm\Ntm;
 use Exception;
 use Ntcm\Exceptions\ScanNotFoundException;
 use Ntcm\Ntm\Model\Address;
+use Ntcm\Ntm\Model\Hop;
 use Ntcm\Ntm\Model\Host;
 use Ntcm\Ntm\Model\Hostname;
 use Ntcm\Ntm\Model\Port;
@@ -125,6 +126,7 @@ class Ntm {
         );
 
         foreach($xml->host as $xmlHost) {
+            // parse and persist hosts...
             $host = Host::create([
                 'state'   => (string)$xmlHost->status->attributes()->state,
                 'start'   => (integer)$xmlHost->attributes()->starttime,
@@ -132,6 +134,7 @@ class Ntm {
                 'scan_id' => $scan->id
             ]);
 
+            // parse and persist addresses...
             foreach($xmlHost->address as $xmlAddress) {
                 Address::create([
                     'address' => (string)$xmlAddress->attributes()->addr,
@@ -141,6 +144,7 @@ class Ntm {
                 ]);
             }
 
+            // parse and persist host names...
             foreach($xmlHost->hostnames->hostname as $xmlHostname) {
                 Hostname::create([
                     'name'    => (string)$xmlHostname->attributes()->name,
@@ -149,6 +153,7 @@ class Ntm {
                 ]);
             }
 
+            // parse and persist ports...
             foreach($xmlHost->ports->port as $xmlPort) {
                 Port::create([
                     'protocol' => (string)$xmlPort->attributes()->protocol,
@@ -160,6 +165,24 @@ class Ntm {
                     'conf'     => (string)$xmlPort->service->attributes()->conf,
                     'host_id'  => $host->id,
                 ]);
+            }
+
+            // parse and persist hops...
+            foreach($xmlHost->trace->hop as $xmlHop) {
+                $rtt = (float)$xmlHop->rtt;
+                $first = $host->address;
+                $second = (string)$xmlHop->ipaddr;
+
+                if( ! $hop = Hop::exists($first, $second)) {
+                    Hop::create([
+                        'address_first'  => $first,
+                        'address_second' => $second,
+                        'scan_id'        => $scan->id,
+                        'rtt'            => $rtt,
+                    ]);
+                } else {
+                    $hop->update(['rtt' => $rtt]);
+                }
             }
 
         }
