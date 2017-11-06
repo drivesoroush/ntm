@@ -42,4 +42,23 @@ class Scan extends Model {
         return table_name('scans');
     }
 
+    /**
+     * Make scan-hop relationship.
+     *
+     * @return mixed
+     */
+    public function hops()
+    {
+        return $this->hasMany(Hop::class);
+    }
+
+    /**
+     * Make scan-host relationship.
+     *
+     * @return mixed
+     */
+    public function hosts()
+    {
+        return $this->hasMany(Host::class);
+    }
 }
