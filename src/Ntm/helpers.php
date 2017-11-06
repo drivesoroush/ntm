@@ -41,7 +41,21 @@ if( ! function_exists('get_range')) {
      */
     function get_range($ip)
     {
-        return "UNKNOWN_DEVICE_" . str_random(5);
+        $values = explode('.', $ip);
+        $resultArray = [$values[0], 0, 0, 0];
+        $tail = "/8";
+
+        if(intval($values[0]) >= 128) {
+            $resultArray[1] = $values[1];
+            $tail = "/16";
+        }
+
+        if(intval($values[0]) >= 192) {
+            $resultArray[2] = $values[2];
+            $tail = "/24";
+        }
+
+        return implode('.', $resultArray) . $tail;
     }
 }
 
