@@ -24,7 +24,7 @@ if( ! function_exists('scans_path')) {
      *
      * @return string
      */
-    function scans_path($scan)
+    function scans_path($scan = "")
     {
         return storage_path("scans/{$scan}");
     }
