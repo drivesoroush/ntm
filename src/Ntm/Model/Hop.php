@@ -51,4 +51,14 @@ class Hop extends Model {
         return table_name('hops');
     }
 
+    /**
+     * Make hop-scan relationship.
+     *
+     * @return mixed
+     */
+    public function scan()
+    {
+        return $this->belongsTo(Scan::class);
+    }
+
 }

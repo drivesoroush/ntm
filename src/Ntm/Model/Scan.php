@@ -3,6 +3,7 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Ntcm\Ntm\Scope\ScanScope;
 
 /**
@@ -45,7 +46,7 @@ class Scan extends Model {
     /**
      * Make scan-hop relationship.
      *
-     * @return mixed
+     * @return HasMany
      */
     public function hops()
     {
@@ -55,7 +56,7 @@ class Scan extends Model {
     /**
      * Make scan-host relationship.
      *
-     * @return mixed
+     * @return HasMany
      */
     public function hosts()
     {

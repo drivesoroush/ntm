@@ -68,4 +68,14 @@ class Host extends Model {
         return $this->hasMany(Port::class);
     }
 
+    /**
+     * Make host-scan relationship.
+     *
+     * @return mixed
+     */
+    public function scan()
+    {
+        return $this->belongsTo(Scan::class);
+    }
+
 }
