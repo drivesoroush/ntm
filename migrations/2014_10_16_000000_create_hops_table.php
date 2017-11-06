@@ -24,13 +24,26 @@ class CreateHopsTable extends Migration {
     public function up()
     {
         $scansTable = config('ntm.tables.scans', 'mapper_scans');
+        $hostsTable = config('ntm.tables.hosts', 'mapper_hosts');
 
-        Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable) {
+        Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable, $hostsTable) {
             $table->unsignedBigInteger('id', true);
 
-            $table->string('address_first');
-            $table->string('address_second');
             $table->string('rtt');
+
+            $table->unsignedBigInteger('address_first');
+            $table->foreign('address_first')
+                  ->references('id')
+                  ->on($hostsTable)
+                  ->onDelete('set null')
+                  ->onUpdate('set null');
+
+            $table->unsignedBigInteger('address_second');
+            $table->foreign('address_second')
+                  ->references('id')
+                  ->on($hostsTable)
+                  ->onDelete('set null')
+                  ->onUpdate('set null');
 
             $table->unsignedBigInteger('scan_id')->nullable();
             $table->foreign('scan_id')
@@ -49,6 +62,8 @@ class CreateHopsTable extends Migration {
     public function down()
     {
         Schema::table($this->getTable(), function (Blueprint $table) {
+            $table->dropForeign(['address_first']);
+            $table->dropForeign(['address_second']);
             $table->dropForeign(['scan_id']);
         });
 

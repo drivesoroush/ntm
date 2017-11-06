@@ -184,19 +184,32 @@ class Ntm {
                 ]);
             }
 
+            // initiate the first address...
             $firstAddress = $host->address;
 
             // parse and persist hops...
             foreach($xmlHost->trace->hop ? : [] as $xmlHop) {
                 $secondAddress = (string)$xmlHop->attributes()->ipaddr;
 
+                // find or create hosts...
+                $first = Host::findOrCreate([
+                    'address' => $firstAddress,
+                    'scan_id' => $scan->id
+                ]);
+                $second = Host::findOrCreate([
+                    'address' => $secondAddress,
+                    'scan_id' => $scan->id
+                ]);
+
+                // find or create hop...
                 Hop::findOrCreate([
-                    'address_first'  => $firstAddress,
-                    'address_second' => $secondAddress,
+                    'address_first'  => $first->id,
+                    'address_second' => $second->id,
                     'scan_id'        => $scan->id,
                     'rtt'            => (float)$xmlHop->rtt,
                 ]);
 
+                // swap addresses...
                 $firstAddress = $secondAddress;
             }
 
