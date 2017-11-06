@@ -191,11 +191,6 @@ class Ntm {
             foreach($xmlHost->trace->hop ? : [] as $xmlHop) {
                 $secondAddress = (string)$xmlHop->attributes()->ipaddr;
 
-                // don't care the loopback...
-                if($firstAddress == $secondAddress) {
-                    continue;
-                }
-
                 // find or create hosts...
                 $first = Host::findOrCreate([
                     'address' => $firstAddress,
@@ -206,6 +201,14 @@ class Ntm {
                     'scan_id' => $scan->id
                 ]);
 
+                // swap addresses...
+                $firstAddress = $secondAddress;
+
+                // don't care the loopback...
+                if($firstAddress == $secondAddress) {
+                    continue;
+                }
+
                 // find or create hop...
                 Hop::findOrCreate([
                     'address_first'  => $first->id,
@@ -213,9 +216,6 @@ class Ntm {
                     'scan_id'        => $scan->id,
                     'rtt'            => (float)$xmlHop->rtt,
                 ]);
-
-                // swap addresses...
-                $firstAddress = $secondAddress;
             }
 
             // update scan info...
