@@ -31,14 +31,14 @@ class CreateHopsTable extends Migration {
 
             $table->string('rtt');
 
-            $table->unsignedBigInteger('address_first');
+            $table->unsignedBigInteger('address_first')->nullable();
             $table->foreign('address_first')
                   ->references('id')
                   ->on($hostsTable)
                   ->onDelete('set null')
                   ->onUpdate('set null');
 
-            $table->unsignedBigInteger('address_second');
+            $table->unsignedBigInteger('address_second')->nullable();
             $table->foreign('address_second')
                   ->references('id')
                   ->on($hostsTable)
