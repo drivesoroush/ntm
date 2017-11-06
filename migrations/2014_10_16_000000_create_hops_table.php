@@ -29,7 +29,7 @@ class CreateHopsTable extends Migration {
         Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable, $hostsTable) {
             $table->unsignedBigInteger('id', true);
 
-            $table->string('rtt');
+            $table->float('rtt')->default(0);
 
             $table->unsignedBigInteger('address_first')->nullable();
             $table->foreign('address_first')
