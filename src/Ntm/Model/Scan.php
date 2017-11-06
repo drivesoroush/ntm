@@ -22,6 +22,7 @@ class Scan extends Model {
         'total_discovered',
         'start',
         'end',
+        'state'
     ];
 
     /**
