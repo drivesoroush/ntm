@@ -68,6 +68,6 @@ if( ! function_exists('get_scanner_address')) {
      */
     function get_scanner_address()
     {
-        return "SCANNER";
+        return env("SCANNER_ADDRESS", "SCANNER");
     }
 }
