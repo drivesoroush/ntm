@@ -203,9 +203,10 @@ class Ntm {
 
             // initiate the first address...
             $firstAddress = $host->address;
+            $index = 0;
 
             // parse and persist hops...
-            foreach($xmlHost->trace->hop ? : [] as $index => $xmlHop) {
+            foreach($xmlHost->trace->hop ? : [] as $xmlHop) {
                 $secondAddress = (string)$xmlHop->attributes()->ipaddr;
 
                 // determine type of hosts...
@@ -263,6 +264,7 @@ class Ntm {
                 // shift addresses...
                 $firstAddress = $secondAddress;
 
+                $index ++;
             }
 
             // update scan info...
