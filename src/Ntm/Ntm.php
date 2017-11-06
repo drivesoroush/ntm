@@ -191,6 +191,11 @@ class Ntm {
             foreach($xmlHost->trace->hop ? : [] as $xmlHop) {
                 $secondAddress = (string)$xmlHop->attributes()->ipaddr;
 
+                // don't care the loopback...
+                if($firstAddress == $secondAddress) {
+                    continue;
+                }
+
                 // find or create hosts...
                 $first = Host::findOrCreate([
                     'address' => $firstAddress,
