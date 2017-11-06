@@ -94,6 +94,11 @@ class Ntm {
         // update the current scan code...
         $this->setScanCode($scan->id);
 
+        // check if scan directory exists...
+        if(!file_exists($this->getOutputDirectory())) {
+            mkdir($this->getOutputDirectory());
+        }
+
         // build the scan command...
         $command = sprintf('%s %s %s %s',
             $this->getExecutable(),

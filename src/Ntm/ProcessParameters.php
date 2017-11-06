@@ -52,6 +52,14 @@ trait ProcessParameters {
     /**
      * @return string
      */
+    public function getOutputDirectory()
+    {
+        return scans_path();
+    }
+
+    /**
+     * @return string
+     */
     public function getExecutable()
     {
         return $this->executable;
