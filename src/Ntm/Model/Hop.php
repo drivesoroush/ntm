@@ -3,6 +3,8 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Ntcm\Ntm\Scope\HopScope;
 
 /**
@@ -54,7 +56,7 @@ class Hop extends Model {
     /**
      * Make hop-scan relationship.
      *
-     * @return mixed
+     * @return BelongsTo
      */
     public function scan()
     {
