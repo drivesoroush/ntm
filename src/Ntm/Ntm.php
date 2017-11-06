@@ -3,6 +3,7 @@
 namespace Ntcm\Ntm;
 
 use Exception;
+use Ntcm\Enums\HostEnum;
 use Ntcm\Enums\ScanEnum;
 use Ntcm\Exceptions\ScanNotFoundException;
 use Ntcm\Ntm\Model\Address;
@@ -95,7 +96,7 @@ class Ntm {
         $this->setScanCode($scan->id);
 
         // check if scan directory exists...
-        if(!file_exists($this->getOutputDirectory())) {
+        if( ! file_exists($this->getOutputDirectory())) {
             mkdir($this->getOutputDirectory());
         }
 
@@ -144,7 +145,7 @@ class Ntm {
             // parse and persist hosts...
             $host = Host::findOrCreate([
                 'address' => $mainAddress,
-                'state'   => (string)$xmlHost->status->attributes()->state,
+                'state'   => (string)$xmlHost->status->attributes()->state == "up" ? HostEnum::STATE_UP : HostEnum::STATE_DOWN,
                 'start'   => (integer)$xmlHost->attributes()->starttime,
                 'end'     => (integer)$xmlHost->attributes()->endtime,
                 'scan_id' => $scan->id
@@ -183,20 +184,20 @@ class Ntm {
                 ]);
             }
 
-            $first = $host->address;
+            $firstAddress = $host->address;
 
             // parse and persist hops...
             foreach($xmlHost->trace->hop ? : [] as $xmlHop) {
-                $second = (string)$xmlHop->attributes()->ipaddr;
+                $secondAddress = (string)$xmlHop->attributes()->ipaddr;
 
                 Hop::findOrCreate([
-                    'address_first'  => $first,
-                    'address_second' => $second,
+                    'address_first'  => $firstAddress,
+                    'address_second' => $secondAddress,
                     'scan_id'        => $scan->id,
                     'rtt'            => (float)$xmlHop->rtt,
                 ]);
 
-                $first = $second;
+                $firstAddress = $secondAddress;
             }
 
             // update scan info...
