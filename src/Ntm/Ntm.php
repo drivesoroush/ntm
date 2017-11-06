@@ -13,6 +13,7 @@ use Ntcm\Ntm\Model\Hostname;
 use Ntcm\Ntm\Model\Port;
 use Ntcm\Ntm\Model\Scan;
 use Ntcm\Ntm\Util\ProcessExecutor;
+use Carbon\Carbon;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
@@ -90,6 +91,7 @@ class Ntm {
         // create a new scan...
         $scan = Scan::create([
             'id' => $this->getScanCode() + 1,
+            'start' => Carbon::now()->timestamp
         ]);
 
         // update the current scan code...
