@@ -212,7 +212,7 @@ class Ntm {
                     ]);
                 }
 
-                // swap addresses...
+                // shift addresses...
                 $firstAddress = $secondAddress;
 
             }
