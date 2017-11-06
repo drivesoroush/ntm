@@ -22,6 +22,8 @@ trait ProcessParameters {
     protected $timeout;
 
     /**
+     * Set process execution timeout.
+     *
      * @param integer $timeout
      *
      * @return $this
@@ -34,6 +36,8 @@ trait ProcessParameters {
     }
 
     /**
+     * Get process execution timeout.
+     *
      * @return integer
      */
     public function getTimeout()
@@ -42,6 +46,8 @@ trait ProcessParameters {
     }
 
     /**
+     * Get path to output file.
+     *
      * @return string
      */
     public function getOutputFile()
@@ -50,6 +56,8 @@ trait ProcessParameters {
     }
 
     /**
+     * Get path to output directory.
+     *
      * @return string
      */
     public function getOutputDirectory()
@@ -58,6 +66,8 @@ trait ProcessParameters {
     }
 
     /**
+     * Get Nmap execution.
+     *
      * @return string
      */
     public function getExecutable()
