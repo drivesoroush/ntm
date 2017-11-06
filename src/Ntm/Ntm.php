@@ -237,7 +237,7 @@ class Ntm {
                     // make a switch...
                     $switch = Host::findOrCreate([
                         'state'   => HostStateEnum::STATE_UP,
-                        'address' => "some address",
+                        'address' => "UNKNOWN_DEVICE_" . str_random(5),
                         'type'    => HostTypeEnum::SWITCH_HOST,
                         'scan_id' => $scan->id,
                     ]);
