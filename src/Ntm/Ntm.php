@@ -213,10 +213,10 @@ class Ntm {
                 $firstType = HostTypeEnum::ROUTER_HOST;
                 $secondType = HostTypeEnum::ROUTER_HOST;
                 if($index == 0) {
-                    $firstType = HostTypeEnum::SWITCH_HOST;
+                    $firstType = HostTypeEnum::NODE_HOST;
                 }
                 if(sizeof($xmlHost->trace->hop) == $index + 1) {
-                    $secondType = HostTypeEnum::SWITCH_HOST;
+                    $secondType = HostTypeEnum::NODE_HOST;
                 }
 
                 // find or create hosts...

@@ -26,6 +26,7 @@ class Host extends Model {
         'end',
         'scan_id',
         'address',
+        'type'
     ];
 
     /**
