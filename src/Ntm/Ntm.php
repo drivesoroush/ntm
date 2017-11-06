@@ -201,21 +201,20 @@ class Ntm {
                     'scan_id' => $scan->id
                 ]);
 
+                // don't care the loopback...
+                if($firstAddress != $secondAddress) {
+                    // find or create hop...
+                    Hop::findOrCreate([
+                        'address_first'  => $first->id,
+                        'address_second' => $second->id,
+                        'scan_id'        => $scan->id,
+                        'rtt'            => (float)$xmlHop->rtt,
+                    ]);
+                }
+
                 // swap addresses...
                 $firstAddress = $secondAddress;
 
-                // don't care the loopback...
-                if($firstAddress == $secondAddress) {
-                    continue;
-                }
-
-                // find or create hop...
-                Hop::findOrCreate([
-                    'address_first'  => $first->id,
-                    'address_second' => $second->id,
-                    'scan_id'        => $scan->id,
-                    'rtt'            => (float)$xmlHop->rtt,
-                ]);
             }
 
             // update scan info...
