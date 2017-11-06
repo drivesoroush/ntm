@@ -133,7 +133,7 @@ class Ntm {
             $this->getOutputFile()
         );
 
-        foreach($xml->host as $xmlHost) {
+        foreach($xml->host ? : [] as $xmlHost) {
             $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
 
             // parse and persist hosts...
@@ -146,7 +146,7 @@ class Ntm {
             ]);
 
             // parse and persist addresses...
-            foreach($xmlHost->address as $xmlAddress) {
+            foreach($xmlHost->address ? : [] as $xmlAddress) {
                 Address::findOrCreate([
                     'address' => (string)$xmlAddress->attributes()->addr,
                     'type'    => (string)$xmlAddress->attributes()->addrtype,
@@ -156,7 +156,7 @@ class Ntm {
             }
 
             // parse and persist host names...
-            foreach($xmlHost->hostnames->hostname as $xmlHostname) {
+            foreach($xmlHost->hostnames->hostname ? : [] as $xmlHostname) {
                 Hostname::findOrCreate([
                     'name'    => (string)$xmlHostname->attributes()->name,
                     'type'    => (string)$xmlHostname->attributes()->type,
@@ -165,7 +165,7 @@ class Ntm {
             }
 
             // parse and persist ports...
-            foreach($xmlHost->ports->port as $xmlPort) {
+            foreach($xmlHost->ports->port ? : [] as $xmlPort) {
                 Port::findOrCreate([
                     'protocol' => (string)$xmlPort->attributes()->protocol,
                     'port_id'  => (integer)$xmlPort->attributes()->portid,
@@ -181,7 +181,7 @@ class Ntm {
             $first = $host->address;
 
             // parse and persist hops...
-            foreach($xmlHost->trace->hop as $xmlHop) {
+            foreach($xmlHost->trace->hop ? : [] as $xmlHop) {
                 $second = (string)$xmlHop->attributes()->ipaddr;
 
                 Hop::findOrCreate([
