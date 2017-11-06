@@ -63,4 +63,24 @@ class Hop extends Model {
         return $this->belongsTo(Scan::class);
     }
 
+    /**
+     * Make first host relationship.
+     *
+     * @return BelongsTo
+     */
+    public function firstHost()
+    {
+        return $this->belongsTo(Host::class, 'address_first');
+    }
+
+    /**
+     * Make first host relationship.
+     *
+     * @return BelongsTo
+     */
+    public function secondHost()
+    {
+        return $this->belongsTo(Host::class, 'address_second');
+    }
+
 }
