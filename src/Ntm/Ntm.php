@@ -2,18 +2,20 @@
 
 namespace Ntcm\Ntm;
 
+use Carbon\Carbon;
 use Exception;
-use Ntcm\Enums\HostEnum;
+use Ntcm\Enums\HostStateEnum;
+use Ntcm\Enums\HostTypeEnum;
 use Ntcm\Enums\ScanEnum;
 use Ntcm\Exceptions\ScanNotFoundException;
 use Ntcm\Ntm\Model\Address;
 use Ntcm\Ntm\Model\Hop;
 use Ntcm\Ntm\Model\Host;
 use Ntcm\Ntm\Model\Hostname;
+use Ntcm\Ntm\Model\Os;
 use Ntcm\Ntm\Model\Port;
 use Ntcm\Ntm\Model\Scan;
 use Ntcm\Ntm\Util\ProcessExecutor;
-use Carbon\Carbon;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
@@ -90,7 +92,7 @@ class Ntm {
 
         // create a new scan...
         $scan = Scan::create([
-            'id' => $this->getScanCode() + 1,
+            'id'    => $this->getScanCode() + 1,
             'start' => Carbon::now()->timestamp
         ]);
 
@@ -147,7 +149,7 @@ class Ntm {
             // parse and persist hosts...
             $host = Host::findOrCreate([
                 'address' => $mainAddress,
-                'state'   => (string)$xmlHost->status->attributes()->state == "up" ? HostEnum::STATE_UP : HostEnum::STATE_DOWN,
+                'state'   => (string)$xmlHost->status->attributes()->state == "up" ? HostStateEnum::STATE_UP : HostStateEnum::STATE_DOWN,
                 'start'   => (integer)$xmlHost->attributes()->starttime,
                 'end'     => (integer)$xmlHost->attributes()->endtime,
                 'scan_id' => $scan->id
@@ -186,33 +188,77 @@ class Ntm {
                 ]);
             }
 
+            // parse and persist ports...
+            foreach($xmlHost->os->osmatch ? : [] as $xmlOs) {
+                Os::findOrCreate([
+                    'name'      => (string)$xmlOs->attributes()->name,
+                    'type'      => (string)$xmlOs->osclass->attributes()->type,
+                    'vendor'    => (string)$xmlOs->osclass->attributes()->vendor,
+                    'os_family' => (string)$xmlOs->osclass->attributes()->osfamily,
+                    'os_gen'    => (string)$xmlOs->osclass->attributes()->osgen,
+                    'accuracy'  => (float)$xmlOs->osclass->attributes()->accuracy,
+                    'host_id'   => $host->id,
+                ]);
+            }
+
             // initiate the first address...
             $firstAddress = $host->address;
 
             // parse and persist hops...
-            foreach($xmlHost->trace->hop ? : [] as $xmlHop) {
+            foreach($xmlHost->trace->hop ? : [] as $index => $xmlHop) {
                 $secondAddress = (string)$xmlHop->attributes()->ipaddr;
+
+                // determine type of hosts...
+                $firstType = HostTypeEnum::ROUTER_HOST;
+                $secondType = HostTypeEnum::ROUTER_HOST;
+                if($index == 0) {
+                    $firstType = HostTypeEnum::SWITCH_HOST;
+                }
+                if(sizeof($xmlHost->trace->hop) == $index + 1) {
+                    $secondType = HostTypeEnum::SWITCH_HOST;
+                }
 
                 // find or create hosts...
                 $first = Host::findOrCreate([
                     'address' => $firstAddress,
-                    'scan_id' => $scan->id
+                    'scan_id' => $scan->id,
+                    'type'    => $firstType,
                 ]);
                 $second = Host::findOrCreate([
                     'address' => $secondAddress,
-                    'scan_id' => $scan->id
+                    'scan_id' => $scan->id,
+                    'type'    => $secondType,
                 ]);
 
-                // don't care the loopback...
-                if($firstAddress != $secondAddress) {
-                    // find or create hop...
+                // first hop...
+                if($index == 0 or sizeof($xmlHost->trace->hop) == $index + 1) {
+
+                    // make a switch...
+                    $switch = Host::findOrCreate([
+                        'state'   => HostStateEnum::STATE_UP,
+                        'address' => "some address",
+                        'type'    => HostTypeEnum::SWITCH_HOST,
+                        'scan_id' => $scan->id,
+                    ]);
+
+                    // connect first host to switch...
                     Hop::findOrCreate([
                         'address_first'  => $first->id,
-                        'address_second' => $second->id,
+                        'address_second' => $switch->id,
                         'scan_id'        => $scan->id,
-                        'rtt'            => (float)$xmlHop->rtt,
                     ]);
+
+                    // move on to the switch...
+                    $first = $switch;
                 }
+
+                // find or create hop...
+                Hop::findOrCreate([
+                    'address_first'  => $first->id,
+                    'address_second' => $second->id,
+                    'scan_id'        => $scan->id,
+                    'rtt'            => (float)$xmlHop->rtt,
+                ]);
 
                 // shift addresses...
                 $firstAddress = $secondAddress;

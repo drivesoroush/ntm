@@ -2,7 +2,7 @@
 
 namespace Ntcm\Enums;
 
-class HostEnum {
+class HostStateEnum {
 
     const STATE_UP = 0;
 

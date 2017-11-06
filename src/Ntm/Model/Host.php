@@ -79,4 +79,23 @@ class Host extends Model {
         return $this->belongsTo(Scan::class);
     }
 
+    /**
+     * Make os-host relationship.
+     *
+     * @return HasMany
+     */
+    public function osCollection()
+    {
+        return $this->hasMany(Os::class);
+    }
+
+    /**
+     * Get main os model of this host.
+     *
+     * @return Os
+     */
+    public function getOsAttribute()
+    {
+        return $this->osCollection()->first();
+    }
 }

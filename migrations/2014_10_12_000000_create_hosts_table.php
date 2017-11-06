@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Ntcm\Enums\HostStateEnum;
+use Ntcm\Enums\HostTypeEnum;
 
 class CreateHostsTable extends Migration {
 
@@ -27,11 +29,12 @@ class CreateHostsTable extends Migration {
 
         Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable) {
             $table->unsignedBigInteger('id', true);
-            $table->string('state');
+            $table->string('state')->default(HostStateEnum::STATE_UP);
 
             $table->string('address')->nullable();
             $table->integer('start')->nullable();
             $table->integer('end')->nullable();
+            $table->integer('type')->default(HostTypeEnum::NODE_HOST);
 
             $table->unsignedBigInteger('scan_id')->nullable();
             $table->foreign('scan_id')

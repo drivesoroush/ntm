@@ -9,6 +9,7 @@ return [
         'ports'      => 'ports',
         'scans'      => 'scans',
         'hops'       => 'hops',
+        'os'         => 'os',
     ],
 
     'scan' => [
