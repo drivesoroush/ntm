@@ -202,7 +202,7 @@ class Ntm {
             }
 
             // initiate the first address...
-            $firstAddress = $host->address;
+            $firstAddress = get_scanner_address();
             $index = 0;
 
             // parse and persist hops...
@@ -231,13 +231,13 @@ class Ntm {
                     'type'    => $secondType,
                 ]);
 
-                // first hop...
-                if($index == 0 or sizeof($xmlHost->trace->hop) == $index + 1) {
+                // first or last hop...
+                if($index == 0 or $index == sizeof($xmlHost->trace->hop) - 1) {
 
                     // make a switch...
                     $switch = Host::findOrCreate([
                         'state'   => HostStateEnum::STATE_UP,
-                        'address' => "UNKNOWN_DEVICE_" . str_random(5),
+                        'address' => get_range($firstAddress),
                         'type'    => HostTypeEnum::SWITCH_HOST,
                         'scan_id' => $scan->id,
                     ]);

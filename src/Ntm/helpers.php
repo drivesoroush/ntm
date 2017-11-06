@@ -29,3 +29,31 @@ if( ! function_exists('scans_path')) {
         return storage_path("scans/{$scan}");
     }
 }
+
+if( ! function_exists('get_range')) {
+
+    /**
+     * Get ip range from ip address.
+     *
+     * @param string $ip
+     *
+     * @return string
+     */
+    function get_range($ip)
+    {
+        return "UNKNOWN_DEVICE_" . str_random(5);
+    }
+}
+
+if( ! function_exists('get_scanner_address')) {
+
+    /**
+     * Get scanner ip address.
+     *
+     * @return string
+     */
+    function get_scanner_address()
+    {
+        return "SCANNER";
+    }
+}
