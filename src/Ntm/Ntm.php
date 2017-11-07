@@ -237,7 +237,7 @@ class Ntm {
                     // make a switch...
                     $switch = Host::findOrCreate([
                         'state'   => HostStateEnum::STATE_UP,
-                        'address' => get_range($firstAddress),
+                        'address' => get_range($secondAddress),
                         'type'    => HostTypeEnum::SWITCH_HOST,
                         'scan_id' => $scan->id,
                     ]);

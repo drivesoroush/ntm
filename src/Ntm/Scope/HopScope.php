@@ -19,6 +19,7 @@ trait HopScope {
      */
     public function scopeFindOrCreate($query, $attributes)
     {
+        // try to find the hop...
         $hop = $query
             ->where(function ($query) use ($attributes) {
                 $query->where('address_first', $attributes['address_first'])
@@ -32,6 +33,12 @@ trait HopScope {
             })
             ->first();
 
+        // check if rtt isset...
+        if( ! isset($attributes['rtt'])) {
+            $attributes['rtt'] = 0;
+        }
+
+        // update or persist the hop...
         if($hop) {
             $hop->update(['rtt' => $attributes['rtt']]);
         } else {
