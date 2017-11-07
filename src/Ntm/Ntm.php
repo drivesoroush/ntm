@@ -132,6 +132,7 @@ class Ntm {
     /**
      * Parses the latest scanned and persists it into the database.
      *
+     * @return Scan
      * @throws ScanNotFoundException when no scan found.
      */
     public function parseOutputFile()
@@ -279,6 +280,8 @@ class Ntm {
             ]);
 
         }
+
+        return $scan;
     }
 
     /**
