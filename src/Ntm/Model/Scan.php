@@ -61,6 +61,16 @@ class Scan extends Model {
      */
     public function hosts()
     {
+        return $this->hasMany(Host::class);
+    }
+
+    /**
+     * Make scan-host relationship.
+     *
+     * @return HasMany
+     */
+    public function upHosts()
+    {
         return $this->hasMany(Host::class)->whereState(HostStateEnum::STATE_UP);
     }
 }
