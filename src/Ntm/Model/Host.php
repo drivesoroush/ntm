@@ -5,6 +5,7 @@ namespace Ntcm\Ntm\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Ntcm\Enums\HostTypeEnum;
 use Ntcm\Ntm\Scope\HostScope;
 
 /**
@@ -98,5 +99,21 @@ class Host extends Model {
     public function getOsAttribute()
     {
         return $this->osCollection()->first();
+    }
+
+    /**
+     * Get host type string attribute.
+     *
+     * @return string
+     */
+    public function getTypeStringAttribute()
+    {
+        if($this->type === HostTypeEnum::NODE_HOST) {
+            return "node";
+        } else if($this->type === HostTypeEnum::ROUTER_HOST) {
+            return "router";
+        } else {
+            return "switch";
+        }
     }
 }
