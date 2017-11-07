@@ -20,7 +20,7 @@ trait NtmParameters {
     /**
      * @var boolean
      */
-    protected $verbose = true;
+    protected $verbose = false;
 
     /**
      * @var boolean
