@@ -94,7 +94,7 @@ class Ntm {
         $scan = Scan::create([
             'id'    => $this->getScanCode() + 1,
             'start' => Carbon::now()->timestamp,
-            'range' => implode(',', $this->getParameters()),
+            'range' => implode(',', $targets),
             'ports' => $this->portScan,
             'os'    => $this->osDetection,
         ]);
