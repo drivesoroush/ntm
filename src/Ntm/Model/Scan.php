@@ -4,6 +4,7 @@ namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Ntcm\Enums\HostStateEnum;
 use Ntcm\Ntm\Scope\ScanScope;
 
 /**
@@ -60,6 +61,6 @@ class Scan extends Model {
      */
     public function hosts()
     {
-        return $this->hasMany(Host::class);
+        return $this->hasMany(Host::class)->whereState(HostStateEnum::STATE_UP);
     }
 }
