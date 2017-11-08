@@ -86,6 +86,9 @@ class Ntm {
             $targets = [$targets];
         }
 
+        // also add scanner to targets...
+        $targets[] = get_scanner_address();
+
         // create a new scan...
         $scan = Scan::create([
             'id'    => $this->getScanCode() + 1,
