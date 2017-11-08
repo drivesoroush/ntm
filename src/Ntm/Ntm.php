@@ -86,9 +86,6 @@ class Ntm {
             $targets = [$targets];
         }
 
-        // also add scanner to targets...
-        $targets[] = get_scanner_address();
-
         // create a new scan...
         $scan = Scan::create([
             'id'    => $this->getScanCode() + 1,
@@ -99,7 +96,9 @@ class Ntm {
         ]);
 
         // make targets ready for shell execution...
-        $targets = implode(' ', scape_shell_array($targets));
+        $targets = implode(' ', scape_shell_array(
+            array_merge($targets, get_scanner_address())
+        ));
 
         // update the current scan code...
         $this->setScanCode($scan->id);
@@ -112,7 +111,9 @@ class Ntm {
         // build the scan command...
         $command = sprintf('%s %s %s %s',
             $this->getExecutable(),
-            implode(' ', scape_shell_array($this->getParameters())),
+            implode(' ',
+                scape_shell_array($this->getParameters())
+            ),
             scape_shell($this->getOutputFile()),
             $targets
         );
