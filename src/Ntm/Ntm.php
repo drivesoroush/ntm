@@ -86,18 +86,19 @@ class Ntm {
             $targets = [$targets];
         }
 
-        $targets = implode(' ', array_map(function ($target) {
-            return escapeshellarg($target);
-        }, $targets));
-
         // create a new scan...
         $scan = Scan::create([
             'id'    => $this->getScanCode() + 1,
             'start' => Carbon::now()->timestamp,
-            'range' => $targets,
+            'range' => implode(' ', $targets),
             'ports' => $this->portScan,
             'os'    => $this->osDetection,
         ]);
+
+        // make targets ready for shell execution...
+        $targets = implode(' ', array_map(function ($target) {
+            return escapeshellarg($target);
+        }, $targets));
 
         // update the current scan code...
         $this->setScanCode($scan->id);
