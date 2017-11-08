@@ -96,9 +96,7 @@ class Ntm {
         ]);
 
         // make targets ready for shell execution...
-        $targets = implode(' ', array_map(function ($target) {
-            return escapeshellarg($target);
-        }, $targets));
+        $targets = implode(' ', scape_shell_array($targets));
 
         // update the current scan code...
         $this->setScanCode($scan->id);
@@ -111,11 +109,8 @@ class Ntm {
         // build the scan command...
         $command = sprintf('%s %s %s %s',
             $this->getExecutable(),
-            // implode(' ', $this->getParameters()),
-            implode(' ', array_map(function ($parameter) {
-                return escapeshellarg($parameter);
-            }, $this->getParameters())),
-            escapeshellarg($this->getOutputFile()),
+            implode(' ', scape_shell_array($this->getParameters())),
+            scape_shell($this->getOutputFile()),
             $targets
         );
 

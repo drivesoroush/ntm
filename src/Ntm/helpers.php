@@ -71,3 +71,35 @@ if( ! function_exists('get_scanner_address')) {
         return env("SCANNER_ADDRESS", "SCANNER");
     }
 }
+
+if( ! function_exists('scape_shell_array')) {
+
+    /**
+     * Scape shell arguments for all indexes of an array.
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    function scape_shell_array($array)
+    {
+        return array_map(function ($item) {
+            return scape_shell($item);
+        }, $array);
+    }
+}
+
+if( ! function_exists('scape_shell')) {
+
+    /**
+     * Scape shell arguments for a string.
+     *
+     * @param string $item
+     *
+     * @return string
+     */
+    function scape_shell($item)
+    {
+        return escapeshellarg($item);
+    }
+}
