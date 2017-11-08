@@ -95,10 +95,11 @@ class Ntm {
             'os'    => $this->osDetection,
         ]);
 
+        // add scanner ip to targets...
+        $targets[] = get_scanner_address();
+
         // make targets ready for shell execution...
-        $targets = implode(' ', scape_shell_array(
-            array_merge($targets, get_scanner_address())
-        ));
+        $targets = implode(' ', scape_shell_array($targets));
 
         // update the current scan code...
         $this->setScanCode($scan->id);
