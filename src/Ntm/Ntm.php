@@ -278,8 +278,8 @@ class Ntm {
             // update scan info...
             $scan->update([
                 'total_discovered' => $xml->runstats->hosts->attributes()->up,
-                'start'            => $xml->attributes()->start,
-                'end'              => $xml->runstats->finished->attributes()->time,
+                // 'start'            => $xml->attributes()->start,
+                'end'              => Carbon::now()->timestamp,
                 'state'            => ScanEnum::DONE
             ]);
 
