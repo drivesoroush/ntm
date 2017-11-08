@@ -111,7 +111,10 @@ class Ntm {
         // build the scan command...
         $command = sprintf('%s %s %s %s',
             $this->getExecutable(),
-            implode(' ', $this->getParameters()),
+            // implode(' ', $this->getParameters()),
+            implode(' ', array_map(function ($parameter) {
+                return escapeshellarg($parameter);
+            }, $this->getParameters())),
             escapeshellarg($this->getOutputFile()),
             $targets
         );
