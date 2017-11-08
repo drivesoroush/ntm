@@ -83,9 +83,11 @@ if( ! function_exists('scape_shell_array')) {
      */
     function scape_shell_array($array)
     {
-        return array_map(function ($item) {
-            return scape_shell($item);
-        }, $array);
+        return array_map(
+            function ($item) {
+                return scape_shell($item);
+            }, $array
+        );
     }
 }
 
