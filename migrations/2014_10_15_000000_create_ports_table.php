@@ -35,6 +35,9 @@ class CreatePortsTable extends Migration {
             $table->string('service');
             $table->string('method');
             $table->string('conf');
+            $table->string('product')->nullable();
+            $table->string('version')->nullable();
+            $table->string('extra_info')->nullable();
 
             $table->unsignedBigInteger('host_id')->nullable();
             $table->foreign('host_id')

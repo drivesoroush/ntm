@@ -27,6 +27,10 @@ class Port extends Model {
         'method',
         'conf',
         'host_id',
+        // service attributes...
+        'product',
+        'version',
+        'extra_info',
     ];
 
     /**
