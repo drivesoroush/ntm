@@ -37,14 +37,4 @@ class SshCredential extends Model {
     {
         return table_name('ssh_credentials');
     }
-
-    /**
-     * Host credential relationship.
-     *
-     * @return HasOne
-     */
-    public function hosts()
-    {
-        return $this->hasOne(Host::class);
-    }
 }

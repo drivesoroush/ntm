@@ -31,13 +31,7 @@ class CreateSshCredentialsTable extends Migration {
             $table->string('username');
             $table->string('password');
 
-            $table->unsignedBigInteger('host_id')->nullable();
-            $table->foreign('host_id')
-                  ->references('id')
-                  ->on($hostsTable)
-                  ->onDelete('set null')
-                  ->onUpdate('set null');
-
+            $table->string('address');
         });
     }
 
@@ -48,10 +42,6 @@ class CreateSshCredentialsTable extends Migration {
      */
     public function down()
     {
-        Schema::table($this->getTable(), function (Blueprint $table) {
-            $table->dropForeign(['host_id']);
-        });
-
         Schema::drop($this->getTable());
     }
 }
