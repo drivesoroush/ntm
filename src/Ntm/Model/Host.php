@@ -58,9 +58,9 @@ class Host extends Model {
     /**
      * @return HasMany
      */
-    public function mac()
+    public function getMacAttribute()
     {
-        return $this->hasMany(Address::class)->whereType('mac');
+        return $this->addresses()->whereType('mac')->first();
     }
 
     /**
