@@ -58,6 +58,14 @@ class Host extends Model {
     /**
      * @return HasMany
      */
+    public function mac()
+    {
+        return $this->hasMany(Address::class)->whereType('mac');
+    }
+
+    /**
+     * @return HasMany
+     */
     public function hostnames()
     {
         return $this->hasMany(Hostname::class);
