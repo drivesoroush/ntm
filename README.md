@@ -2,11 +2,11 @@
 
 Network topology mapper with Laravel 5. This package runs an Nmap scan on input hosts and networks, parses and populates the database with extracted values. First you must add service provider into your `app.php` config file.
 ```php
-    'providers' => [
-        ...
-        Ntcm\Ntm\NtmServiceProvider::class
-        ...
-    ]
+'providers' => [
+    ...
+    Ntcm\Ntm\NtmServiceProvider::class
+    ...
+]
 ```
 
 Then you must publish config files. This will copy `ntm.php` config file inside your config directory.
