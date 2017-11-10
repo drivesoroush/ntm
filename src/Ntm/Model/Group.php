@@ -4,14 +4,14 @@ namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Ntcm\Ntm\Scope\HostScope;
+use Ntcm\Ntm\Scope\GroupScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Group extends Model {
 
-    use HostScope;
+    use GroupScope;
 
     /**
      * The attributes that are mass assignable.
