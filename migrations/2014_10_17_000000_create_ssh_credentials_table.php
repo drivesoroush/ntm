@@ -26,12 +26,12 @@ class CreateSshCredentialsTable extends Migration {
         $hostsTable = config('ntm.tables.hosts', 'mapper_hosts');
 
         Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
-            $table->unsignedBigInteger('id', true);
-
-            $table->string('username');
-            $table->string('password');
-
-            $table->string('address');
+            $table->unsignedBigInteger('group_id')->nullable();
+            $table->foreign('group_id')
+                  ->references('id')
+                  ->on($hostsTable)
+                  ->onDelete('set null')
+                  ->onUpdate('set null');
         });
     }
 
@@ -42,6 +42,8 @@ class CreateSshCredentialsTable extends Migration {
      */
     public function down()
     {
-        Schema::drop($this->getTable());
+        Schema::table($this->getTable(), function (Blueprint $table) {
+            $table->dropForeign(['group_id']);
+        });
     }
 }

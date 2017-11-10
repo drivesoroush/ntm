@@ -11,10 +11,11 @@ return [
         'hops'            => 'hops',
         'os'              => 'os',
         'ssh_credentials' => 'ssh_credentials',
+        'host_groups'     => 'host_groups',
     ],
 
     'scan' => [
         // you can determine scan process execution timeout default value in seconds...
-        'timeout'   => 24 * 60 * 60,
+        'timeout' => 24 * 60 * 60,
     ]
 ];

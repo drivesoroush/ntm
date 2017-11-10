@@ -134,4 +134,14 @@ class Host extends Model {
     {
         return $this->hasMany(SshCredential::class, 'address', 'address');
     }
+
+    /**
+     * Create host relationship.
+     *
+     * @return BelongsTo
+     */
+    public function group()
+    {
+        return $this->belongsTo(HostGroup::class);
+    }
 }
