@@ -93,7 +93,7 @@ class SshCredential extends Model {
      *
      * @return void
      */
-    public function ready()
+    public function auth()
     {
         $connections[$this->configKey] = [
             'host'     => $this->address,

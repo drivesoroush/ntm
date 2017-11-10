@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
+
 if( ! function_exists('table_name')) {
 
     /**
@@ -103,5 +106,32 @@ if( ! function_exists('scape_shell')) {
     function scape_shell($item)
     {
         return escapeshellarg($item);
+    }
+}
+
+if( ! function_exists('batch_auth')) {
+
+    /**
+     * Authenticate these credentials for remote connection.
+     *
+     * @param Collection $credentials
+     *
+     * @return void
+     */
+    function batch_auth($credentials)
+    {
+        $connections = [];
+
+        foreach($credentials as $credential) {
+            $connections[$credential->configKey] = [
+                'host'     => $credential->address,
+                'username' => $credential->username,
+                'password' => $credential->password
+            ];
+
+        }
+
+        Config::set('remote.connections', $connections);
+        Config::set('remote.default', $credentials->first()->configKey);
     }
 }
