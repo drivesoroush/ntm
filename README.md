@@ -14,7 +14,7 @@ Then you must publish config files. This will copy `ntm.php` config file inside 
 $ php artisan vendor:publish
 ```
 
-Before doing the migrations, you can customize your table names inside `ntm.php` file in your config directory. After that do the database migration.
+Before doing the migrations, you can customize your table names inside `ntm.php` file in your config directory. With no config file and by default all tables are prefixed with `mapper_`. After that do the database migration.
 ```
 $ php artisan migrate
 ```
