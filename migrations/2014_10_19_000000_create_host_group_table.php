@@ -34,7 +34,7 @@ class CreateHostGroupTable extends Migration {
                   ->onDelete('set null')
                   ->onUpdate('set null');
 
-            $table->unsignedBigInteger('group_id', true);
+            $table->unsignedBigInteger('group_id')->nullable();
             $table->foreign('group_id')
                   ->references('id')
                   ->on($hostsTable)
@@ -50,6 +50,11 @@ class CreateHostGroupTable extends Migration {
      */
     public function down()
     {
+        Schema::table($this->getTable(), function (Blueprint $table) {
+            $table->dropForeign(['host_id']);
+            $table->dropForeign(['group_id']);
+        });
+
         Schema::drop($this->getTable());
     }
 }
