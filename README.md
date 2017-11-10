@@ -23,7 +23,7 @@ Now you can run a scan like so:
 ```php
 use Ntcm\Ntm\Ntm;
 
-$target = 'scanme.nmap.org';
+$targets = 'scanme.nmap.org';
 
 Ntm::create()
    ->setTimeout(60) // in seconds...
@@ -33,7 +33,7 @@ Ntm::create()
 
 This will scan the host inside a `1.xml` file and store the parsed information into the database with `scan_id = 1`. You can also input an array of targets like so: 
 ```php
-$target = ['scanme.nmap.org', '192.168.101.0/24'];
+$targets = ['scanme.nmap.org', '192.168.101.0/24'];
 
 Ntm::create()
    ->setTimeout(60)
@@ -43,7 +43,7 @@ Ntm::create()
 
 Besides you can enable / disable different scan attributes. These are the default values for the attributes.
 ```php
-$target = ['scanme.nmap.org', '192.168.101.0/24'];
+$targets = ['scanme.nmap.org', '192.168.101.0/24'];
 
 Ntm::create()
    ->setTimeout(60)
