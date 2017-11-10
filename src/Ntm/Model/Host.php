@@ -124,4 +124,14 @@ class Host extends Model {
             return "switch";
         }
     }
+
+    /**
+     * Create host-credential relationship.
+     *
+     * @return HasMany
+     */
+    public function sshCredentials()
+    {
+        return $this->hasMany(SshCredential::class, 'address', 'address');
+    }
 }
