@@ -128,7 +128,6 @@ if( ! function_exists('batch_auth')) {
                 'username' => $credential->username,
                 'password' => $credential->password
             ];
-
         }
 
         Config::set('remote.connections', $connections);
