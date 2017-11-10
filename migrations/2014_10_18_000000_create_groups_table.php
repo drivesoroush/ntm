@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHostGroupsTable extends Migration {
+class CreateGroupsTable extends Migration {
 
     /**
      * Get table name.
@@ -13,7 +13,7 @@ class CreateHostGroupsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.host_groups', 'mapper_host_groups');
+        return config('ntm.tables.groups', 'mapper_groups');
     }
 
     /**

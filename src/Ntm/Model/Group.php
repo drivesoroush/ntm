@@ -3,13 +3,13 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Ntcm\Ntm\Scope\HostScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
-class HostGroup extends Model {
+class Group extends Model {
 
     use HostScope;
 
@@ -43,10 +43,10 @@ class HostGroup extends Model {
     /**
      * Create host group relationship.
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
     public function hosts()
     {
-        return $this->hasMany(Host::class);
+        return $this->belongsToMany(Host::class);
     }
 }

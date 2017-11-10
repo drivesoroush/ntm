@@ -4,6 +4,7 @@ namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Ntcm\Enums\HostTypeEnum;
 use Ntcm\Ntm\Scope\HostScope;
@@ -138,10 +139,10 @@ class Host extends Model {
     /**
      * Create host relationship.
      *
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function group()
+    public function groups()
     {
-        return $this->belongsTo(HostGroup::class);
+        return $this->belongsToMany(Group::class);
     }
 }

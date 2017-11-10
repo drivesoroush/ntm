@@ -11,7 +11,8 @@ return [
         'hops'            => 'hops',
         'os'              => 'os',
         'ssh_credentials' => 'ssh_credentials',
-        'host_groups'     => 'host_groups',
+        'groups'          => 'groups',
+        'host_group'      => 'host_group',
     ],
 
     'scan' => [
