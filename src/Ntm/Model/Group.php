@@ -37,7 +37,7 @@ class Group extends Model {
      */
     public function getTable()
     {
-        return table_name('host_groups');
+        return table_name('groups');
     }
 
     /**
@@ -47,6 +47,8 @@ class Group extends Model {
      */
     public function hosts()
     {
-        return $this->belongsToMany(Host::class);
+        $pivot = config('ntm.tables.host_group', 'mapper_host_group');
+
+        return $this->belongsToMany(Host::class, $pivot);
     }
 }

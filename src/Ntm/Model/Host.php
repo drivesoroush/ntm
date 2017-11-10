@@ -143,6 +143,8 @@ class Host extends Model {
      */
     public function groups()
     {
-        return $this->belongsToMany(Group::class);
+        $pivot = config('ntm.tables.host_group', 'mapper_host_group');
+
+        return $this->belongsToMany(Group::class, $pivot);
     }
 }
