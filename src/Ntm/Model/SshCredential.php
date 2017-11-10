@@ -3,6 +3,7 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
@@ -75,5 +76,32 @@ class SshCredential extends Model {
     public function getPasswordAttribute()
     {
         return decrypt($this->attributes['password']);
+    }
+
+    /**
+     * Get configurations key attribute for this credential.
+     *
+     * @return string
+     */
+    public function getConfigKeyAttribute()
+    {
+        return str_replace('.', '-', $this->address);
+    }
+
+    /**
+     * Ready the credentials to connect to this host.
+     *
+     * @return void
+     */
+    public function ready()
+    {
+        $connections[$this->configKey] = [
+            'host'     => $this->address,
+            'username' => $this->username,
+            'password' => $this->password
+        ];
+
+        Config::set('remote.connections', $connections);
+        Config::set('remote.default', $this->configKey);
     }
 }
