@@ -85,7 +85,7 @@ class SshCredential extends Model {
      */
     public function getConfigKeyAttribute()
     {
-        return str_replace('.', '-', $this->address);
+        return config_key($this->address);
     }
 
     /**

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Config;
 use Ntcm\Enums\HostTypeEnum;
 use Ntcm\Ntm\Scope\HostScope;
 
@@ -146,5 +147,35 @@ class Host extends Model {
         $pivot = config('ntm.tables.host_group', 'mapper_host_group');
 
         return $this->belongsToMany(Group::class, $pivot);
+    }
+
+    /**
+     * Get configurations key attribute for this credential.
+     *
+     * @return string
+     */
+    public function getConfigKeyAttribute()
+    {
+        return config_key($this->address);
+    }
+
+    /**
+     * Ready the remote package to connect to this host.
+     *
+     * @param string $username
+     * @param string $password
+     *
+     * @return void
+     */
+    public function auth($username, $password)
+    {
+        $connections[$this->configKey] = [
+            'host'     => $this->address,
+            'username' => $username,
+            'password' => $password
+        ];
+
+        Config::set('remote.connections', $connections);
+        Config::set('remote.default', $this->configKey);
     }
 }

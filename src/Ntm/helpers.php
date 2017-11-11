@@ -134,3 +134,18 @@ if( ! function_exists('batch_auth')) {
         Config::set('remote.default', $credentials->first()->configKey);
     }
 }
+
+if( ! function_exists('config_key')) {
+
+    /**
+     * Make config key out of this addrees.
+     *
+     * @param string $address
+     *
+     * @return string
+     */
+    function config_key($address)
+    {
+        return str_replace('.', '-', $address);
+    }
+}
