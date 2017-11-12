@@ -19,6 +19,7 @@ class SshCredential extends Model {
      */
     protected $fillable = [
         'id',
+        'address',
         'username',
         'password',
     ];
