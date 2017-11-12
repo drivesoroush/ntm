@@ -107,10 +107,10 @@ class SshCredential extends Model {
      */
     public function getIsValidAttribute()
     {
-        $this->auth();
-
         // try to run a command...
         try {
+            $this->auth();
+
             SSH::run(['ls']);
 
             return true;
