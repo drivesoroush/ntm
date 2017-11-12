@@ -4,6 +4,9 @@ namespace Ntcm\Ntm\Observers;
 
 use Ntcm\Ntm\Model\SshCredential;
 
+/**
+ * @author Soroush Kazemi <kazemi.soroush@gmail.com>
+ */
 class SshCredentialObserver {
 
     /**
