@@ -2,6 +2,8 @@
 
 namespace Ntcm\Ntm\Model;
 
+use Collective\Remote\RemoteFacade as SSH;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 
@@ -96,5 +98,25 @@ class SshCredential extends Model {
 
         Config::set('remote.connections', $connections);
         Config::set('remote.default', $this->configKey);
+    }
+
+    /**
+     * Check if credential is valid.
+     *
+     * @return boolean
+     */
+    public function getIsValidAttribute()
+    {
+        $this->auth();
+
+        // try to run a command...
+        try {
+            SSH::run(['ls']);
+
+            return true;
+        } catch(Exception $e) {
+            // remote authentication failure...
+            return false;
+        }
     }
 }
