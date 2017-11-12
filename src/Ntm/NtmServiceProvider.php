@@ -2,9 +2,9 @@
 
 namespace Ntcm\Ntm;
 
-use App\Observers\SshCredentialObserver;
 use Illuminate\Support\ServiceProvider;
 use Ntcm\Ntm\Model\SshCredential;
+use Ntcm\Ntm\Observers\SshCredentialObserver;
 
 class NtmServiceProvider extends ServiceProvider {
 

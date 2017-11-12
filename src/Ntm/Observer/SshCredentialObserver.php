@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers;
+namespace Ntcm\Ntm\Observers;
 
 use Ntcm\Ntm\Model\SshCredential;
 
