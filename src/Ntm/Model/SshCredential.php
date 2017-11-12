@@ -25,6 +25,7 @@ class SshCredential extends Model {
         'address',
         'username',
         'password',
+        'isValid',
     ];
 
     /**
@@ -45,6 +46,10 @@ class SshCredential extends Model {
     public function setUsernameAttribute($username)
     {
         $this->attributes['username'] = encrypt($username);
+
+        $this->update([
+            'isValid' => $this->checkIsValid()
+        ]);
     }
 
     /**
@@ -55,6 +60,10 @@ class SshCredential extends Model {
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = encrypt($password);
+
+        $this->update([
+            'isValid' => $this->checkIsValid()
+        ]);
     }
 
     /**
@@ -109,7 +118,7 @@ class SshCredential extends Model {
      *
      * @return boolean
      */
-    public function getIsValidAttribute()
+    public function checkIsValid()
     {
         // try to run a command...
         try {
