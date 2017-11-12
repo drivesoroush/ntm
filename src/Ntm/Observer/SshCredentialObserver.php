@@ -4,9 +4,6 @@ namespace Ntcm\Ntm\Observers;
 
 use Ntcm\Ntm\Model\SshCredential;
 
-/**
- * @author Soroush Kazemi <kazemi.soroush@gmail.com>
- */
 class SshCredentialObserver {
 
     /**
@@ -18,8 +15,34 @@ class SshCredentialObserver {
      */
     public function created(SshCredential $credential)
     {
+        $valid = $credential->checkIsValid();
+
+        if($valid == $credential->isValid) {
+            return;
+        }
+
         $credential->update([
-            'isValid' => $credential->checkIsValid()
+            'isValid' => $valid
+        ]);
+    }
+
+    /**
+     * Listen to the credential updated event.
+     *
+     * @param SshCredential $credential
+     *
+     * @return void
+     */
+    public function updated(SshCredential $credential)
+    {
+        $valid = $credential->checkIsValid();
+
+        if($valid == $credential->isValid) {
+            return;
+        }
+
+        $credential->update([
+            'isValid' => $valid
         ]);
     }
 
