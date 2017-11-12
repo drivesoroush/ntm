@@ -2,7 +2,9 @@
 
 namespace Ntcm\Ntm;
 
+use App\Observers\SshCredentialObserver;
 use Illuminate\Support\ServiceProvider;
+use Ntcm\Ntm\Model\SshCredential;
 
 class NtmServiceProvider extends ServiceProvider {
 
@@ -20,6 +22,8 @@ class NtmServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
+        SshCredential::observe(SshCredentialObserver::class);
+
         $config = __DIR__ . '/../../config/ntm.php';
         $migrations = __DIR__ . '/../../migrations/';
 
