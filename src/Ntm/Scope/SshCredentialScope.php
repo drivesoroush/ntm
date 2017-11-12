@@ -22,8 +22,14 @@ trait SshCredentialScope {
                           ->where('username', $attributes['username'])
                           ->first();
 
+        if($instance) {
+            $query->update($attributes);
+        } else {
+            // otherwise create...;
+            $query->create($attributes);
+        }
+
         // if the host found return it...
-        // otherwise create...
-        return $instance ? $instance : $query->create($attributes);
+        return $instance;
     }
 }
