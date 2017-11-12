@@ -29,6 +29,15 @@ class SshCredential extends Model {
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'isValid' => 'boolean'
+    ];
+
+    /**
      * Get the table associated with the model.
      *
      * @return string

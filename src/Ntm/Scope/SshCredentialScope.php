@@ -17,19 +17,22 @@ trait SshCredentialScope {
      */
     public function scopeFindOrCreate($query, $attributes)
     {
-        // try to find the host...
-        $instance = $query->where('address', $attributes['address'])
-                          ->where('username', $attributes['username'])
-                          ->first();
+        $credential = $query->where('address', $attributes['address'])
+                            ->get()
+                            ->filter(function ($record) use ($attributes) {
+                                if($record->username == $attributes['username']) {
+                                    return $record;
+                                }
+                            })
+                            ->first();
 
-        if($instance) {
-            $query->update($attributes);
+        if( ! $credential) {
+            $credential = $query->create($attributes);
         } else {
-            // otherwise create...;
-            $query->create($attributes);
+            $credential->update($attributes);
         }
 
-        // if the host found return it...
-        return $instance;
+        // if the credential found return it...
+        return $credential;
     }
 }
