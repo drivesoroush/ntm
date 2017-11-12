@@ -27,6 +27,7 @@ class CreateSshCredentialsTable extends Migration {
             $table->string('address');
             $table->string('username');
             $table->string('password');
+            $table->timestamps();
         });
     }
 
