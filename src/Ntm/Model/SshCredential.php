@@ -6,11 +6,14 @@ use Collective\Remote\RemoteFacade as SSH;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
+use Ntcm\Ntm\Scope\SshCredentialScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class SshCredential extends Model {
+
+    use SshCredentialScope;
 
     /**
      * The attributes that are mass assignable.
