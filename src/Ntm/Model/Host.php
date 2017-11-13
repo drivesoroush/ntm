@@ -151,6 +151,26 @@ class Host extends Model {
     }
 
     /**
+     * Get list of hops.
+     *
+     * @return HasMany
+     */
+    public function fromHops()
+    {
+        return $this->hasMany(Hop::class, 'address_first');
+    }
+
+    /**
+     * Get list of hops.
+     *
+     * @return HasMany
+     */
+    public function toHops()
+    {
+        return $this->hasMany(Hop::class, 'address_second');
+    }
+
+    /**
      * Get configurations key attribute for this credential.
      *
      * @return string
