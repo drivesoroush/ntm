@@ -10,6 +10,8 @@ class ScanEnum {
 
     const STORING = 2;
 
-    const FATAL = 3;
+    const FATAL_STORING = 3;
+
+    const FATAL = 4;
 
 }
