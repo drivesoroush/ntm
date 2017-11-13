@@ -3,6 +3,7 @@
 namespace Ntcm\Ntm;
 
 use Illuminate\Support\ServiceProvider;
+use Ntcm\Ntm\Commands\ScanCommand;
 use Ntcm\Ntm\Model\SshCredential;
 use Ntcm\Ntm\Observers\SshCredentialObserver;
 
@@ -27,18 +28,18 @@ class NtmServiceProvider extends ServiceProvider {
 
         // publish configuration files...
         $config = __DIR__ . '/../../config/ntm.php';
-        $migrations = __DIR__ . '/../../migrations/';
-
         $this->publishes([
             $config => config_path('ntm.php'),
         ], 'config');
 
         // register migrations...
+        $migrations = __DIR__ . '/../../migrations/';
         $this->loadMigrationsFrom($migrations);
 
-        if ($this->app->runningInConsole()) {
+        // register console commands...
+        if($this->app->runningInConsole()) {
             $this->commands([
-                BarCommand::class,
+                ScanCommand::class,
             ]);
         }
     }
