@@ -50,7 +50,8 @@ class ScanCommand extends Command {
         CreateScanJob::dispatch(
             $targets,
             $scanPorts,
-            $scanOs
+            $scanOs,
+            $scheduled
         );
 
     }
