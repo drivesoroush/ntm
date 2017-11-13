@@ -88,11 +88,12 @@ class Ntm {
 
         // create a new scan...
         $scan = Scan::create([
-            'id'    => $this->getScanCode() + 1,
-            'start' => Carbon::now()->timestamp,
-            'range' => implode(' ', $targets),
-            'ports' => $this->portScan,
-            'os'    => $this->osDetection,
+            'id'        => $this->getScanCode() + 1,
+            'scheduled' => $this->getScheduled(),
+            'start'     => Carbon::now()->timestamp,
+            'range'     => implode(' ', $targets),
+            'ports'     => $this->portScan,
+            'os'        => $this->osDetection,
         ]);
 
         // add scanner ip to targets...

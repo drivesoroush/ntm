@@ -38,23 +38,32 @@ class CreateScanJob implements ShouldQueue {
      */
     protected $scanOs;
 
+    protected $scheduled;
+
     /**
      * Create a new job instance.
      *
      * @param string | array $range
      * @param boolean        $scanPorts
      * @param boolean        $scanOs
+     * @param string | null  $scheduled
      * @param integer        $timeout
      */
-    public function __construct($range, $scanPorts = true, $scanOs = true, $timeout = null)
+    public function __construct($range, $scanPorts = true, $scanOs = true, $scheduled = null, $timeout = null)
     {
+        // target range...
         if(is_array($range)) {
             $this->range = $range;
         } else {
             $this->range = explode(' ', str_replace(',', ' ', $range));
         }
+
+        // finger print flags...
         $this->scanPorts = $scanPorts;
         $this->scanOs = $scanOs;
+
+        // scheduling cron string...
+        $this->scheduled = $scheduled;
 
         // set the timeout...
         if(is_null($timeout)) {
@@ -73,6 +82,7 @@ class CreateScanJob implements ShouldQueue {
     {
         // do the scan here...
         $scan = Ntm::create()
+                   ->setScheduled($this->scheduled)
                    ->setTimeout($this->timeout)
                    ->setPortScan($this->scanPorts)
                    ->setOsDetection($this->scanOs)

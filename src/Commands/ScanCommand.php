@@ -13,6 +13,7 @@ class ScanCommand extends Command {
      * @var string
      */
     protected $signature = 'scan {targets* : List of target hosts or networks to scan.}
+                                 {--s|scheduled= : Determine if the scan is scheduled.}
                                  {--o|os : Enable operating system scan.}
                                  {--p|ports : Enable well-known port scanning.}
                                  ';
@@ -43,6 +44,7 @@ class ScanCommand extends Command {
         $targets = $this->argument('targets');
         $scanPorts = $this->option('ports');
         $scanOs = $this->option('os');
+        $scheduled = $this->option('scheduled');
 
         // initiate the scan job...
         CreateScanJob::dispatch(

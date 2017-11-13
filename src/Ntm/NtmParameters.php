@@ -8,6 +8,13 @@ namespace Ntcm\Ntm;
 trait NtmParameters {
 
     /**
+     * Task scheduling cron string.
+     *
+     * @var string | null
+     */
+    protected $scheduled = null;
+
+    /**
      * @var boolean
      */
     protected $osDetection = true;
@@ -124,6 +131,26 @@ trait NtmParameters {
         $this->treatHostsAsOnline = $treatHostsAsOnline;
 
         return $this;
+    }
+
+    /**
+     * @param $scheduled
+     *
+     * @return $this
+     */
+    public function setScheduled($scheduled)
+    {
+        $this->scheduled = $scheduled;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getScheduled()
+    {
+        return $this->scheduled;
     }
 
     /**
