@@ -190,9 +190,11 @@ class Host extends Model {
         try {
             $query = $this->osCollection();
 
-            foreach(config('ntm.remotable') as $remotable) {
-                $query->orWhere('os_family', $remotable);
-            }
+            $query->where(function ($query) {
+                foreach(config('ntm.remotable') as $remotable) {
+                    $query->orWhere('os_family', $remotable);
+                }
+            });
 
             return $query->count() > 0;
         } catch(Exception $e) {
