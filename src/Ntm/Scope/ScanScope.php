@@ -28,6 +28,6 @@ trait ScanScope {
      */
     public function scopeScheduled($query)
     {
-        return $query->whereNotNull('scheduled')->get();
+        return $query->whereNotNull('scheduled');
     }
 }
