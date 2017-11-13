@@ -4,6 +4,7 @@ namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Artisan;
 use Ntcm\Enums\HostStateEnum;
 use Ntcm\Ntm\Scope\ScanScope;
 
@@ -76,5 +77,20 @@ class Scan extends Model {
     public function upHosts()
     {
         return $this->hasMany(Host::class)->whereState(HostStateEnum::STATE_UP);
+    }
+
+    /**
+     * Rerun the scan.
+     *
+     * @return integer
+     */
+    public function rescan()
+    {
+        // call scan artisan command...
+        return Artisan::call('scan', [
+            'targets' => $this->range,
+            '--os'    => $this->ports,
+            '--ports' => $this->os,
+        ]);
     }
 }
