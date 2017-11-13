@@ -174,7 +174,7 @@ trait NtmParameters {
         }
 
         if($this->portScan) {
-            $parameters[] = '-sS';
+            $parameters[] = '-p 1-65535';
         } else if( ! empty($this->ports)) {
             $parameters[] = '-p ' . implode(',', $this->ports);
         }
