@@ -153,7 +153,7 @@ class Ntm {
             );
         } catch(Exception $e) {
             $scan->update([
-                'state' => ScanEnum::FATAL
+                'state' => ScanEnum::FATAL_STORING
             ]);
 
             return $scan;
