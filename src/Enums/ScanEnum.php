@@ -8,6 +8,8 @@ class ScanEnum {
 
     const DONE = 1;
 
-    const FATAL = 2;
+    const STORING = 2;
+
+    const FATAL = 3;
 
 }

@@ -146,10 +146,23 @@ class Ntm {
             throw new ScanNotFoundException();
         }
 
-        // parse xml file into xml object variable...
-        $xml = simplexml_load_file(
-            $this->getOutputFile()
-        );
+        try {
+            // parse xml file into xml object variable...
+            $xml = simplexml_load_file(
+                $this->getOutputFile()
+            );
+        } catch(Exception $e) {
+            $scan->update([
+                'state' => ScanEnum::FATAL
+            ]);
+
+            return $scan;
+        }
+
+        // change scan state to storing...
+        $scan->update([
+            'state' => ScanEnum::STORING
+        ]);
 
         foreach($xml->host ? : [] as $xmlHost) {
             $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
