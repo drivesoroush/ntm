@@ -37,11 +37,9 @@ class NtmServiceProvider extends ServiceProvider {
         $this->loadMigrationsFrom($migrations);
 
         // register console commands...
-        if($this->app->runningInConsole()) {
-            $this->commands([
-                ScanCommand::class,
-            ]);
-        }
+        $this->commands([
+            ScanCommand::class,
+        ]);
     }
 
     /**
