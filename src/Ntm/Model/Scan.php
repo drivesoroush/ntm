@@ -95,4 +95,14 @@ class Scan extends Model {
             '--ports' => $this->os,
         ]);
     }
+
+    /**
+     * Get is scheduled attribute.
+     *
+     * @return boolean
+     */
+    public function getIsScheduledAttribute()
+    {
+        return ! is_null($this->scheduled);
+    }
 }
