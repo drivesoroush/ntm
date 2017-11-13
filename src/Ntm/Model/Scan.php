@@ -30,6 +30,8 @@ class Scan extends Model {
         'range',
         'ports',
         'os',
+        // scheduling...
+        'scheduled',
     ];
 
     /**

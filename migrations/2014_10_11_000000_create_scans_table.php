@@ -30,6 +30,8 @@ class CreateScansTable extends Migration {
             $table->boolean('ports')->default(true);
             $table->boolean('os')->default(true);
 
+            $table->string('scheduled')->nullable()->default(null);
+
             $table->integer('total_discovered')->default(0);
             $table->integer('state')->default(0);
 
