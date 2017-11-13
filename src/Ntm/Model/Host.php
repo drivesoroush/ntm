@@ -2,6 +2,7 @@
 
 namespace Ntcm\Ntm\Model;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -177,5 +178,25 @@ class Host extends Model {
 
         Config::set('remote.connections', $connections);
         Config::set('remote.default', $this->configKey);
+    }
+
+    /**
+     * Check if the host is remotable.
+     *
+     * @return boolean
+     */
+    public function getIsRemotableAttribute()
+    {
+        try {
+            $query = $this->osCollection();
+
+            foreach(config('ntm.remotable') as $remotable) {
+                $query->orWhere('os_family', $remotable);
+            }
+
+            return $query->count() > 0;
+        } catch(Exception $e) {
+            return false;
+        }
     }
 }

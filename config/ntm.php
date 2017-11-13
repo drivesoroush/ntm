@@ -15,8 +15,14 @@ return [
         'host_group'      => 'host_group',
     ],
 
-    'scan' => [
+    'scan'      => [
         // you can determine scan process execution timeout default value in seconds...
         'timeout' => 24 * 60 * 60,
+    ],
+
+    // remotable operating systems...
+    'remotable' => [
+        'linux',
+        'Linux',
     ]
 ];
