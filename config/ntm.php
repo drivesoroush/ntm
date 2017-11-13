@@ -22,7 +22,6 @@ return [
 
     // remotable operating systems...
     'remotable' => [
-        'linux',
         'Linux',
     ]
 ];
