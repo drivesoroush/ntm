@@ -22,8 +22,10 @@ class NtmServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
+        // register model observers...
         SshCredential::observe(SshCredentialObserver::class);
 
+        // publish configuration files...
         $config = __DIR__ . '/../../config/ntm.php';
         $migrations = __DIR__ . '/../../migrations/';
 
@@ -31,11 +33,14 @@ class NtmServiceProvider extends ServiceProvider {
             $config => config_path('ntm.php'),
         ], 'config');
 
+        // register migrations...
         $this->loadMigrationsFrom($migrations);
 
-        //$this->publishes([
-        //    $migrations => base_path('database/migrations')
-        //], 'migrations');
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                BarCommand::class,
+            ]);
+        }
     }
 
     /**
