@@ -146,6 +146,11 @@ class Ntm {
             throw new ScanNotFoundException();
         }
 
+        // change scan state to storing...
+        $scan->update([
+            'state' => ScanEnum::STORING
+        ]);
+
         try {
             // parse xml file into xml object variable...
             $xml = simplexml_load_file(
@@ -158,11 +163,6 @@ class Ntm {
 
             return $scan;
         }
-
-        // change scan state to storing...
-        $scan->update([
-            'state' => ScanEnum::STORING
-        ]);
 
         foreach($xml->host ? : [] as $xmlHost) {
             $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
