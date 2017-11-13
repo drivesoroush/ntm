@@ -58,3 +58,46 @@ Ntm::create()
    ->parseOutputFile();
 ```
 
+## Scan Command
+
+You can run a scan using `ScanCommand` class like so:
+
+```php
+$targets = ['scanme.nmap.org', '192.168.101.0/24'];
+
+// call scan artisan command...
+Artisan::call('scan', [
+  'targets'     => $targets,
+  '--os'        => true, // to enable operating system scan...
+  '--ports'     => true, // to enable well-known TCP ports...
+  '--scheduled' => '0 1,13 * * * *' // you can use this to schedule the scan...
+]);
+
+```
+
+## Scheduled Scan
+
+You can schedule your scans by adding this code to `schedule` method of your `App\Console\Kernel` class:
+
+
+```php
+/**
+ * Define the application's command schedule.
+ *
+ * @param Schedule $schedule
+ *
+ * @return void
+ */
+protected function schedule(Schedule $schedule)
+	{
+    foreach(Scan::scheduled()->get() as $scan) {
+        $schedule
+            ->command('scan', [
+                'targets' => $scan->range,
+                '--os'    => $scan->os,
+                '--ports' => $scan->ports,
+            ])
+            ->cron($scan->scheduled);
+    }
+}
+```
