@@ -27,16 +27,16 @@ return [
     // remotable operating systems...
     'remotable' => [
         'Linux',
-        // 'VxWorks',
-        // 'embedded',
-        // 'NonStop OS',
-        // 'ESXi',
-        // 'FreeBSD',
-        // 'ESX Server',
-        // 'Windows',
-        // 'Android',
-        // 'OpenBSD',
-        // 'RouterOS',
-        // 'Fireware',
+        'VxWorks',
+        'embedded',
+        'NonStop OS',
+        'ESXi',
+        'FreeBSD',
+        'ESX Server',
+        //'Windows',
+        //'Android',
+        'OpenBSD',
+        'RouterOS',
+        'Fireware',
     ]
 ];
