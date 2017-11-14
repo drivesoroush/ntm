@@ -24,6 +24,8 @@ class CreateSshCredentialsTable extends Migration {
     public function up()
     {
         Schema::create($this->getTable(), function (Blueprint $table) {
+            $table->unsignedBigInteger('id', true);
+
             $table->string('address');
             $table->string('username');
             $table->string('password');
