@@ -24,16 +24,22 @@ class CreateScanJob implements ShouldQueue {
     public $timeout;
 
     /**
+     * Ranges to scan.
+     *
      * @var string
      */
     protected $ranges;
 
     /**
+     * Enable or disable well-known port scan.
+     *
      * @var boolean
      */
     protected $scanPorts;
 
     /**
+     * Enable or disable operating system scan.
+     *
      * @var boolean
      */
     protected $scanOs;
