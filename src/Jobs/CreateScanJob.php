@@ -28,21 +28,21 @@ class CreateScanJob implements ShouldQueue {
      *
      * @var string
      */
-    protected $ranges;
+    public $ranges;
 
     /**
      * Enable or disable well-known port scan.
      *
      * @var boolean
      */
-    protected $scanPorts;
+    public $scanPorts;
 
     /**
      * Enable or disable operating system scan.
      *
      * @var boolean
      */
-    protected $scanOs;
+    public $scanOs;
 
     /**
      * Create a new job instance.
