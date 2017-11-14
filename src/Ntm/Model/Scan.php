@@ -90,7 +90,7 @@ class Scan extends Model {
     {
         // call scan artisan command...
         return Artisan::call('scan', [
-            'targets' => $this->range,
+            'range' => $this->range,
             '--os'    => $this->ports,
             '--ports' => $this->os,
         ]);

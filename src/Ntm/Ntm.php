@@ -70,20 +70,20 @@ class Ntm {
     }
 
     /**
-     * Starts new scan with input targets and ports.
+     * Starts new scan with input range and ports.
      *
-     * @param array | string $targets
+     * @param array | string $ranges
      * @param array          $ports
      *
      * @return $this
      */
-    public function scan($targets, array $ports = [])
+    public function scan($ranges, array $ports = [])
     {
         $this->ports = $ports;
 
-        // for non-array targets...
-        if(is_string($targets)) {
-            $targets = [$targets];
+        // for non-array ranges...
+        if(is_string($ranges)) {
+            $ranges = [$ranges];
         }
 
         // create a new scan...
@@ -91,16 +91,16 @@ class Ntm {
             'id'        => $this->getScanCode() + 1,
             'scheduled' => $this->getScheduled(),
             'start'     => Carbon::now()->timestamp,
-            'range'     => implode(' ', $targets),
+            'range'     => implode(' ', $ranges),
             'ports'     => $this->portScan,
             'os'        => $this->osDetection,
         ]);
 
-        // add scanner ip to targets...
-        $targets[] = get_scanner_address();
+        // add scanner ip to ranges...
+        $ranges[] = get_scanner_address();
 
-        // make targets ready for shell execution...
-        $targets = implode(' ', scape_shell_array($targets));
+        // make ranges ready for shell execution...
+        $ranges = implode(' ', scape_shell_array($ranges));
 
         // update the current scan code...
         $this->setScanCode($scan->id);
@@ -117,7 +117,7 @@ class Ntm {
                 scape_shell_array($this->getParameters())
             ),
             scape_shell($this->getOutputFile()),
-            $targets
+            $ranges
         );
 
         try {
