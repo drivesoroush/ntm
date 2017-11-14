@@ -19,6 +19,9 @@ return [
     'scan'      => [
         // you can determine scan process execution timeout default value in seconds...
         'timeout' => 24 * 60 * 60,
+
+        // well-known ports...
+        'ports'   => '1-1000'
     ],
 
     // remotable operating systems...

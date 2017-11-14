@@ -147,7 +147,9 @@ trait NtmParameters {
         }
 
         if($this->portScan) {
-            $parameters[] = '-p 1-955';
+            $wellKnownPorts = config('ntm.scan.ports', '1-1000');
+
+            $parameters[] = "-p {$wellKnownPorts}";
         } else if( ! empty($this->ports)) {
             $parameters[] = '-p ' . implode(',', $this->ports);
         }
