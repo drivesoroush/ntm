@@ -13,6 +13,7 @@ return [
         'ssh_credentials' => 'ssh_credentials',
         'groups'          => 'groups',
         'host_group'      => 'host_group',
+        'targets'         => 'targets',
     ],
 
     'scan'      => [

@@ -3,17 +3,15 @@
 namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Artisan;
-use Ntcm\Enums\HostStateEnum;
-use Ntcm\Ntm\Scope\ScanScope;
+use Ntcm\Ntm\Scope\TargetScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
-class Scan extends Model {
+class Target extends Model {
 
-    use ScanScope;
+    use TargetScope;
 
     /**
      * The attributes that are mass assignable.
@@ -22,14 +20,10 @@ class Scan extends Model {
      */
     protected $fillable = [
         'id',
-        'total_discovered',
-        'start',
-        'end',
-        'state',
-        // scan info...
         'ranges',
         'ports',
         'os',
+        'scheduled'
     ];
 
     /**
@@ -46,37 +40,7 @@ class Scan extends Model {
      */
     public function getTable()
     {
-        return table_name('scans');
-    }
-
-    /**
-     * Make scan-hop relationship.
-     *
-     * @return HasMany
-     */
-    public function hops()
-    {
-        return $this->hasMany(Hop::class);
-    }
-
-    /**
-     * Make scan-host relationship.
-     *
-     * @return HasMany
-     */
-    public function hosts()
-    {
-        return $this->hasMany(Host::class);
-    }
-
-    /**
-     * Make scan-host relationship.
-     *
-     * @return HasMany
-     */
-    public function upHosts()
-    {
-        return $this->hasMany(Host::class)->whereState(HostStateEnum::STATE_UP);
+        return table_name('targets');
     }
 
     /**
@@ -84,7 +48,7 @@ class Scan extends Model {
      *
      * @return integer
      */
-    public function rescan()
+    public function scan()
     {
         // call scan artisan command...
         return Artisan::call('scan', [
@@ -92,5 +56,15 @@ class Scan extends Model {
             '--os'    => $this->ports,
             '--ports' => $this->os,
         ]);
+    }
+
+    /**
+     * Get is scheduled attribute.
+     *
+     * @return boolean
+     */
+    public function getIsScheduledAttribute()
+    {
+        return ! is_null($this->scheduled);
     }
 }

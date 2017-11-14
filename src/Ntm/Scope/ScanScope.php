@@ -19,15 +19,4 @@ trait ScanScope {
         return $query->orderBy('id', 'desc')->first();
     }
 
-    /**
-     * Get scheduled scans list.
-     *
-     * @param $query
-     *
-     * @return mixed
-     */
-    public function scopeScheduled($query)
-    {
-        return $query->whereNotNull('scheduled');
-    }
 }

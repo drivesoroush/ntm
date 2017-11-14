@@ -4,6 +4,7 @@ namespace Ntcm\Ntm\Commands;
 
 use Illuminate\Console\Command;
 use Ntcm\Ntm\Jobs\CreateScanJob;
+use Ntcm\Ntm\Model\Target;
 
 class ScanCommand extends Command {
 
@@ -13,12 +14,10 @@ class ScanCommand extends Command {
      * @var string
      */
     protected $signature = 'scan {ranges* : List of hosts or networks to scan separated by space.}
-                                 {--s|scheduled= : Determine if the scan is scheduled.}
+                                 {--s|scheduled= : Determine scheduled target to scan. Just pass cron string here but we won\' run the scan when you do.}
                                  {--o|os : Enable operating system scan.}
                                  {--p|ports : Enable well-known port scanning.}
                                  ';
-
-    // {t|timeout? : Total timeout considered for this scan.}
 
     /**
      * The console command description.
@@ -46,13 +45,21 @@ class ScanCommand extends Command {
         $scanOs = $this->option('os');
         $scheduled = $this->option('scheduled');
 
-        // initiate the scan job...
-        CreateScanJob::dispatch(
-            $ranges,
-            $scanPorts,
-            $scanOs
-            // $scheduled
-        );
-
+        // if user passes the scheduled cron string then just store the target...
+        if( ! is_null($scheduled)) {
+            Target::create([
+                'ranges'    => $ranges,
+                'ports'     => $scanPorts,
+                'os'        => $scanOs,
+                'scheduled' => $scheduled
+            ]);
+        } else {
+            // initiate the scan job...
+            CreateScanJob::dispatch(
+                $ranges,
+                $scanPorts,
+                $scanOs
+            );
+        }
     }
 }

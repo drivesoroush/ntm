@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateScansTable extends Migration {
+class CreateTargetsTable extends Migration {
 
     /**
      * Get table name.
@@ -13,7 +13,7 @@ class CreateScansTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.scans', 'mapper_scans');
+        return config('ntm.tables.targets', 'mapper_targets');
     }
 
     /**
@@ -30,11 +30,7 @@ class CreateScansTable extends Migration {
             $table->boolean('ports')->default(true);
             $table->boolean('os')->default(true);
 
-            $table->integer('total_discovered')->default(0);
-            $table->integer('state')->default(0);
-
-            $table->integer('start')->nullable();
-            $table->integer('end')->nullable();
+            $table->string('scheduled')->nullable()->default(null);
         });
     }
 
