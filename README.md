@@ -81,23 +81,23 @@ You can schedule your scans by adding this code to `schedule` method of your `Ap
 
 
 ```php
-/**
- * Define the application's command schedule.
- *
- * @param Schedule $schedule
- *
- * @return void
- */
-protected function schedule(Schedule $schedule)
-	{
-    foreach(Scan::scheduled()->get() as $scan) {
-        $schedule
-            ->command('scan', [
-                'targets' => $scan->range,
-                '--os'    => $scan->os,
-                '--ports' => $scan->ports,
-            ])
-            ->cron($scan->scheduled);
+    /**
+     * Define the application's command schedule.
+     *
+     * @param Schedule $schedule
+     *
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        foreach(Target::scheduled()->get() as $target) {
+            $schedule
+                ->command('scan', [
+                    'ranges'  => $target->range,
+                    '--os'    => $target->ports,
+                    '--ports' => $target->os,
+                ])
+                ->cron($target->scheduled);
+        }
     }
-}
 ```
