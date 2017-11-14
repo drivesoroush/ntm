@@ -27,11 +27,11 @@ class Scan extends Model {
         'end',
         'state',
         // scan info...
-        'range',
+        'ranges',
         'ports',
         'os',
         // scheduling...
-        'scheduled',
+        // 'scheduled',
     ];
 
     /**
@@ -90,19 +90,19 @@ class Scan extends Model {
     {
         // call scan artisan command...
         return Artisan::call('scan', [
-            'range' => $this->range,
+            'ranges'  => $this->ranges,
             '--os'    => $this->ports,
             '--ports' => $this->os,
         ]);
     }
 
-    /**
-     * Get is scheduled attribute.
-     *
-     * @return boolean
-     */
-    public function getIsScheduledAttribute()
-    {
-        return ! is_null($this->scheduled);
-    }
+    // /**
+    // * Get is scheduled attribute.
+    // *
+    // * @return boolean
+    // */
+    // public function getIsScheduledAttribute()
+    // {
+    // return ! is_null($this->scheduled);
+    // }
 }

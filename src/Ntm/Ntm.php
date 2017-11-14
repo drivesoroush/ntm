@@ -70,7 +70,7 @@ class Ntm {
     }
 
     /**
-     * Starts new scan with input range and ports.
+     * Starts new scan with input ranges and ports.
      *
      * @param array | string $ranges
      * @param array          $ports
@@ -88,12 +88,11 @@ class Ntm {
 
         // create a new scan...
         $scan = Scan::create([
-            'id'        => $this->getScanCode() + 1,
-            'scheduled' => $this->getScheduled(),
-            'start'     => Carbon::now()->timestamp,
-            'range'     => implode(' ', $ranges),
-            'ports'     => $this->portScan,
-            'os'        => $this->osDetection,
+            'id'     => $this->getScanCode() + 1,
+            'start'  => Carbon::now()->timestamp,
+            'ranges' => implode(' ', $ranges),
+            'ports'  => $this->portScan,
+            'os'     => $this->osDetection,
         ]);
 
         // add scanner ip to ranges...
