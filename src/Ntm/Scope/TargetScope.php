@@ -7,4 +7,15 @@ namespace Ntcm\Ntm\Scope;
  */
 trait TargetScope {
 
+    /**
+     * Get scheduled scan targets list.
+     *
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeScheduled($query)
+    {
+        return $query->whereNotNull('scheduled');
+    }
 }
