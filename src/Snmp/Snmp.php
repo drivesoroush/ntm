@@ -21,23 +21,26 @@ class Snmp {
     /**
      * Scan a host with snmp and store the returning values.
      *
-     * @param string $address
-     * @param string $readCommunity
-     * @param array  $oidList
+     * @param string       $address
+     * @param string       $readCommunity
+     * @param array | null $oidList
      *
      * @return bool
      */
-    public function scan($address, $readCommunity, $oidList = [])
+    public function scan($address, $readCommunity, $oidList = null)
     {
-        if(empty($oidList)) {
+        if(is_null($oidList)) {
             $oidList = config('snmp.default');
+        } else if(is_string($oidList)) {
+            // for non-array ranges...
+            $oidList = [$oidList];
         }
 
         // create a connector object...
         $snmp = new SnmpLibrary($address, $readCommunity);
 
         // loop on object ids...
-        foreach($oidList as $oid) {
+        foreach($oidList as $key => $oid) {
             $value = $snmp->get($oid);
 
             Mib::findOrCreate([
