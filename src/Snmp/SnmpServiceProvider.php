@@ -3,6 +3,8 @@
 namespace Ntcm\Ntm;
 
 use Illuminate\Support\ServiceProvider;
+use Ntcm\Snmp\Model\SnmpCredential;
+use Ntcm\Snmp\Observers\SnmpCredentialObserver;
 use Ntcm\Snmp\Snmp;
 
 class SnmpServiceProvider extends ServiceProvider {
@@ -21,6 +23,9 @@ class SnmpServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
+        // register model observers...
+        SnmpCredential::observe(SnmpCredentialObserver::class);
+
         // publish configuration files...
         $config = __DIR__ . '/../../config/snmp.php';
         $this->publishes([
