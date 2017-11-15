@@ -13,7 +13,7 @@ class CreateSshCredentialsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.ssh_credentials', 'mapper_ssh_credentials');
+        return config('ntm.tables.snmp_credentials', 'mapper_snmp_credentials');
     }
 
     /**
@@ -27,8 +27,9 @@ class CreateSshCredentialsTable extends Migration {
             $table->unsignedBigInteger('id', true);
 
             $table->string('address');
-            $table->string('username');
-            $table->string('password');
+            $table->string('read');
+            $table->string('write')->nullable();
+
             $table->boolean('is_valid')->default(false);
             $table->timestamps();
         });

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Config;
 use Ntcm\Enums\HostTypeEnum;
 use Ntcm\Ntm\Scope\HostScope;
+use Ntcm\Snmp\Model\SnmpCredential;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
@@ -136,6 +137,16 @@ class Host extends Model {
     public function sshCredentials()
     {
         return $this->hasMany(SshCredential::class, 'address', 'address');
+    }
+
+    /**
+     * Create host-credential relationship.
+     *
+     * @return HasMany
+     */
+    public function snmpCredentials()
+    {
+        return $this->hasMany(SnmpCredential::class, 'address', 'address');
     }
 
     /**

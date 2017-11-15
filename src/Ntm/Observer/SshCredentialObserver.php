@@ -17,12 +17,12 @@ class SshCredentialObserver {
     {
         $valid = $credential->checkIsValid();
 
-        if($valid == $credential->isValid) {
+        if($valid == $credential->is_valid) {
             return;
         }
 
         $credential->update([
-            'isValid' => $valid
+            'is_valid' => $valid
         ]);
     }
 
@@ -37,12 +37,12 @@ class SshCredentialObserver {
     {
         $valid = $credential->checkIsValid();
 
-        if($valid == $credential->isValid) {
+        if($valid == $credential->is_valid) {
             return;
         }
 
         $credential->update([
-            'isValid' => $valid
+            'is_valid' => $valid
         ]);
     }
 

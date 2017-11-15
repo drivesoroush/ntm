@@ -25,7 +25,7 @@ class SshCredential extends Model {
         'address',
         'username',
         'password',
-        'isValid',
+        'is_valid',
     ];
 
     /**
@@ -34,7 +34,7 @@ class SshCredential extends Model {
      * @var array
      */
     protected $casts = [
-        'isValid' => 'boolean'
+        'is_valid' => 'boolean'
     ];
 
     /**

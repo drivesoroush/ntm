@@ -3,17 +3,18 @@
 return [
     // you can determine your table names...
     'tables' => [
-        'hosts'           => 'hosts',
-        'addresses'       => 'addresses',
-        'host_names'      => 'host_names',
-        'ports'           => 'ports',
-        'scans'           => 'scans',
-        'hops'            => 'hops',
-        'os'              => 'os',
-        'ssh_credentials' => 'ssh_credentials',
-        'groups'          => 'groups',
-        'host_group'      => 'host_group',
-        'targets'         => 'targets',
+        'hosts'            => 'hosts',
+        'addresses'        => 'addresses',
+        'host_names'       => 'host_names',
+        'ports'            => 'ports',
+        'scans'            => 'scans',
+        'hops'             => 'hops',
+        'os'               => 'os',
+        'ssh_credentials'  => 'ssh_credentials',
+        'groups'           => 'groups',
+        'host_group'       => 'host_group',
+        'targets'          => 'targets',
+        'snmp_credentials' => 'snmp_credentials',
     ],
 
     'scan'      => [
