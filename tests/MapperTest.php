@@ -2,7 +2,7 @@
 
 namespace Ntcm\NtmTest;
 
-use Ntcm\Ntm\Ntm;
+use Ntcm\Ntm\Snmp;
 
 class MapperTest extends TestCase {
 

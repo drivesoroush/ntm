@@ -2,7 +2,7 @@
 
 namespace Ntcm\NtmTest;
 
-use Ntcm\Ntm\Ntm;
+use Ntcm\Ntm\Snmp;
 use Ntcm\Ntm\NtmServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
@@ -30,7 +30,7 @@ class TestCase extends OrchestraTestCase {
     protected function getPackageAliases($app)
     {
         return [
-            'Ntm' => Ntm::class,
+            'Ntm' => Snmp::class,
         ];
     }
 }

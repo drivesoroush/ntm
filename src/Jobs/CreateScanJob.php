@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Ntcm\Enums\ScanEnum;
 use Ntcm\Ntm\Model\Scan;
-use Ntcm\Ntm\Ntm;
+use Ntcm\Ntm\Snmp;
 
 class CreateScanJob implements ShouldQueue {
 
@@ -81,12 +81,12 @@ class CreateScanJob implements ShouldQueue {
     public function handle()
     {
         // do the scan here...
-        $scan = Ntm::create()
-                   ->setTimeout($this->timeout)
-                   ->setPortScan($this->scanPorts)
-                   ->setOsDetection($this->scanOs)
-                   ->scan($this->ranges)
-                   ->parseOutputFile();
+        $scan = Snmp::create()
+                    ->setTimeout($this->timeout)
+                    ->setPortScan($this->scanPorts)
+                    ->setOsDetection($this->scanOs)
+                    ->scan($this->ranges)
+                    ->parseOutputFile();
     }
 
     /**
