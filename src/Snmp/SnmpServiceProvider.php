@@ -31,6 +31,10 @@ class SnmpServiceProvider extends ServiceProvider {
         $this->publishes([
             $config => config_path('snmp.php'),
         ], 'config');
+
+        // register migrations...
+        $migrations = __DIR__ . '/migrations/';
+        $this->loadMigrationsFrom($migrations);
     }
 
     /**

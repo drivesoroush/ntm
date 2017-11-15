@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSshCredentialsTable extends Migration {
+class CreateMibTable extends Migration {
 
     /**
      * Get table name.
@@ -27,10 +27,9 @@ class CreateSshCredentialsTable extends Migration {
             $table->unsignedBigInteger('id', true);
 
             $table->string('address');
-            $table->string('read');
-            $table->string('write')->nullable();
+            $table->string('oid');
+            $table->string('value')->nullable();
 
-            $table->boolean('is_valid')->default(false);
             $table->timestamps();
         });
     }
