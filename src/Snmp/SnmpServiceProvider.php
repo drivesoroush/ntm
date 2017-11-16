@@ -1,11 +1,10 @@
 <?php
 
-namespace Ntcm\Ntm;
+namespace Ntcm\Snmp;
 
 use Illuminate\Support\ServiceProvider;
 use Ntcm\Snmp\Model\SnmpCredential;
 use Ntcm\Snmp\Observers\SnmpCredentialObserver;
-use Ntcm\Snmp\Snmp;
 
 class SnmpServiceProvider extends ServiceProvider {
 
