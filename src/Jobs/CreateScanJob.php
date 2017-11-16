@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Ntcm\Enums\ScanEnum;
 use Ntcm\Ntm\Model\Scan;
-use Ntcm\Ntm\Snmp;
+use Ntcm\Ntm\Ntm;
 
 class CreateScanJob implements ShouldQueue {
 
@@ -55,7 +55,7 @@ class CreateScanJob implements ShouldQueue {
     public function __construct($ranges, $scanPorts = true, $scanOs = true, $timeout = null)
     {
         // target ranges...
-        if(is_array($ranges)) {
+        if (is_array($ranges)) {
             $this->ranges = $ranges;
         } else {
             $this->ranges = explode(' ', str_replace(',', ' ', $ranges));
@@ -66,7 +66,7 @@ class CreateScanJob implements ShouldQueue {
         $this->scanOs = $scanOs;
 
         // set the timeout...
-        if(is_null($timeout)) {
+        if (is_null($timeout)) {
             $this->timeout = config('ntm.scan.timeout');
         } else {
             $this->timeout = $timeout;
@@ -81,12 +81,12 @@ class CreateScanJob implements ShouldQueue {
     public function handle()
     {
         // do the scan here...
-        $scan = Snmp::create()
-                    ->setTimeout($this->timeout)
-                    ->setPortScan($this->scanPorts)
-                    ->setOsDetection($this->scanOs)
-                    ->scan($this->ranges)
-                    ->parseOutputFile();
+        $scan = Ntm::create()
+                   ->setTimeout($this->timeout)
+                   ->setPortScan($this->scanPorts)
+                   ->setOsDetection($this->scanOs)
+                   ->scan($this->ranges)
+                   ->parseOutputFile();
     }
 
     /**
