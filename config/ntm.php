@@ -15,6 +15,7 @@ return [
         'host_group'       => 'host_group',
         'targets'          => 'targets',
         'snmp_credentials' => 'snmp_credentials',
+        'mib'              => 'mib',
     ],
 
     'scan'      => [
@@ -22,7 +23,7 @@ return [
         'timeout' => 24 * 60 * 60,
 
         // well-known ports...
-        'ports'   => '1-1000'
+        'ports'   => '1-1000',
     ],
 
     // remotable operating systems...
@@ -39,5 +40,5 @@ return [
         'OpenBSD',
         'RouterOS',
         'Fireware',
-    ]
+    ],
 ];

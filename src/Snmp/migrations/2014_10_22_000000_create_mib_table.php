@@ -13,7 +13,7 @@ class CreateMibTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.snmp_credentials', 'mapper_snmp_credentials');
+        return config('ntm.tables.mib', 'mapper_mib');
     }
 
     /**
