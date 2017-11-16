@@ -1,6 +1,6 @@
 <?php
 
-namespace lasselehtinen\MyPackage;
+namespace Ntcm\Ntm;
 
 use Illuminate\Support\Facades\Facade;
 
