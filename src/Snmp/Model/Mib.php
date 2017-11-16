@@ -41,4 +41,11 @@ class Mib extends Model {
         return table_name('mib');
     }
 
+    /**
+     * Refresh a mib item.
+     */
+    public function refresh()
+    {
+        // TODO...
+    }
 }
