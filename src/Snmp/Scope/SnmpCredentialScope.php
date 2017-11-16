@@ -21,7 +21,7 @@ trait SnmpCredentialScope {
 
         // remove the previous snmp credentials...
         if($credential) {
-            $credential->destroy();
+            $credential->delete();
         }
 
         // persist the new one...
