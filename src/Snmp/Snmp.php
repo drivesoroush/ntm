@@ -41,7 +41,7 @@ class Snmp {
 
         // loop on object ids...
         foreach($oidList as $key => $oid) {
-            $value = $snmp->get($oid);
+            $value = array_first($snmp->get($oid));
 
             Mib::findOrCreate([
                 'address' => $address,
