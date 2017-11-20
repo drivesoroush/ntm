@@ -3,14 +3,14 @@
 namespace Ntcm\Snmp\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Ntcm\Snmp\Scope\SnmpCredentialScope;
+use Ntcm\Snmp\Scope\MibScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Mib extends Model {
 
-    use SnmpCredentialScope;
+    use MibScope;
 
     /**
      * The attributes that are mass assignable.

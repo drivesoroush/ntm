@@ -23,7 +23,9 @@ trait MibScope {
                           ->first();
 
         if($instance) {
-            $instance->update($attributes);
+            $query->update($attributes);
+        } else {
+            $query->create($attributes);
         }
 
         // if the host found return it...
