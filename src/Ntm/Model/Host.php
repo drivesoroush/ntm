@@ -221,6 +221,12 @@ class Host extends Model {
         try {
             $query = $this->osCollection();
 
+            // no os detected...
+            if($query->count() === 0) {
+                return true;
+            }
+
+            // otherwise...
             $query->where(function ($query) {
                 foreach(config('ntm.remotable') as $remotable) {
                     $query->orWhere('os_family', $remotable);
