@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSshCredentialsTable extends Migration {
+class CreateMibTable extends Migration {
 
     /**
      * Get table name.
@@ -13,7 +13,7 @@ class CreateSshCredentialsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.snmp_credentials', 'mapper_snmp_credentials');
+        return config('ntm.tables.mib', 'mapper_mib');
     }
 
     /**

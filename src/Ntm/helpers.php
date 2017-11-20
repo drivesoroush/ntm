@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Request;
 
 if( ! function_exists('table_name')) {
 
@@ -71,7 +72,11 @@ if( ! function_exists('get_scanner_address')) {
      */
     function get_scanner_address()
     {
-        return env("SCANNER_ADDRESS", "SCANNER");
+        try {
+            return trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
+        } catch(Exception $e) {
+            return env("SCANNER_ADDRESS", Request::getClientIp());
+        }
     }
 }
 
@@ -87,7 +92,7 @@ if( ! function_exists('scape_shell_array')) {
     function scape_shell_array($array)
     {
         return array_map(
-            function ($item) {
+            function($item) {
                 return scape_shell($item);
             }, $array
         );
@@ -126,7 +131,7 @@ if( ! function_exists('batch_auth')) {
             $connections[$credential->configKey] = [
                 'host'     => $credential->address,
                 'username' => $credential->username,
-                'password' => $credential->password
+                'password' => $credential->password,
             ];
         }
 

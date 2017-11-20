@@ -17,7 +17,7 @@ class SnmpCredentialObserver {
     {
         $valid = $credential->checkIsValid();
 
-        if($valid == $credential->is_valid) {
+        if($valid === $credential->is_valid) {
             return;
         }
 
@@ -37,7 +37,7 @@ class SnmpCredentialObserver {
     {
         $valid = $credential->checkIsValid();
 
-        if($valid == $credential->is_valid) {
+        if($valid === $credential->is_valid) {
             return;
         }
 

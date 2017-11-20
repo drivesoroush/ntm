@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSshCredentialsTable extends Migration {
+class CreateSnmpCredentialsTable extends Migration {
 
     /**
      * Get table name.

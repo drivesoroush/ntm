@@ -33,7 +33,7 @@ class NtmServiceProvider extends ServiceProvider {
         ], 'config');
 
         // register migrations...
-        $migrations = __DIR__ . '/../../migrations/';
+        $migrations = __DIR__ . '/migrations/';
         $this->loadMigrationsFrom($migrations);
 
         // register console commands...
