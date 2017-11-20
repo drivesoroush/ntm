@@ -41,4 +41,21 @@ class Mib extends Model {
         return table_name('mib');
     }
 
+    /**
+     * Get Snmp oid key.
+     *
+     * @return null | string
+     */
+    public function getKeyAttribute()
+    {
+        $oidCollection = config('snmp.default');
+
+        foreach($oidCollection as $key => $oid) {
+            if($oid == $this->oid) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
 }
