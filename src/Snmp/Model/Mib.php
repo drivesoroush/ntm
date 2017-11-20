@@ -3,14 +3,14 @@
 namespace Ntcm\Snmp\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Ntcm\Snmp\Scope\SnmpCredentialScope;
+use Ntcm\Snmp\Scope\MibScope;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
 class Mib extends Model {
 
-    use SnmpCredentialScope;
+    use MibScope;
 
     /**
      * The attributes that are mass assignable.
@@ -42,10 +42,20 @@ class Mib extends Model {
     }
 
     /**
-     * Refresh a mib item.
+     * Get Snmp oid key.
+     *
+     * @return null | string
      */
-    public function refresh()
+    public function getKeyAttribute()
     {
-        // TODO...
+        $oidCollection = config('snmp.default');
+
+        foreach($oidCollection as $key => $oid) {
+            if($oid == $this->oid) {
+                return $key;
+            }
+        }
+
+        return null;
     }
 }
