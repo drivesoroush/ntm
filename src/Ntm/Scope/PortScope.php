@@ -19,7 +19,7 @@ trait PortScope {
     {
         // try to find the host...
         $instance = $query->where('port_id', $attributes['port_id'])
-                          ->where('host_id', $attributes['host_id'])
+                          ->where('address', $attributes['address'])
                           ->first();
 
         // if the host found return it...

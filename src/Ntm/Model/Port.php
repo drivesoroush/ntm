@@ -19,6 +19,7 @@ class Port extends Model {
      */
     protected $fillable = [
         'id',
+        'address',
         'protocol',
         'port_id',
         'state',

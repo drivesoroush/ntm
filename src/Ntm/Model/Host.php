@@ -80,7 +80,7 @@ class Host extends Model {
      */
     public function ports()
     {
-        return $this->hasMany(Port::class);
+        return $this->hasMany(Port::class, 'address', 'address');
     }
 
     /**
@@ -100,7 +100,7 @@ class Host extends Model {
      */
     public function osCollection()
     {
-        return $this->hasMany(Os::class);
+        return $this->hasMany(Os::class, 'address', 'address');
     }
 
     /**

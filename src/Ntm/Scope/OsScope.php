@@ -19,7 +19,7 @@ trait OsScope {
     {
         // try to find the host...
         $instance = $query->where('name', $attributes['name'])
-                          ->where('host_id', $attributes['host_id'])
+                          ->where('address', $attributes['address'])
                           ->first();
 
         // if the host found return it...

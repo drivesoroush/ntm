@@ -20,6 +20,7 @@ class Os extends Model {
     protected $fillable = [
         'id',
         'name',
+        'address',
         'type',
         'vendor',
         'os_family',
