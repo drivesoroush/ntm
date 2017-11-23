@@ -197,7 +197,9 @@ class Ntm {
 
             // parse and persist ports...
             foreach($xmlHost->ports->port ? : [] as $xmlPort) {
-                Port::findOrCreate([
+                Port::whereAddress($mainAddress)->delete();
+
+                Port::create([
                     'address'    => $mainAddress,
                     'protocol'   => (string)$xmlPort->attributes()->protocol,
                     'port_id'    => (integer)$xmlPort->attributes()->portid,
@@ -215,7 +217,9 @@ class Ntm {
 
             // parse and persist ports...
             foreach($xmlHost->os->osmatch ? : [] as $xmlOs) {
-                Os::findOrCreate([
+                Os::whereAddress($mainAddress)->delete();
+
+                Os::create([
                     'address'   => $mainAddress,
                     'name'      => (string)$xmlOs->attributes()->name,
                     'type'      => (string)$xmlOs->osclass->attributes()->type,
