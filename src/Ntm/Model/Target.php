@@ -23,7 +23,7 @@ class Target extends Model {
         'ranges',
         'ports',
         'os',
-        'scheduled'
+        'scheduled',
     ];
 
     /**
@@ -32,6 +32,16 @@ class Target extends Model {
      * @var boolean
      */
     public $timestamps = false;
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'ports' => 'boolean',
+        'os'    => 'boolean',
+    ];
 
     /**
      * Get the table associated with the model.
