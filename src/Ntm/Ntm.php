@@ -211,7 +211,7 @@ class Ntm {
                     'product'    => (string)$xmlPort->service->attributes()->product ? : null,
                     'version'    => (string)$xmlPort->service->attributes()->version ? : null,
                     'extra_info' => (string)$xmlPort->service->attributes()->extrainfo ? : null,
-                    'host_id'    => $host->id,
+                    // 'host_id'    => $host->id,
                 ]);
             }
 
@@ -227,7 +227,7 @@ class Ntm {
                     'os_family' => (string)$xmlOs->osclass->attributes()->osfamily,
                     'os_gen'    => (string)$xmlOs->osclass->attributes()->osgen,
                     'accuracy'  => (float)$xmlOs->osclass->attributes()->accuracy,
-                    'host_id'   => $host->id,
+                    // 'host_id'   => $host->id,
                 ]);
             }
 
