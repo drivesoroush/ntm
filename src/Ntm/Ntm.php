@@ -195,10 +195,11 @@ class Ntm {
                 ]);
             }
 
+            // remove deprecated ports information...
+            Port::whereAddress($mainAddress)->delete();
+
             // parse and persist ports...
             foreach($xmlHost->ports->port ? : [] as $xmlPort) {
-                Port::whereAddress($mainAddress)->delete();
-
                 Port::create([
                     'address'    => $mainAddress,
                     'protocol'   => (string)$xmlPort->attributes()->protocol,
@@ -215,10 +216,11 @@ class Ntm {
                 ]);
             }
 
+            // remove deprecated os information...
+            Os::whereAddress($mainAddress)->delete();
+
             // parse and persist ports...
             foreach($xmlHost->os->osmatch ? : [] as $xmlOs) {
-                Os::whereAddress($mainAddress)->delete();
-
                 Os::create([
                     'address'   => $mainAddress,
                     'name'      => (string)$xmlOs->attributes()->name,
