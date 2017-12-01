@@ -156,165 +156,163 @@ class Ntm {
             $xml = simplexml_load_file(
                 $this->getOutputFile()
             );
+            foreach($xml->host ? : [] as $xmlHost) {
+                $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
+
+                // parse and persist hosts...
+                $host = Host::findOrCreate([
+                    'address' => $mainAddress,
+                    'state'   => (string)$xmlHost->status->attributes()->state == "up" ? HostStateEnum::STATE_UP : HostStateEnum::STATE_DOWN,
+                    'start'   => (integer)$xmlHost->attributes()->starttime,
+                    'end'     => (integer)$xmlHost->attributes()->endtime,
+                    'scan_id' => $scan->id
+                ]);
+
+                // parse and persist addresses...
+                foreach($xmlHost->address ? : [] as $xmlAddress) {
+                    Address::findOrCreate([
+                        'address' => (string)$xmlAddress->attributes()->addr,
+                        'type'    => (string)$xmlAddress->attributes()->addrtype,
+                        'vendor'  => (string)$xmlAddress->attributes()->vendor,
+                        'host_id' => $host->id,
+                    ]);
+                }
+
+                // parse and persist host names...
+                foreach($xmlHost->hostnames->hostname ? : [] as $xmlHostname) {
+                    Hostname::findOrCreate([
+                        'name'    => (string)$xmlHostname->attributes()->name,
+                        'type'    => (string)$xmlHostname->attributes()->type,
+                        'host_id' => $host->id,
+                    ]);
+                }
+
+                // remove deprecated os information...
+                Os::whereAddress($mainAddress)->delete();
+
+                // parse and persist ports...
+                foreach($xmlHost->os->osmatch ? : [] as $xmlOs) {
+                    if(strtolower((string)$xmlOs->osclass->attributes()->type) == "router") {
+                        $host->update(['type' => HostTypeEnum::ROUTER_HOST]);
+                    }
+
+                    Os::create([
+                        'address'   => $mainAddress,
+                        'name'      => (string)$xmlOs->attributes()->name,
+                        'type'      => (string)$xmlOs->osclass->attributes()->type,
+                        'vendor'    => (string)$xmlOs->osclass->attributes()->vendor,
+                        'os_family' => (string)$xmlOs->osclass->attributes()->osfamily,
+                        'os_gen'    => (string)$xmlOs->osclass->attributes()->osgen,
+                        'accuracy'  => (float)$xmlOs->osclass->attributes()->accuracy,
+                        // 'host_id'   => $host->id,
+                    ]);
+                }
+
+                // remove deprecated ports information...
+                Port::whereAddress($mainAddress)->delete();
+
+                // parse and persist ports...
+                foreach($xmlHost->ports->port ? : [] as $xmlPort) {
+                    if(strtolower((string)$xmlPort->service->attributes()->devicetype) == "switch") {
+                        $host->update(['type' => HostTypeEnum::SWITCH_HOST]);
+                    }
+
+                    Port::create([
+                        'address'    => $mainAddress,
+                        'protocol'   => (string)$xmlPort->attributes()->protocol,
+                        'port_id'    => (integer)$xmlPort->attributes()->portid,
+                        'state'      => (string)$xmlPort->state->attributes()->state,
+                        'reason'     => (string)$xmlPort->state->attributes()->reason,
+                        'service'    => (string)$xmlPort->service->attributes()->name,
+                        'method'     => (string)$xmlPort->service->attributes()->method,
+                        'conf'       => (string)$xmlPort->service->attributes()->conf,
+                        'product'    => (string)$xmlPort->service->attributes()->product ? : null,
+                        'version'    => (string)$xmlPort->service->attributes()->version ? : null,
+                        'extra_info' => (string)$xmlPort->service->attributes()->extrainfo ? : null,
+                        // 'host_id'    => $host->id,
+                    ]);
+                }
+
+                // initiate the first address...
+                $firstAddress = get_scanner_address();
+                $index = 0;
+
+                // parse and persist hops...
+                foreach($xmlHost->trace->hop ? : [] as $xmlHop) {
+                    $secondAddress = (string)$xmlHop->attributes()->ipaddr;
+
+                    // determine type of hosts...
+                    $firstType = HostTypeEnum::ROUTER_HOST;
+                    $secondType = HostTypeEnum::ROUTER_HOST;
+                    if($index == 0) {
+                        $firstType = HostTypeEnum::NODE_HOST;
+                    }
+                    if(sizeof($xmlHost->trace->hop) == $index + 1) {
+                        $secondType = HostTypeEnum::NODE_HOST;
+                    }
+
+                    // find or create hosts...
+                    $first = Host::findOrCreate([
+                        'address' => $firstAddress,
+                        'scan_id' => $scan->id,
+                        'type'    => $firstType,
+                    ]);
+                    $second = Host::findOrCreate([
+                        'address' => $secondAddress,
+                        'scan_id' => $scan->id,
+                        'type'    => $secondType,
+                    ]);
+
+                    // first or last hop...
+                    if($index == 0 or $index == sizeof($xmlHost->trace->hop) - 1) {
+
+                        // make a switch...
+                        $switch = Host::findOrCreate([
+                            'state'   => HostStateEnum::STATE_UP,
+                            'address' => subnet_address(get_range($secondAddress)),
+                            'type'    => HostTypeEnum::SWITCH_HOST,
+                            'scan_id' => $scan->id,
+                        ]);
+
+                        // connect first host to switch...
+                        Hop::findOrCreate([
+                            'address_first'  => $first->id,
+                            'address_second' => $switch->id,
+                            'scan_id'        => $scan->id,
+                        ]);
+
+                        // move on to the switch...
+                        $first = $switch;
+                    }
+
+                    // find or create hop...
+                    Hop::findOrCreate([
+                        'address_first'  => $first->id,
+                        'address_second' => $second->id,
+                        'scan_id'        => $scan->id,
+                        'rtt'            => (float)$xmlHop->rtt,
+                    ]);
+
+                    // shift addresses...
+                    $firstAddress = $secondAddress;
+
+                    $index ++;
+                }
+
+                // update scan info...
+                $scan->update([
+                    'total_discovered' => $xml->runstats->hosts->attributes()->up,
+                    // 'start'            => $xml->attributes()->start,
+                    'end'              => Carbon::now()->timestamp,
+                    'state'            => ScanEnum::DONE
+                ]);
+
+            }
+
         } catch(Exception $e) {
             $scan->update([
                 'state' => ScanEnum::FATAL_STORING
             ]);
-
-            return $scan;
-        }
-
-        foreach($xml->host ? : [] as $xmlHost) {
-            $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
-
-            // parse and persist hosts...
-            $host = Host::findOrCreate([
-                'address' => $mainAddress,
-                'state'   => (string)$xmlHost->status->attributes()->state == "up" ? HostStateEnum::STATE_UP : HostStateEnum::STATE_DOWN,
-                'start'   => (integer)$xmlHost->attributes()->starttime,
-                'end'     => (integer)$xmlHost->attributes()->endtime,
-                'scan_id' => $scan->id
-            ]);
-
-            // parse and persist addresses...
-            foreach($xmlHost->address ? : [] as $xmlAddress) {
-                Address::findOrCreate([
-                    'address' => (string)$xmlAddress->attributes()->addr,
-                    'type'    => (string)$xmlAddress->attributes()->addrtype,
-                    'vendor'  => (string)$xmlAddress->attributes()->vendor,
-                    'host_id' => $host->id,
-                ]);
-            }
-
-            // parse and persist host names...
-            foreach($xmlHost->hostnames->hostname ? : [] as $xmlHostname) {
-                Hostname::findOrCreate([
-                    'name'    => (string)$xmlHostname->attributes()->name,
-                    'type'    => (string)$xmlHostname->attributes()->type,
-                    'host_id' => $host->id,
-                ]);
-            }
-
-            // remove deprecated os information...
-            Os::whereAddress($mainAddress)->delete();
-
-            // parse and persist ports...
-            foreach($xmlHost->os->osmatch ? : [] as $xmlOs) {
-                if(strtolower((string)$xmlOs->osclass->attributes()->type) == "router") {
-                    $host->update(['type' => HostTypeEnum::ROUTER_HOST]);
-                }
-
-                Os::create([
-                    'address'   => $mainAddress,
-                    'name'      => (string)$xmlOs->attributes()->name,
-                    'type'      => (string)$xmlOs->osclass->attributes()->type,
-                    'vendor'    => (string)$xmlOs->osclass->attributes()->vendor,
-                    'os_family' => (string)$xmlOs->osclass->attributes()->osfamily,
-                    'os_gen'    => (string)$xmlOs->osclass->attributes()->osgen,
-                    'accuracy'  => (float)$xmlOs->osclass->attributes()->accuracy,
-                    // 'host_id'   => $host->id,
-                ]);
-            }
-
-            // remove deprecated ports information...
-            Port::whereAddress($mainAddress)->delete();
-
-            // parse and persist ports...
-            foreach($xmlHost->ports->port ? : [] as $xmlPort) {
-                if(strtolower((string)$xmlPort->service->attributes()->devicetype) == "switch") {
-                    $host->update(['type' => HostTypeEnum::SWITCH_HOST]);
-                }
-
-                Port::create([
-                    'address'    => $mainAddress,
-                    'protocol'   => (string)$xmlPort->attributes()->protocol,
-                    'port_id'    => (integer)$xmlPort->attributes()->portid,
-                    'state'      => (string)$xmlPort->state->attributes()->state,
-                    'reason'     => (string)$xmlPort->state->attributes()->reason,
-                    'service'    => (string)$xmlPort->service->attributes()->name,
-                    'method'     => (string)$xmlPort->service->attributes()->method,
-                    'conf'       => (string)$xmlPort->service->attributes()->conf,
-                    'product'    => (string)$xmlPort->service->attributes()->product ? : null,
-                    'version'    => (string)$xmlPort->service->attributes()->version ? : null,
-                    'extra_info' => (string)$xmlPort->service->attributes()->extrainfo ? : null,
-                    // 'host_id'    => $host->id,
-                ]);
-            }
-
-            // initiate the first address...
-            $firstAddress = get_scanner_address();
-            $index = 0;
-
-            // parse and persist hops...
-            foreach($xmlHost->trace->hop ? : [] as $xmlHop) {
-                $secondAddress = (string)$xmlHop->attributes()->ipaddr;
-
-                // determine type of hosts...
-                $firstType = HostTypeEnum::ROUTER_HOST;
-                $secondType = HostTypeEnum::ROUTER_HOST;
-                if($index == 0) {
-                    $firstType = HostTypeEnum::NODE_HOST;
-                }
-                if(sizeof($xmlHost->trace->hop) == $index + 1) {
-                    $secondType = HostTypeEnum::NODE_HOST;
-                }
-
-                // find or create hosts...
-                $first = Host::findOrCreate([
-                    'address' => $firstAddress,
-                    'scan_id' => $scan->id,
-                    'type'    => $firstType,
-                ]);
-                $second = Host::findOrCreate([
-                    'address' => $secondAddress,
-                    'scan_id' => $scan->id,
-                    'type'    => $secondType,
-                ]);
-
-                // first or last hop...
-                if($index == 0 or $index == sizeof($xmlHost->trace->hop) - 1) {
-
-                    // make a switch...
-                    $switch = Host::findOrCreate([
-                        'state'   => HostStateEnum::STATE_UP,
-                        'address' => subnet_address(get_range($secondAddress)),
-                        'type'    => HostTypeEnum::SWITCH_HOST,
-                        'scan_id' => $scan->id,
-                    ]);
-
-                    // connect first host to switch...
-                    Hop::findOrCreate([
-                        'address_first'  => $first->id,
-                        'address_second' => $switch->id,
-                        'scan_id'        => $scan->id,
-                    ]);
-
-                    // move on to the switch...
-                    $first = $switch;
-                }
-
-                // find or create hop...
-                Hop::findOrCreate([
-                    'address_first'  => $first->id,
-                    'address_second' => $second->id,
-                    'scan_id'        => $scan->id,
-                    'rtt'            => (float)$xmlHop->rtt,
-                ]);
-
-                // shift addresses...
-                $firstAddress = $secondAddress;
-
-                $index ++;
-            }
-
-            // update scan info...
-            $scan->update([
-                'total_discovered' => $xml->runstats->hosts->attributes()->up,
-                // 'start'            => $xml->attributes()->start,
-                'end'              => Carbon::now()->timestamp,
-                'state'            => ScanEnum::DONE
-            ]);
-
         }
 
         return $scan;
