@@ -311,7 +311,8 @@ class Ntm {
 
         } catch(Exception $e) {
             $scan->update([
-                'state' => ScanEnum::FATAL_STORING
+                'state' => ScanEnum::FATAL_STORING,
+                'end'   => Carbon::now()->timestamp
             ]);
         }
 
