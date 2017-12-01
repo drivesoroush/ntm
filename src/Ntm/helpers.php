@@ -225,7 +225,7 @@ if( ! function_exists('is_range')) {
      */
     function is_range($range)
     {
-        if( ! str_contains("/", $range)) {
+        if( ! str_contains($range, "/")) {
             return false;
         }
 
