@@ -195,11 +195,36 @@ class Ntm {
                 ]);
             }
 
+            // remove deprecated os information...
+            Os::whereAddress($mainAddress)->delete();
+
+            // parse and persist ports...
+            foreach($xmlHost->os->osmatch ? : [] as $xmlOs) {
+                if(strtolower((string)$xmlOs->osclass->attributes()->type) == "router") {
+                    $host->update(['type' => HostTypeEnum::ROUTER_HOST]);
+                }
+
+                Os::create([
+                    'address'   => $mainAddress,
+                    'name'      => (string)$xmlOs->attributes()->name,
+                    'type'      => (string)$xmlOs->osclass->attributes()->type,
+                    'vendor'    => (string)$xmlOs->osclass->attributes()->vendor,
+                    'os_family' => (string)$xmlOs->osclass->attributes()->osfamily,
+                    'os_gen'    => (string)$xmlOs->osclass->attributes()->osgen,
+                    'accuracy'  => (float)$xmlOs->osclass->attributes()->accuracy,
+                    // 'host_id'   => $host->id,
+                ]);
+            }
+
             // remove deprecated ports information...
             Port::whereAddress($mainAddress)->delete();
 
             // parse and persist ports...
             foreach($xmlHost->ports->port ? : [] as $xmlPort) {
+                if(strtolower((string)$xmlPort->service->attributes()->devicetype) == "switch") {
+                    $host->update(['type' => HostTypeEnum::SWITCH_HOST]);
+                }
+
                 Port::create([
                     'address'    => $mainAddress,
                     'protocol'   => (string)$xmlPort->attributes()->protocol,
@@ -213,23 +238,6 @@ class Ntm {
                     'version'    => (string)$xmlPort->service->attributes()->version ? : null,
                     'extra_info' => (string)$xmlPort->service->attributes()->extrainfo ? : null,
                     // 'host_id'    => $host->id,
-                ]);
-            }
-
-            // remove deprecated os information...
-            Os::whereAddress($mainAddress)->delete();
-
-            // parse and persist ports...
-            foreach($xmlHost->os->osmatch ? : [] as $xmlOs) {
-                Os::create([
-                    'address'   => $mainAddress,
-                    'name'      => (string)$xmlOs->attributes()->name,
-                    'type'      => (string)$xmlOs->osclass->attributes()->type,
-                    'vendor'    => (string)$xmlOs->osclass->attributes()->vendor,
-                    'os_family' => (string)$xmlOs->osclass->attributes()->osfamily,
-                    'os_gen'    => (string)$xmlOs->osclass->attributes()->osgen,
-                    'accuracy'  => (float)$xmlOs->osclass->attributes()->accuracy,
-                    // 'host_id'   => $host->id,
                 ]);
             }
 
