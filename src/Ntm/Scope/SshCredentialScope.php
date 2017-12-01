@@ -17,7 +17,7 @@ trait SshCredentialScope {
      */
     public function scopeFindOrCreate($query, $attributes)
     {
-        $credential = $query->where('address', $attributes['address'])
+        $credential = $query->where('address', encode_ip($attributes['address']))
                             ->get()
                             ->filter(function ($record) use ($attributes) {
                                 if($record->username == $attributes['username']) {

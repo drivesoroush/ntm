@@ -18,7 +18,7 @@ trait HostScope {
     public function scopeFindOrCreate($query, $attributes)
     {
         // try to find the host...
-        $instance = $query->where('address', $attributes['address'])
+        $instance = $query->where('address', encode_ip($attributes['address']))
                           ->where('scan_id', $attributes['scan_id'])
                           ->first();
 
