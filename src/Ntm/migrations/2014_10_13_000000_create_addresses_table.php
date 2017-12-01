@@ -27,7 +27,7 @@ class CreateAddressesTable extends Migration {
 
         Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
             $table->unsignedBigInteger('id', true);
-            $table->bigInteger('address');
+            $table->string('address');
             $table->string('type');
             $table->string('vendor')->nullable();
 
