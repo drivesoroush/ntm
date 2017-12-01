@@ -17,7 +17,7 @@ trait SnmpCredentialScope {
      */
     public function scopeFindOrCreate($query, $attributes)
     {
-        $credential = $query->where('address', $attributes['address'])->first();
+        $credential = $query->where('address', encode_ip($attributes['address']))->first();
 
         // remove the previous snmp credentials...
         if($credential) {
