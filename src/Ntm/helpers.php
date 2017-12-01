@@ -166,6 +166,10 @@ if( ! function_exists('encode_ip')) {
      */
     function encode_ip($address)
     {
+        if( ! is_ip($address)) {
+            return $address;
+        }
+
         return ip2long($address);
     }
 }
@@ -196,12 +200,52 @@ if( ! function_exists('subnet_address')) {
      */
     function subnet_address($subnet)
     {
-        if( ! str_contains($subnet, '/')) {
+        if(is_ip($subnet)) {
             return encode_ip($subnet);
+        }
+
+        if( ! is_range($subnet)) {
+            return $subnet;
         }
 
         list($ip, $range) = explode('/', $subnet);
 
         return $ip;
+    }
+}
+
+if( ! function_exists('is_range')) {
+
+    /**
+     * Check if the input value is a valid range.
+     *
+     * @param string $range
+     *
+     * @return string
+     */
+    function is_range($range)
+    {
+        if( ! str_contains("/", $range)) {
+            return false;
+        }
+
+        list($ip, $range) = explode('/', $range);
+
+        return is_ip($ip) and is_numeric($range) and $range <= 32;
+    }
+}
+
+if( ! function_exists('is_ip')) {
+
+    /**
+     * Check if the input value is a valid ip address.
+     *
+     * @param string $ip
+     *
+     * @return string
+     */
+    function is_ip($ip)
+    {
+        return filter_var($ip, FILTER_VALIDATE_IP) !== false;
     }
 }
