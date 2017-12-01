@@ -184,3 +184,24 @@ if( ! function_exists('decode_ip')) {
         return long2ip($address);
     }
 }
+
+if( ! function_exists('encode_range')) {
+
+    /**
+     * Get ip range from ip address.
+     *
+     * @param string $subnet
+     *
+     * @return string
+     */
+    function encode_range($subnet)
+    {
+        if( ! str_contains($subnet, '/')) {
+            return encode_ip($subnet);
+        }
+
+        list($ip, $range) = explode('/', $subnet);
+
+        return encode_ip($ip);
+    }
+}
