@@ -185,16 +185,16 @@ if( ! function_exists('decode_ip')) {
     }
 }
 
-if( ! function_exists('encode_range')) {
+if( ! function_exists('subnet_address')) {
 
     /**
-     * Get ip range from ip address.
+     * Get subnet address.
      *
      * @param string $subnet
      *
      * @return string
      */
-    function encode_range($subnet)
+    function subnet_address($subnet)
     {
         if( ! str_contains($subnet, '/')) {
             return encode_ip($subnet);
@@ -202,6 +202,6 @@ if( ! function_exists('encode_range')) {
 
         list($ip, $range) = explode('/', $subnet);
 
-        return encode_ip($ip);
+        return $ip;
     }
 }
