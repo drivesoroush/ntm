@@ -26,7 +26,7 @@ class CreateMibTable extends Migration {
         Schema::create($this->getTable(), function (Blueprint $table) {
             $table->unsignedBigInteger('id', true);
 
-            $table->string('address');
+            $table->bigInteger('address');
             $table->string('oid');
             $table->string('value')->nullable();
 

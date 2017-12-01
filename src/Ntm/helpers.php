@@ -92,7 +92,7 @@ if( ! function_exists('scape_shell_array')) {
     function scape_shell_array($array)
     {
         return array_map(
-            function($item) {
+            function ($item) {
                 return scape_shell($item);
             }, $array
         );
@@ -143,7 +143,7 @@ if( ! function_exists('batch_auth')) {
 if( ! function_exists('config_key')) {
 
     /**
-     * Make config key out of this addrees.
+     * Make config key out of this address.
      *
      * @param string $address
      *
@@ -152,5 +152,35 @@ if( ! function_exists('config_key')) {
     function config_key($address)
     {
         return str_replace('.', '-', $address);
+    }
+}
+
+if( ! function_exists('encode_ip')) {
+
+    /**
+     * Encode the ip address into integer.
+     *
+     * @param string $address
+     *
+     * @return string
+     */
+    function encode_ip($address)
+    {
+        return ip2long($address);
+    }
+}
+
+if( ! function_exists('decode_ip')) {
+
+    /**
+     * Decode the encoded ip address into string ip address.
+     *
+     * @param string $address
+     *
+     * @return string
+     */
+    function decode_ip($address)
+    {
+        return long2ip($address);
     }
 }

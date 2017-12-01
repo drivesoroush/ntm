@@ -26,7 +26,7 @@ class CreateSnmpCredentialsTable extends Migration {
         Schema::create($this->getTable(), function (Blueprint $table) {
             $table->unsignedBigInteger('id', true);
 
-            $table->string('address');
+            $table->bigInteger('address');
             $table->string('read');
             $table->string('write')->nullable();
 

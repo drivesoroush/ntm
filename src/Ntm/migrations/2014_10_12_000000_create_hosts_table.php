@@ -31,7 +31,7 @@ class CreateHostsTable extends Migration {
             $table->unsignedBigInteger('id', true);
             $table->string('state')->default(HostStateEnum::STATE_UP);
 
-            $table->string('address')->nullable();
+            $table->bigInteger('address')->nullable();
             $table->integer('start')->nullable();
             $table->integer('end')->nullable();
             $table->integer('type')->default(HostTypeEnum::NODE_HOST);

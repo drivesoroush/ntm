@@ -29,7 +29,7 @@ class CreateOsTable extends Migration {
             $table->unsignedBigInteger('id', true);
 
             $table->string('name')->nullable();
-            $table->string('address');
+            $table->bigInteger('address');
             $table->string('type')->nullable();
             $table->string('vendor')->nullable();
             $table->string('os_family')->nullable();

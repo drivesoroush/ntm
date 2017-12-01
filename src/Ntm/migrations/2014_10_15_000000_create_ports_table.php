@@ -28,7 +28,7 @@ class CreatePortsTable extends Migration {
         Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
             $table->unsignedBigInteger('id', true);
 
-            $table->string('address');
+            $table->bigInteger('address');
             $table->string('protocol');
             $table->string('port_id');
             $table->string('state');

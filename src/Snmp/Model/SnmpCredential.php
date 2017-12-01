@@ -97,4 +97,25 @@ class SnmpCredential extends Model {
 
         return ! empty($snmp->get('.1.3.6.1.2.1.1.1.0'));
     }
+
+    /**
+     * Mutate the ip address.
+     *
+     * @param $address
+     */
+    public function setAddressAttribute($address)
+    {
+        $this->attributes['address'] = encode_ip($address);
+    }
+
+    /**
+     * Mutate the ip address.
+     *
+     * @return string
+     */
+    public function getAddressAttribute()
+    {
+        return decode_ip($this->attributes['address']);
+    }
+
 }
