@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Request;
 
 if( ! function_exists('table_name')) {
 
@@ -73,10 +73,12 @@ if( ! function_exists('get_scanner_address')) {
     function get_scanner_address()
     {
         try {
-            return trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
+            $public = trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
         } catch(Exception $e) {
-            return env("SCANNER_ADDRESS", Request::getClientIp());
+            $public = Request::getClientIp();
         }
+
+        return env("SCANNER_ADDRESS", $public);
     }
 }
 
