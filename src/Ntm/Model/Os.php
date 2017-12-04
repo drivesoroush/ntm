@@ -45,6 +45,7 @@ class Os extends Model {
     {
         return table_name('os');
     }
+
     /**
      * Mutate the address attribute into ip address.
      *
