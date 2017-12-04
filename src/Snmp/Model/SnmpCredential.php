@@ -93,7 +93,7 @@ class SnmpCredential extends Model {
     public function checkIsValid()
     {
         // try to run a command...
-        $snmp = new Snmp($this->address, $this->read);
+        $snmp = new Snmp($this->ip, $this->read);
 
         return ! empty($snmp->get('.1.3.6.1.2.1.1.1.0'));
     }

@@ -94,7 +94,7 @@ class SshCredential extends Model {
      */
     public function getConfigKeyAttribute()
     {
-        return config_key($this->address);
+        return config_key($this->ip);
     }
 
     /**
@@ -105,7 +105,7 @@ class SshCredential extends Model {
     public function auth()
     {
         $connections[$this->configKey] = [
-            'host'     => $this->address,
+            'host'     => $this->ip,
             'username' => $this->username,
             'password' => $this->password
         ];
