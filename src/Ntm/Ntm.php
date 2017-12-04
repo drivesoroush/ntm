@@ -188,7 +188,7 @@ class Ntm {
                 }
 
                 // remove deprecated os information...
-                Os::whereAddress($mainAddress)->delete();
+                Os::whereAddress(encode_ip($mainAddress))->delete();
 
                 $index = 0;
 
@@ -213,7 +213,7 @@ class Ntm {
                 }
 
                 // remove deprecated ports information...
-                Port::whereAddress($mainAddress)->delete();
+                Port::whereAddress(encode_ip($mainAddress))->delete();
 
                 // parse and persist ports...
                 foreach($xmlHost->ports->port ? : [] as $xmlPort) {
