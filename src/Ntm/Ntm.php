@@ -190,9 +190,11 @@ class Ntm {
                 // remove deprecated os information...
                 Os::whereAddress($mainAddress)->delete();
 
+                $index = 0;
+
                 // parse and persist ports...
                 foreach($xmlHost->os->osmatch ? : [] as $xmlOs) {
-                    if(strtolower((string)$xmlOs->osclass->attributes()->type) == "router") {
+                    if($index == 0 and strtolower((string)$xmlOs->osclass->attributes()->type) == "router") {
                         $host->update(['type' => HostTypeEnum::ROUTER_HOST]);
                     }
 
@@ -206,6 +208,8 @@ class Ntm {
                         'accuracy'  => (float)$xmlOs->osclass->attributes()->accuracy,
                         // 'host_id'   => $host->id,
                     ]);
+
+                    $index++;
                 }
 
                 // remove deprecated ports information...
