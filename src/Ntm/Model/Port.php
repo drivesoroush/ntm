@@ -66,6 +66,17 @@ class Port extends Model {
     {
         return table_name('ports');
     }
+
+    /**
+     * Mutate the ip address.
+     *
+     * @param $address
+     */
+    public function setAddressAttribute($address)
+    {
+        $this->attributes['address'] = encode_ip($address);
+    }
+
     /**
      * Mutate the address attribute into ip address.
      *

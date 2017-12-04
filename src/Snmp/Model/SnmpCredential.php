@@ -99,6 +99,16 @@ class SnmpCredential extends Model {
     }
 
     /**
+     * Mutate the ip address.
+     *
+     * @param $address
+     */
+    public function setAddressAttribute($address)
+    {
+        $this->attributes['address'] = encode_ip($address);
+    }
+
+    /**
      * Mutate the address attribute into ip address.
      *
      * @return string
