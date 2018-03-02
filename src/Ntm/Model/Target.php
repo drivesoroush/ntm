@@ -24,6 +24,7 @@ class Target extends Model {
         'ports',
         'os',
         'scheduled',
+        'user_id',
     ];
 
     /**

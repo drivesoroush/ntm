@@ -26,6 +26,8 @@ class Scan extends Model {
         'start',
         'end',
         'state',
+        'user_id',
+
         // scan info...
         'ranges',
         'ports',
