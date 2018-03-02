@@ -88,11 +88,12 @@ class Ntm {
 
         // create a new scan...
         $scan = Scan::create([
-            'id'     => $this->getScanCode() + 1,
-            'start'  => Carbon::now()->timestamp,
-            'ranges' => implode(' ', $ranges),
-            'ports'  => $this->portScan,
-            'os'     => $this->osDetection,
+            'id'      => $this->getScanCode() + 1,
+            'user_id' => $this->getUserId(),
+            'start'   => Carbon::now()->timestamp,
+            'ranges'  => implode(' ', $ranges),
+            'ports'   => $this->portScan,
+            'os'      => $this->osDetection,
         ]);
 
         // add scanner ip to ranges...
@@ -209,7 +210,7 @@ class Ntm {
                         // 'host_id'   => $host->id,
                     ]);
 
-                    $index++;
+                    $index ++;
                 }
 
                 // remove deprecated ports information...

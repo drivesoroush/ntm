@@ -31,6 +31,8 @@ class CreateHostScanTable extends Migration {
         Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable, $hostsTable) {
             $table->unsignedBigInteger('id', true);
 
+            $table->unsignedInteger('user_id');
+
             $table->unsignedBigInteger('host_id')->nullable();
             $table->foreign('host_id')
                   ->references('id')

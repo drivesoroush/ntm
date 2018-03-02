@@ -42,6 +42,8 @@ trait NtmParameters {
      */
     protected $traceroute = true;
 
+    protected $userId;
+
     /**
      * @param bool $traceroute
      *
@@ -122,6 +124,26 @@ trait NtmParameters {
     public function setTreatHostsAsOnline($treatHostsAsOnline)
     {
         $this->treatHostsAsOnline = $treatHostsAsOnline;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param mixed $userId
+     *
+     * @return $this
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
 
         return $this;
     }

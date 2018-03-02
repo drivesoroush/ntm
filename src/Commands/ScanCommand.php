@@ -17,6 +17,7 @@ class ScanCommand extends Command {
                                  {--s|scheduled= : Determine scheduled target to scan. Just pass cron string here but we won\' run the scan when you do.}
                                  {--o|os : Enable operating system scan.}
                                  {--p|ports : Enable well-known port scanning.}
+                                 {--u|user= : Id of user who created this scan.}
                                  ';
 
     /**
@@ -44,6 +45,7 @@ class ScanCommand extends Command {
         $scanPorts = $this->option('ports');
         $scanOs = $this->option('os');
         $scheduled = $this->option('scheduled');
+        $user = $this->option('user');
 
         // if user passes the scheduled cron string then just store the target...
         if( ! is_null($scheduled)) {
@@ -51,14 +53,16 @@ class ScanCommand extends Command {
                 'ranges'    => $ranges,
                 'ports'     => $scanPorts,
                 'os'        => $scanOs,
-                'scheduled' => $scheduled
+                'scheduled' => $scheduled,
+                'user_id'   => $user
             ]);
         } else {
             // initiate the scan job...
             CreateScanJob::dispatch(
                 $ranges,
                 $scanPorts,
-                $scanOs
+                $scanOs,
+                $user
             );
         }
     }

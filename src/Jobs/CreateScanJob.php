@@ -45,17 +45,23 @@ class CreateScanJob implements ShouldQueue {
     public $scanOs;
 
     /**
+     * @var int
+     */
+    public $userId;
+
+    /**
      * Create a new job instance.
      *
      * @param string | array $ranges
+     * @param integer        $userId
      * @param boolean        $scanPorts
      * @param boolean        $scanOs
      * @param integer        $timeout
      */
-    public function __construct($ranges, $scanPorts = true, $scanOs = true, $timeout = null)
+    public function __construct($ranges, $userId, $scanPorts = true, $scanOs = true, $timeout = null)
     {
         // target ranges...
-        if (is_array($ranges)) {
+        if(is_array($ranges)) {
             $this->ranges = $ranges;
         } else {
             $this->ranges = explode(' ', str_replace(',', ' ', $ranges));
@@ -65,8 +71,11 @@ class CreateScanJob implements ShouldQueue {
         $this->scanPorts = $scanPorts;
         $this->scanOs = $scanOs;
 
+        // user id...
+        $this->userId = $userId;
+
         // set the timeout...
-        if (is_null($timeout)) {
+        if(is_null($timeout)) {
             $this->timeout = config('ntm.scan.timeout');
         } else {
             $this->timeout = $timeout;
@@ -82,6 +91,7 @@ class CreateScanJob implements ShouldQueue {
     {
         // do the scan here...
         $scan = Ntm::create()
+                   ->setUserId($this->userId)
                    ->setTimeout($this->timeout)
                    ->setPortScan($this->scanPorts)
                    ->setOsDetection($this->scanOs)
