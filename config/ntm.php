@@ -16,6 +16,7 @@ return [
         'targets'          => 'targets',
         'snmp_credentials' => 'snmp_credentials',
         'mib'              => 'mib',
+        'host_groups'      => 'host_groups',
     ],
 
     'scan'      => [
