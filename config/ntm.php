@@ -17,6 +17,7 @@ return [
         'snmp_credentials' => 'snmp_credentials',
         'mib'              => 'mib',
         'host_groups'      => 'host_groups',
+        'host_scan'        => 'host_scan',
     ],
 
     'scan'      => [
