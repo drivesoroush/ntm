@@ -26,7 +26,7 @@ class CreateScansTable extends Migration {
         Schema::create($this->getTable(), function (Blueprint $table) {
             $table->unsignedBigInteger('id', true);
 
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
 
             $table->string('ranges');
             $table->boolean('ports')->default(true);
