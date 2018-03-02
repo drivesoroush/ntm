@@ -60,9 +60,9 @@ class ScanCommand extends Command {
             // initiate the scan job...
             CreateScanJob::dispatch(
                 $ranges,
+                $user,
                 $scanPorts,
-                $scanOs,
-                $user
+                $scanOs
             );
         }
     }
