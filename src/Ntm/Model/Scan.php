@@ -84,15 +84,18 @@ class Scan extends Model {
     /**
      * Rerun the scan.
      *
+     * @param integer | null $userId
+     *
      * @return integer
      */
-    public function rescan()
+    public function rescan($userId = null)
     {
         // call scan artisan command...
         return Artisan::call('scan', [
             'ranges'  => $this->ranges,
             '--os'    => $this->ports,
             '--ports' => $this->os,
+            '--user'  => $userId
         ]);
     }
 }
