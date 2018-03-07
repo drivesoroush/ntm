@@ -218,24 +218,28 @@ class Ntm {
 
                 // parse and persist ports...
                 foreach($xmlHost->ports->port ? : [] as $xmlPort) {
-                    if(strtolower((string)$xmlPort->service->attributes()->devicetype) == "switch") {
-                        $host->update(['type' => HostTypeEnum::SWITCH_HOST]);
-                    }
+                    try {
+                        if(strtolower((string)$xmlPort->service->attributes()->devicetype) == "switch") {
+                            $host->update(['type' => HostTypeEnum::SWITCH_HOST]);
+                        }
 
-                    Port::create([
-                        'address'    => $mainAddress,
-                        'protocol'   => (string)$xmlPort->attributes()->protocol,
-                        'port_id'    => (integer)$xmlPort->attributes()->portid,
-                        'state'      => (string)$xmlPort->state->attributes()->state,
-                        'reason'     => (string)$xmlPort->state->attributes()->reason,
-                        'service'    => (string)$xmlPort->service->attributes()->name,
-                        'method'     => (string)$xmlPort->service->attributes()->method,
-                        'conf'       => (string)$xmlPort->service->attributes()->conf,
-                        'product'    => (string)$xmlPort->service->attributes()->product ? : null,
-                        'version'    => (string)$xmlPort->service->attributes()->version ? : null,
-                        'extra_info' => (string)$xmlPort->service->attributes()->extrainfo ? : null,
-                        // 'host_id'    => $host->id,
-                    ]);
+                        Port::create([
+                            'address'    => $mainAddress,
+                            'protocol'   => (string)$xmlPort->attributes()->protocol,
+                            'port_id'    => (integer)$xmlPort->attributes()->portid,
+                            'state'      => (string)$xmlPort->state->attributes()->state,
+                            'reason'     => (string)$xmlPort->state->attributes()->reason,
+                            'service'    => (string)$xmlPort->service->attributes()->name,
+                            'method'     => (string)$xmlPort->service->attributes()->method,
+                            'conf'       => (string)$xmlPort->service->attributes()->conf,
+                            'product'    => (string)$xmlPort->service->attributes()->product ? : null,
+                            'version'    => (string)$xmlPort->service->attributes()->version ? : null,
+                            'extra_info' => (string)$xmlPort->service->attributes()->extrainfo ? : null,
+                            // 'host_id'    => $host->id,
+                        ]);
+                    } catch(Exception $e) {
+                        // ...
+                    }
                 }
 
                 // initiate the first address...
