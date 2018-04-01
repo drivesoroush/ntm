@@ -36,12 +36,8 @@ class CreateHostsTable extends Migration {
             $table->integer('end')->nullable();
             $table->integer('type')->default(HostTypeEnum::NODE_HOST);
 
-            $table->unsignedBigInteger('scan_id')->nullable();
-            $table->foreign('scan_id')
-                  ->references('id')
-                  ->on($scansTable)
-                  ->onDelete('set null')
-                  ->onUpdate('set null');
+            //$table->unsignedBigInteger('scan_id')->nullable();
+            //$table->foreign('scan_id')->references('id')->on($scansTable)->onDelete('set null')->onUpdate('set null');
         });
     }
 

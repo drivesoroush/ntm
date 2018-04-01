@@ -19,12 +19,19 @@ trait HostScope {
     {
         // try to find the host...
         $instance = $query->where('address', encode_ip($attributes['address']))
-                          ->where('scan_id', $attributes['scan_id'])
+                          //->where('scan_id', $attributes['scan_id'])
                           ->first();
 
-        // if the host found return it...
-        // otherwise create...
-        return $instance ? $instance : $query->create($attributes);
+        if($instance) {
+            // if there is such host then update it...
+            $instance->update($attributes);
+        } else {
+            // otherwise create...
+            $instance = $query->create($attributes);
+        }
+
+        // return the instance...
+        return $instance;
     }
 
 }

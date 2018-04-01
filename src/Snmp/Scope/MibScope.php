@@ -18,9 +18,8 @@ trait MibScope {
     public function scopeFindOrCreate($query, $attributes)
     {
         // try to find the host...
-        $instance = $query->where('address', $attributes['address'])
-                          ->where('oid', $attributes['oid'])
-                          ->first();
+        //$instance = $query->where('address', $attributes['address'])->where('oid', $attributes['oid'])->first();
+        $instance = $query->where('host_id', $attributes['host_id'])->where('oid', $attributes['oid'])->first();
 
         if($instance) {
             $query->update($attributes);

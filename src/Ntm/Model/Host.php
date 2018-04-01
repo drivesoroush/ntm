@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Config;
 use Ntcm\Enums\HostTypeEnum;
 use Ntcm\Ntm\Scope\HostScope;
+use Ntcm\Snmp\Model\Mib;
 use Ntcm\Snmp\Model\SnmpCredential;
 
 /**
@@ -80,18 +81,28 @@ class Host extends Model {
      */
     public function ports()
     {
-        return $this->hasMany(Port::class, 'address', 'address');
+        //return $this->hasMany(Port::class, 'address', 'address');
+        return $this->hasMany(Port::class);
     }
 
     /**
-     * Make host-scan relationship.
-     *
-     * @return BelongsTo
+     * @return HasMany
      */
-    public function scan()
+    public function mibCollection()
     {
-        return $this->belongsTo(Scan::class);
+        //return $this->hasMany(Port::class, 'address', 'address');
+        return $this->hasMany(Mib::class);
     }
+
+    ///**
+    // * Make host-scan relationship.
+    // *
+    // * @return BelongsTo
+    // */
+    //public function scan()
+    //{
+    //    return $this->belongsTo(Scan::class);
+    //}
 
     /**
      * Make os-host relationship.
@@ -100,7 +111,8 @@ class Host extends Model {
      */
     public function osCollection()
     {
-        return $this->hasMany(Os::class, 'address', 'address');
+        //return $this->hasMany(Os::class, 'address', 'address');
+        return $this->hasMany(Os::class);
     }
 
     /**
@@ -136,7 +148,8 @@ class Host extends Model {
      */
     public function sshCredentials()
     {
-        return $this->hasMany(SshCredential::class, 'address', 'address');
+        //return $this->hasMany(SshCredential::class, 'address', 'address');
+        return $this->hasMany(SshCredential::class);
     }
 
     /**
@@ -146,7 +159,8 @@ class Host extends Model {
      */
     public function snmpCredentials()
     {
-        return $this->hasMany(SnmpCredential::class, 'address', 'address');
+        //return $this->hasMany(SnmpCredential::class, 'address', 'address');
+        return $this->hasMany(SnmpCredential::class);
     }
 
     /**

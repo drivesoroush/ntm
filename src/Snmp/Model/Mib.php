@@ -2,7 +2,9 @@
 
 namespace Ntcm\Snmp\Model;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Ntcm\Ntm\Model\Host;
 use Ntcm\Snmp\Scope\MibScope;
 
 /**
@@ -19,9 +21,10 @@ class Mib extends Model {
      */
     protected $fillable = [
         'id',
-        'address',
+        //'address',
         'oid',
         'value',
+        'host_id',
     ];
 
     /**
@@ -60,22 +63,32 @@ class Mib extends Model {
     }
 
     /**
-     * Mutate the ip address.
+     * Create relation to host model.
      *
-     * @param $address
+     * @return BelongsTo
      */
-    public function setAddressAttribute($address)
+    public function host()
     {
-        $this->attributes['address'] = encode_ip($address);
+        return $this->belongsTo(Host::class);
     }
 
-    /**
-     * Mutate the ip address.
-     *
-     * @return string
-     */
-    public function getAddressAttribute()
-    {
-        return decode_ip($this->attributes['address']);
-    }
+    ///**
+    // * Mutate the ip address.
+    // *
+    // * @param $address
+    // */
+    //public function setAddressAttribute($address)
+    //{
+    //    $this->attributes['address'] = encode_ip($address);
+    //}
+    //
+    ///**
+    // * Mutate the ip address.
+    // *
+    // * @return string
+    // */
+    //public function getAddressAttribute()
+    //{
+    //    return decode_ip($this->attributes['address']);
+    //}
 }

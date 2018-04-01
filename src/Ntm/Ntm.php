@@ -166,7 +166,7 @@ class Ntm {
                     'state'   => (string)$xmlHost->status->attributes()->state == "up" ? HostStateEnum::STATE_UP : HostStateEnum::STATE_DOWN,
                     'start'   => (integer)$xmlHost->attributes()->starttime,
                     'end'     => (integer)$xmlHost->attributes()->endtime,
-                    'scan_id' => $scan->id
+                    //'scan_id' => $scan->id
                 ]);
 
                 // parse and persist addresses...
@@ -189,7 +189,8 @@ class Ntm {
                 }
 
                 // remove deprecated os information...
-                Os::whereAddress(encode_ip($mainAddress))->delete();
+                // $host->osCollection()->delete();
+                Os::where('host_id', $host->id)->delete();
 
                 $index = 0;
 
@@ -200,21 +201,22 @@ class Ntm {
                     }
 
                     Os::create([
-                        'address'   => $mainAddress,
+                        //'address'   => $mainAddress,
                         'name'      => (string)$xmlOs->attributes()->name,
                         'type'      => (string)$xmlOs->osclass->attributes()->type,
                         'vendor'    => (string)$xmlOs->osclass->attributes()->vendor,
                         'os_family' => (string)$xmlOs->osclass->attributes()->osfamily,
                         'os_gen'    => (string)$xmlOs->osclass->attributes()->osgen,
                         'accuracy'  => (float)$xmlOs->osclass->attributes()->accuracy,
-                        // 'host_id'   => $host->id,
+                        'host_id'   => $host->id,
                     ]);
 
                     $index ++;
                 }
 
                 // remove deprecated ports information...
-                Port::whereAddress(encode_ip($mainAddress))->delete();
+                // $host->ports()->delete();
+                Port::where('host_id', $host->id)->delete();
 
                 // parse and persist ports...
                 foreach($xmlHost->ports->port ? : [] as $xmlPort) {
@@ -224,7 +226,7 @@ class Ntm {
                         }
 
                         Port::create([
-                            'address'    => $mainAddress,
+                            //'address'    => $mainAddress,
                             'protocol'   => (string)$xmlPort->attributes()->protocol,
                             'port_id'    => (integer)$xmlPort->attributes()->portid,
                             'state'      => (string)$xmlPort->state->attributes()->state,
@@ -235,7 +237,7 @@ class Ntm {
                             'product'    => (string)$xmlPort->service->attributes()->product ? : null,
                             'version'    => (string)$xmlPort->service->attributes()->version ? : null,
                             'extra_info' => (string)$xmlPort->service->attributes()->extrainfo ? : null,
-                            // 'host_id'    => $host->id,
+                            'host_id'    => $host->id,
                         ]);
                     } catch(Exception $e) {
                         // ...
@@ -263,12 +265,12 @@ class Ntm {
                     // find or create hosts...
                     $first = Host::findOrCreate([
                         'address' => $firstAddress,
-                        'scan_id' => $scan->id,
+                        //'scan_id' => $scan->id,
                         'type'    => $firstType,
                     ]);
                     $second = Host::findOrCreate([
                         'address' => $secondAddress,
-                        'scan_id' => $scan->id,
+                        //'scan_id' => $scan->id,
                         'type'    => $secondType,
                     ]);
 
@@ -280,7 +282,7 @@ class Ntm {
                             'state'   => HostStateEnum::STATE_UP,
                             'address' => subnet_address(get_range($secondAddress)),
                             'type'    => HostTypeEnum::SWITCH_HOST,
-                            'scan_id' => $scan->id,
+                            //'scan_id' => $scan->id,
                         ]);
 
                         // connect first host to switch...

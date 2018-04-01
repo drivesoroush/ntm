@@ -29,19 +29,19 @@ class CreateOsTable extends Migration {
             $table->unsignedBigInteger('id', true);
 
             $table->string('name')->nullable();
-            $table->bigInteger('address');
+            //$table->bigInteger('address');
             $table->string('type')->nullable();
             $table->string('vendor')->nullable();
             $table->string('os_family')->nullable();
             $table->string('os_gen')->nullable();
             $table->float('accuracy')->nullable();
 
-            //$table->unsignedBigInteger('host_id')->nullable();
-            //$table->foreign('host_id')
-            //      ->references('id')
-            //      ->on($hostsTable)
-            //      ->onDelete('set null')
-            //      ->onUpdate('set null');
+            $table->unsignedBigInteger('host_id')->nullable();
+            $table->foreign('host_id')
+                  ->references('id')
+                  ->on($hostsTable)
+                  ->onDelete('set null')
+                  ->onUpdate('set null');
 
         });
     }
@@ -53,9 +53,9 @@ class CreateOsTable extends Migration {
      */
     public function down()
     {
-        //Schema::table($this->getTable(), function (Blueprint $table) {
-        //    $table->dropForeign(['host_id']);
-        //});
+        Schema::table($this->getTable(), function (Blueprint $table) {
+            $table->dropForeign(['host_id']);
+        });
 
         Schema::drop($this->getTable());
     }

@@ -2,6 +2,7 @@
 
 namespace Ntcm\Ntm\Model;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Collective\Remote\RemoteFacade as SSH;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -22,10 +23,11 @@ class SshCredential extends Model {
      */
     protected $fillable = [
         'id',
-        'address',
+        //'address',
         'username',
         'password',
         'is_valid',
+        'host_id',
     ];
 
     /**
@@ -135,23 +137,33 @@ class SshCredential extends Model {
     }
 
     /**
-     * Mutate the ip address.
+     * Create relation to host model.
      *
-     * @param $address
+     * @return BelongsTo
      */
-    public function setAddressAttribute($address)
+    public function host()
     {
-        $this->attributes['address'] = encode_ip($address);
+        return $this->belongsTo(Host::class);
     }
 
-    /**
-     * Mutate the address attribute into ip address.
-     *
-     * @return string
-     */
-    public function getIpAttribute()
-    {
-        return decode_ip($this->attributes['address']);
-    }
+    ///**
+    // * Mutate the ip address.
+    // *
+    // * @param $address
+    // */
+    //public function setAddressAttribute($address)
+    //{
+    //    $this->attributes['address'] = encode_ip($address);
+    //}
+    //
+    ///**
+    // * Mutate the address attribute into ip address.
+    // *
+    // * @return string
+    // */
+    //public function getIpAttribute()
+    //{
+    //    return decode_ip($this->attributes['address']);
+    //}
 
 }

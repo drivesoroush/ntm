@@ -23,14 +23,24 @@ class CreateSnmpCredentialsTable extends Migration {
      */
     public function up()
     {
-        Schema::create($this->getTable(), function (Blueprint $table) {
+        $hostsTable = config('ntm.tables.hosts', 'mapper_hosts');
+
+        Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
             $table->unsignedBigInteger('id', true);
 
-            $table->bigInteger('address');
+            //$table->bigInteger('address');
             $table->string('read');
             $table->string('write')->nullable();
 
             $table->boolean('is_valid')->default(false);
+
+            $table->unsignedBigInteger('host_id')->nullable();
+            $table->foreign('host_id')
+                  ->references('id')
+                  ->on($hostsTable)
+                  ->onDelete('set null')
+                  ->onUpdate('set null');
+
             $table->timestamps();
         });
     }
@@ -42,6 +52,10 @@ class CreateSnmpCredentialsTable extends Migration {
      */
     public function down()
     {
+        Schema::table($this->getTable(), function (Blueprint $table) {
+            $table->dropForeign(['host_id']);
+        });
+
         Schema::drop($this->getTable());
     }
 }

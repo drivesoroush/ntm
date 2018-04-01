@@ -28,7 +28,7 @@ class CreatePortsTable extends Migration {
         Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
             $table->unsignedBigInteger('id', true);
 
-            $table->bigInteger('address');
+            //$table->bigInteger('address');
             $table->string('protocol');
             $table->string('port_id');
             $table->string('state');
@@ -40,12 +40,12 @@ class CreatePortsTable extends Migration {
             $table->string('version')->nullable();
             $table->string('extra_info')->nullable();
 
-            //$table->unsignedBigInteger('host_id')->nullable();
-            //$table->foreign('host_id')
-            //      ->references('id')
-            //      ->on($hostsTable)
-            //      ->onDelete('set null')
-            //      ->onUpdate('set null');
+            $table->unsignedBigInteger('host_id')->nullable();
+            $table->foreign('host_id')
+                  ->references('id')
+                  ->on($hostsTable)
+                  ->onDelete('set null')
+                  ->onUpdate('set null');
         });
     }
 
@@ -56,9 +56,9 @@ class CreatePortsTable extends Migration {
      */
     public function down()
     {
-        //Schema::table($this->getTable(), function (Blueprint $table) {
-        //    $table->dropForeign(['host_id']);
-        //});
+        Schema::table($this->getTable(), function (Blueprint $table) {
+            $table->dropForeign(['host_id']);
+        });
 
         Schema::drop($this->getTable());
     }

@@ -8,7 +8,7 @@ namespace Ntcm\Snmp\Scope;
 trait SnmpCredentialScope {
 
     /**
-     * Check whether this hop exists in the database or not.
+     * Find snmp credential of create one.
      *
      * @param        $query
      * @param array  $attributes
@@ -17,7 +17,8 @@ trait SnmpCredentialScope {
      */
     public function scopeFindOrCreate($query, $attributes)
     {
-        $credential = $query->where('address', encode_ip($attributes['address']))->first();
+        //$credential = $query->where('address', encode_ip($attributes['address']))->first();
+        $credential = $query->where('host_id', $attributes['host_id'])->first();
 
         // remove the previous snmp credentials...
         if($credential) {

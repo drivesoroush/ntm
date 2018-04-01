@@ -8,7 +8,7 @@ namespace Ntcm\Ntm\Scope;
 trait SshCredentialScope {
 
     /**
-     * Check whether this hop exists in the database or not.
+     * Try to find the ssh credential otherwise create new one with input attributes.
      *
      * @param        $query
      * @param array  $attributes
@@ -17,7 +17,16 @@ trait SshCredentialScope {
      */
     public function scopeFindOrCreate($query, $attributes)
     {
-        $credential = $query->where('address', encode_ip($attributes['address']))
+        //$credential = $query->where('address', encode_ip($attributes['address']))
+        //                    ->get()
+        //                    ->filter(function ($record) use ($attributes) {
+        //                        if($record->username == $attributes['username']) {
+        //                            return $record;
+        //                        }
+        //                    })
+        //                    ->first();
+
+        $credential = $query->where('host_id', $attributes['host_id'])
                             ->get()
                             ->filter(function ($record) use ($attributes) {
                                 if($record->username == $attributes['username']) {
@@ -26,6 +35,7 @@ trait SshCredentialScope {
                             })
                             ->first();
 
+        // if you find it then update it, otherwise create new one...
         if( ! $credential) {
             $credential = $query->create($attributes);
         } else {

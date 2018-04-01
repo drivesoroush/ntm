@@ -2,6 +2,7 @@
 
 namespace Ntcm\Ntm\Model;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Ntcm\Ntm\Scope\PortScope;
 
@@ -19,7 +20,7 @@ class Port extends Model {
      */
     protected $fillable = [
         'id',
-        'address',
+        //'address',
         'protocol',
         'port_id',
         'state',
@@ -46,7 +47,7 @@ class Port extends Model {
      */
     public function isOpen()
     {
-        //
+        return true;
     }
 
     /**
@@ -54,7 +55,7 @@ class Port extends Model {
      */
     public function isClosed()
     {
-        //
+        return false;
     }
 
     /**
@@ -68,23 +69,33 @@ class Port extends Model {
     }
 
     /**
-     * Mutate the ip address.
+     * Create relation to host model.
      *
-     * @param $address
+     * @return BelongsTo
      */
-    public function setAddressAttribute($address)
+    public function host()
     {
-        $this->attributes['address'] = encode_ip($address);
+        return $this->belongsTo(Host::class);
     }
 
-    /**
-     * Mutate the address attribute into ip address.
-     *
-     * @return string
-     */
-    public function getIpAttribute()
-    {
-        return decode_ip($this->attributes['address']);
-    }
+    ///**
+    // * Mutate the ip address.
+    // *
+    // * @param $address
+    // */
+    //public function setAddressAttribute($address)
+    //{
+    //    $this->attributes['address'] = encode_ip($address);
+    //}
+    //
+    ///**
+    // * Mutate the address attribute into ip address.
+    // *
+    // * @return string
+    // */
+    //public function getIpAttribute()
+    //{
+    //    return decode_ip($this->attributes['address']);
+    //}
 
 }
