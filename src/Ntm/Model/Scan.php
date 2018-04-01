@@ -2,6 +2,7 @@
 
 namespace Ntcm\Ntm\Model;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -99,5 +100,19 @@ class Scan extends Model {
             '--ports' => $this->os,
             '--user'  => $userId
         ]);
+    }
+
+    /**
+     * Relate this scan to the host.
+     *
+     * @param integer $hostId
+     */
+    public function attachHost($hostId)
+    {
+        try {
+            $this->hosts()->findOrFail($hostId);
+        } catch(Exception $e) {
+            $this->hosts()->attach($hostId);
+        }
     }
 }
