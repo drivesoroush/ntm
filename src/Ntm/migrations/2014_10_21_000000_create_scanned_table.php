@@ -31,15 +31,15 @@ class CreateScannedTable extends Migration {
             $table->foreign('host_id')
                   ->references('id')
                   ->on($hostsTable)
-                  ->onDelete('set null')
-                  ->onUpdate('set null');
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
 
             $table->unsignedBigInteger('scan_id')->nullable();
             $table->foreign('scan_id')
                   ->references('id')
                   ->on($scansTable)
-                  ->onDelete('set null')
-                  ->onUpdate('set null');
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
         });
     }
 
