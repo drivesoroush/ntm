@@ -169,6 +169,8 @@ class Ntm {
                     //'scan_id' => $scan->id
                 ]);
 
+                $scan->hosts()->attach($host->id);
+
                 // parse and persist addresses...
                 foreach($xmlHost->address ? : [] as $xmlAddress) {
                     Address::findOrCreate([
@@ -274,6 +276,9 @@ class Ntm {
                         'type'    => $secondType,
                     ]);
 
+                    $scan->hosts()->attach($first->id);
+                    $scan->hosts()->attach($second->id);
+
                     // first or last hop...
                     if($index == 0 or $index == sizeof($xmlHost->trace->hop) - 1) {
 
@@ -284,6 +289,8 @@ class Ntm {
                             'type'    => HostTypeEnum::SWITCH_HOST,
                             //'scan_id' => $scan->id,
                         ]);
+
+                        $scan->hosts()->attach($switch->id);
 
                         // connect first host to switch...
                         Hop::findOrCreate([
