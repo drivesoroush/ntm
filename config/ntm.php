@@ -18,6 +18,7 @@ return [
         'mib'              => 'mib',
         'host_groups'      => 'host_groups',
         'host_scan'        => 'host_scan',
+        'scanned'          => 'scanned',
     ],
 
     'scan'      => [

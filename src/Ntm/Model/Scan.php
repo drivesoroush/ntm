@@ -4,6 +4,7 @@ namespace Ntcm\Ntm\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Artisan;
 use Ntcm\Enums\HostStateEnum;
 use Ntcm\Ntm\Scope\ScanScope;
@@ -64,11 +65,11 @@ class Scan extends Model {
     /**
      * Make scan-host relationship.
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
     public function hosts()
     {
-        return $this->hasMany(Host::class);
+        return $this->belongsToMany(Host::class, config('ntm.tables.scanned', 'mapper_scanned'));
     }
 
     /**
@@ -78,7 +79,8 @@ class Scan extends Model {
      */
     public function upHosts()
     {
-        return $this->hasMany(Host::class)->whereState(HostStateEnum::STATE_UP);
+        return $this->belongsToMany(Host::class, config('ntm.tables.scanned', 'mapper_scanned'))
+                    ->whereState(HostStateEnum::STATE_UP);
     }
 
     /**
