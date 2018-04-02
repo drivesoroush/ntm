@@ -13,7 +13,7 @@ class CreateHostGroupTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.host_groups', 'mapper_host_groups');
+        return table_name('host_groups');
     }
 
     /**
@@ -23,8 +23,8 @@ class CreateHostGroupTable extends Migration {
      */
     public function up()
     {
-        $hostsTable = config('ntm.tables.hosts', 'mapper_hosts');
-        $groupsTable = config('ntm.tables.groups', 'mapper_groups');
+        $hostsTable = table_name('hosts');
+        $groupsTable = table_name('groups');
 
         Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable, $groupsTable) {
             $table->unsignedBigInteger('host_id')->nullable();

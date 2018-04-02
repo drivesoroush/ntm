@@ -13,7 +13,7 @@ class CreateTargetsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.targets', 'mapper_targets');
+        return table_name('targets');
     }
 
     /**

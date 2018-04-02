@@ -70,7 +70,7 @@ class Scan extends Model {
      */
     public function hosts()
     {
-        return $this->belongsToMany(Host::class, config('ntm.tables.scanned', 'mapper_scanned'));
+        return $this->belongsToMany(Host::class, table_name('scanned'));
     }
 
     /**
@@ -80,7 +80,7 @@ class Scan extends Model {
      */
     public function upHosts()
     {
-        return $this->belongsToMany(Host::class, config('ntm.tables.scanned', 'mapper_scanned'))
+        return $this->belongsToMany(Host::class, table_name('scanned'))
                     ->whereState(HostStateEnum::STATE_UP);
     }
 

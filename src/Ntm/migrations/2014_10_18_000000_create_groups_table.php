@@ -13,7 +13,7 @@ class CreateGroupsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.groups', 'mapper_groups');
+        return table_name('groups');
     }
 
     /**

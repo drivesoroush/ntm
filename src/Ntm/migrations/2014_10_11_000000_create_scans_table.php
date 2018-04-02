@@ -13,7 +13,7 @@ class CreateScansTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.scans', 'mapper_scans');
+        return table_name('scans');
     }
 
     /**

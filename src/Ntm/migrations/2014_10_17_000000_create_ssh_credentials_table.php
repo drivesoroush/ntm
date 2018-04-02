@@ -13,7 +13,7 @@ class CreateSshCredentialsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.ssh_credentials', 'mapper_ssh_credentials');
+        return table_name('ssh_credentials');
     }
 
     /**
@@ -23,7 +23,7 @@ class CreateSshCredentialsTable extends Migration {
      */
     public function up()
     {
-        $hostsTable = config('ntm.tables.hosts', 'mapper_hosts');
+        $hostsTable = table_name('hosts');
 
         Schema::create($this->getTable(), function (Blueprint $table) use ($hostsTable) {
             $table->unsignedBigInteger('id', true);
