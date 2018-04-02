@@ -38,7 +38,7 @@ class CreateHostsTable extends Migration {
             $table->integer('type')->default(HostTypeEnum::NODE_HOST);
 
             $table->unsignedBigInteger('os_generic_id')->nullable();
-            $table->foreign('scan_id')
+            $table->foreign('os_generic_id')
                   ->references('id')
                   ->on($osGenericTable)
                   ->onDelete('set null')
@@ -56,9 +56,9 @@ class CreateHostsTable extends Migration {
      */
     public function down()
     {
-        //Schema::table($this->getTable(), function (Blueprint $table) {
-        //    $table->dropForeign(['scan_id']);
-        //});
+        Schema::table($this->getTable(), function (Blueprint $table) {
+            $table->dropForeign(['os_generic_id']);
+        });
 
         Schema::drop($this->getTable());
     }
