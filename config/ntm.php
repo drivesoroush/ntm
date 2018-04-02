@@ -10,6 +10,7 @@ return [
         'scans'            => 'scans',
         'hops'             => 'hops',
         'os_detected'      => 'os_detected',
+        'os_generic'       => 'os_generic',
         'ssh_credentials'  => 'ssh_credentials',
         'groups'           => 'groups',
         'host_group'       => 'host_group',

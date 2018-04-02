@@ -26,8 +26,9 @@ class CreateHostsTable extends Migration {
     public function up()
     {
         $scansTable = table_name('scans');
+        $osGenericTable = table_name('os_generic');
 
-        Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable) {
+        Schema::create($this->getTable(), function (Blueprint $table) use ($scansTable, $osGenericTable) {
             $table->unsignedBigInteger('id', true);
             $table->string('state')->default(HostStateEnum::STATE_UP);
 
@@ -35,6 +36,13 @@ class CreateHostsTable extends Migration {
             $table->integer('start')->nullable();
             $table->integer('end')->nullable();
             $table->integer('type')->default(HostTypeEnum::NODE_HOST);
+
+            $table->unsignedBigInteger('os_generic_id')->nullable();
+            $table->foreign('scan_id')
+                  ->references('id')
+                  ->on($osGenericTable)
+                  ->onDelete('set null')
+                  ->onUpdate('set null');
 
             //$table->unsignedBigInteger('scan_id')->nullable();
             //$table->foreign('scan_id')->references('id')->on($scansTable)->onDelete('set null')->onUpdate('set null');

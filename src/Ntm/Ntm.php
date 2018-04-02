@@ -13,6 +13,7 @@ use Ntcm\Ntm\Model\Hop;
 use Ntcm\Ntm\Model\Host;
 use Ntcm\Ntm\Model\Hostname;
 use Ntcm\Ntm\Model\Os;
+use Ntcm\Ntm\Model\OsGeneric;
 use Ntcm\Ntm\Model\Port;
 use Ntcm\Ntm\Model\Scan;
 use Ntcm\Ntm\Util\ProcessExecutor;
@@ -202,16 +203,27 @@ class Ntm {
                         $host->update(['type' => HostTypeEnum::ROUTER_HOST]);
                     }
 
+                    // detected operating system family...
+                    $osFamily = (string)$xmlOs->osclass->attributes()->osfamily;
+
                     $os = Os::create([
                         //'address'   => $mainAddress,
                         'name'      => (string)$xmlOs->attributes()->name,
                         'type'      => (string)$xmlOs->osclass->attributes()->type,
                         'vendor'    => (string)$xmlOs->osclass->attributes()->vendor,
-                        'os_family' => (string)$xmlOs->osclass->attributes()->osfamily,
+                        'os_family' => $osFamily,
                         'os_gen'    => (string)$xmlOs->osclass->attributes()->osgen,
                         'accuracy'  => (float)$xmlOs->osclass->attributes()->accuracy,
                         'host_id'   => $host->id,
                     ]);
+
+                    $generic = OsGeneric::where('family', 'like', strtolower($osFamily))->firstOrFail();
+
+                    if(is_null($host->os_generic_id)) {
+                        $host->update([
+                            'os_generic_id' => $generic->id
+                        ]);
+                    }
 
                     $index ++;
                 }
