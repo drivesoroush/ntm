@@ -33,7 +33,7 @@ class Host extends Model {
         'scan_id',
         'address',
         'type',
-        'os_generic',
+        'os_generic_id',
     ];
 
     /**
