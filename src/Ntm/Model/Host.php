@@ -274,8 +274,4 @@ class Host extends Model {
         return decode_ip($this->attributes['address']);
     }
 
-    public function setGenericOs(OsGeneric $generic)
-    {
-
-    }
 }
