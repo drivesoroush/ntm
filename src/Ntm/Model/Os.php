@@ -44,7 +44,7 @@ class Os extends Model {
      */
     public function getTable()
     {
-        return table_name('os');
+        return table_name('os_detected');
     }
 
     /**

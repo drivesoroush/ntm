@@ -202,7 +202,7 @@ class Ntm {
                         $host->update(['type' => HostTypeEnum::ROUTER_HOST]);
                     }
 
-                    Os::create([
+                    $os = Os::create([
                         //'address'   => $mainAddress,
                         'name'      => (string)$xmlOs->attributes()->name,
                         'type'      => (string)$xmlOs->osclass->attributes()->type,

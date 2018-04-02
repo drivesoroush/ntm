@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOsTable extends Migration {
+class CreateOsDetectedTable extends Migration {
 
     /**
      * Get table name.
@@ -13,7 +13,7 @@ class CreateOsTable extends Migration {
      */
     function getTable()
     {
-        return config('ntm.tables.os', 'mapper_os');
+        return config('ntm.tables.os_detected', 'mapper_os_detected');
     }
 
     /**

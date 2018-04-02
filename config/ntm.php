@@ -9,7 +9,7 @@ return [
         'ports'            => 'ports',
         'scans'            => 'scans',
         'hops'             => 'hops',
-        'os'               => 'os',
+        'os_detected'      => 'os_detected',
         'ssh_credentials'  => 'ssh_credentials',
         'groups'           => 'groups',
         'host_group'       => 'host_group',
