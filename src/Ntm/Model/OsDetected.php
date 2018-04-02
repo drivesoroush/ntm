@@ -9,7 +9,7 @@ use Ntcm\Ntm\Scope\OsScope;
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
  */
-class Os extends Model {
+class OsDetected extends Model {
 
     use OsScope;
 

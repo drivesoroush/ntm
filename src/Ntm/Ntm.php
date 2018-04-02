@@ -12,7 +12,7 @@ use Ntcm\Ntm\Model\Address;
 use Ntcm\Ntm\Model\Hop;
 use Ntcm\Ntm\Model\Host;
 use Ntcm\Ntm\Model\Hostname;
-use Ntcm\Ntm\Model\Os;
+use Ntcm\Ntm\Model\OsDetected;
 use Ntcm\Ntm\Model\OsGeneric;
 use Ntcm\Ntm\Model\Port;
 use Ntcm\Ntm\Model\Scan;
@@ -193,7 +193,7 @@ class Ntm {
 
                 // remove deprecated os information...
                 // $host->osCollection()->delete();
-                Os::where('host_id', $host->id)->delete();
+                OsDetected::where('host_id', $host->id)->delete();
 
                 $index = 0;
 
@@ -206,7 +206,7 @@ class Ntm {
                     // detected operating system family...
                     $osFamily = (string)$xmlOs->osclass->attributes()->osfamily;
 
-                    $os = Os::create([
+                    $os = OsDetected::create([
                         //'address'   => $mainAddress,
                         'name'      => (string)$xmlOs->attributes()->name,
                         'type'      => (string)$xmlOs->osclass->attributes()->type,
@@ -217,9 +217,9 @@ class Ntm {
                         'host_id'   => $host->id,
                     ]);
 
-                    $generic = OsGeneric::where('family', 'like', strtolower($osFamily))->first();
+                    $generic = OsGeneric::where('family', 'like', "%" . strtolower($osFamily) . "%")->first();
 
-                    if(is_null($host->os_generic_id) and $generic) {
+                    if( ! $host->os_generic_id and $generic) {
                         $host->update([
                             'os_generic_id' => $generic->id
                         ]);

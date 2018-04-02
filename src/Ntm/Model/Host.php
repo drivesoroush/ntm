@@ -113,13 +113,21 @@ class Host extends Model {
     public function osCollection()
     {
         //return $this->hasMany(Os::class, 'address', 'address');
-        return $this->hasMany(Os::class);
+        return $this->hasMany(OsDetected::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function osGeneric()
+    {
+        return $this->belongsTo(OsGeneric::class);
     }
 
     /**
      * Get main os model of this host.
      *
-     * @return Os
+     * @return OsDetected
      */
     public function getOsAttribute()
     {
@@ -274,4 +282,20 @@ class Host extends Model {
         return decode_ip($this->attributes['address']);
     }
 
+    public function backupConfigurations()
+    {
+        // ip address...
+        $address = $this->address;
+
+        // port...
+        $port = 22;
+
+        // ssh credentials...
+        $credential = $this->sshCredentials()->where('is_valid', true)->firstOrFail();
+        $username = $credential->username;
+        $password = $credential->password;
+
+        // os...
+        $os = $this->osGeneric->alias;
+    }
 }
