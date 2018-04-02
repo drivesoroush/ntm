@@ -217,9 +217,9 @@ class Ntm {
                         'host_id'   => $host->id,
                     ]);
 
-                    $generic = OsGeneric::where('family', 'like', strtolower($osFamily))->firstOrFail();
+                    $generic = OsGeneric::where('family', 'like', strtolower($osFamily))->first();
 
-                    if(is_null($host->os_generic_id)) {
+                    if(is_null($host->os_generic_id) and $generic) {
                         $host->update([
                             'os_generic_id' => $generic->id
                         ]);
