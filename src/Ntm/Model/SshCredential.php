@@ -26,6 +26,7 @@ class SshCredential extends Model {
         //'address',
         'username',
         'password',
+        'port',
         'is_valid',
         'host_id',
     ];
