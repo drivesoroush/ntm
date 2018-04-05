@@ -37,7 +37,7 @@ class ProcessExecutor {
         $process->run();
 
         // set output and exit code...
-        $this->setOutput($process->getOutput());
+        $this->setOutput(trim($process->getOutput()));
         $this->setExitCode($process->getExitCode());
 
         if( ! $process->isSuccessful()) {
