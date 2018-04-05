@@ -23,7 +23,8 @@ return [
         'host_scan'        => 'host_scan',
         'scanned'          => 'scanned',
         // ncm...
-        'backup'           => 'backup',
+        'backups'          => 'backups',
+        'changes'          => 'changes',
     ],
 
     'scan'      => [
