@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBackupsGenericTable extends Migration {
+class CreateBackupsTable extends Migration {
 
     /**
      * Get table name.
