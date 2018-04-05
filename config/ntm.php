@@ -3,6 +3,7 @@
 return [
     // you can determine your table names...
     'tables' => [
+        // ntm...
         'hosts'            => 'hosts',
         'addresses'        => 'addresses',
         'host_names'       => 'host_names',
@@ -15,11 +16,14 @@ return [
         'groups'           => 'groups',
         'host_group'       => 'host_group',
         'targets'          => 'targets',
+        // snmp
         'snmp_credentials' => 'snmp_credentials',
         'mib'              => 'mib',
         'host_groups'      => 'host_groups',
         'host_scan'        => 'host_scan',
         'scanned'          => 'scanned',
+        // ncm...
+        'backup'           => 'backup',
     ],
 
     'scan'      => [
