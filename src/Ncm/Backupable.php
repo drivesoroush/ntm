@@ -65,7 +65,7 @@ trait Backupable {
      */
     protected function getRestoreUsername()
     {
-        return $this->getHost()->username;
+        return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->username;
     }
 
     /**
@@ -73,7 +73,7 @@ trait Backupable {
      */
     protected function getRestorePassword()
     {
-        return $this->getHost()->password;
+        return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->password;
     }
 
     /**
@@ -81,7 +81,7 @@ trait Backupable {
      */
     protected function getRestorePort()
     {
-        return $this->getHost()->port;
+        return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->port;
     }
 
     /**
