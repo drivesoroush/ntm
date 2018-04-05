@@ -33,7 +33,11 @@ class ProcessExecutor {
     {
         $process = new Process($command, null, null, null, $timeout);
 
-        $this->setOutput($process->run());
+        // run the command...
+        $process->run();
+
+        // set output and exit code...
+        $this->setOutput($process->getOutput());
         $this->setExitCode($process->getExitCode());
 
         if( ! $process->isSuccessful()) {
