@@ -37,7 +37,7 @@ class CreateBackupsTable extends Migration {
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
-            $table->timestamps("created_at");
+            $table->timestamp("created_at")->default(Carbon::now());
         });
 
     }
