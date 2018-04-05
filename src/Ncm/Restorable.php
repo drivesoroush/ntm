@@ -38,7 +38,7 @@ trait Restorable {
      */
     protected function getExecutable()
     {
-        return remote_config_script_path("restore.py");
+        return "python " . remote_config_script_path("restore.py");
     }
 
     /**
