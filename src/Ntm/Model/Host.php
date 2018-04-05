@@ -161,18 +161,18 @@ class Host extends Model {
         return decode_ip($this->attributes['address']);
     }
 
-    public function backupConfigurations()
+    public function backup()
     {
         // ip address...
-        $address = $this->address;
-
-        // port...
-        $port = 22;
+        $address = $this->ip;
 
         // ssh credentials...
         $credential = $this->sshCredentials()->where('is_valid', true)->firstOrFail();
         $username = $credential->username;
         $password = $credential->password;
+
+        // port...
+        $port = $credential->port;
 
         // os...
         $os = $this->osGeneric->alias;

@@ -3,6 +3,7 @@
 namespace Ntcm\Ncm;
 
 use Illuminate\Support\ServiceProvider;
+use Ntcm\Ntm\Commands\TrapHandlerCommand;
 
 class NcmServiceProvider extends ServiceProvider {
 
@@ -32,7 +33,7 @@ class NcmServiceProvider extends ServiceProvider {
 
         // register console commands...
         $this->commands([
-            // ...
+            TrapHandlerCommand::class
         ]);
     }
 

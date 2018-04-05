@@ -3,6 +3,7 @@
 namespace Ntcm\Ntm\Relation;
 
 use Ntcm\Ncm\Model\Backup;
+use Ntcm\Ncm\Model\Trap;
 use Ntcm\Ntm\Model\Address;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,6 +24,8 @@ use Ntcm\Snmp\Model\SnmpCredential;
 trait HostRelation {
 
     /**
+     * Get all addresses related to this host.
+     *
      * @return HasMany
      */
     public function addresses()
@@ -31,6 +34,8 @@ trait HostRelation {
     }
 
     /**
+     * Get all hostnames related to this host.
+     *
      * @return HasMany
      */
     public function hostnames()
@@ -39,6 +44,8 @@ trait HostRelation {
     }
 
     /**
+     * Get all ports related to this host.
+     *
      * @return HasMany
      */
     public function ports()
@@ -48,6 +55,8 @@ trait HostRelation {
     }
 
     /**
+     * Get all mib items related to this host.
+     *
      * @return HasMany
      */
     public function mibCollection()
@@ -55,16 +64,6 @@ trait HostRelation {
         //return $this->hasMany(Port::class, 'address', 'address');
         return $this->hasMany(Mib::class);
     }
-
-    ///**
-    // * Make host-scan relationship.
-    // *
-    // * @return BelongsTo
-    // */
-    //public function scan()
-    //{
-    //    return $this->belongsTo(Scan::class);
-    //}
 
     /**
      * Make os-host relationship.
@@ -140,6 +139,8 @@ trait HostRelation {
     }
 
     /**
+     * Get host backups.
+     *
      * @return HasMany
      */
     public function backups()
@@ -147,4 +148,13 @@ trait HostRelation {
         return $this->hasMany(Backup::class);
     }
 
+    /**
+     * Get traps for this host.
+     *
+     * @return HasMany
+     */
+    public function traps()
+    {
+        return $this->hasMany(Trap::class, 'address', 'address');
+    }
 }

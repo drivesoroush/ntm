@@ -4,7 +4,7 @@ namespace Ntcm\Exceptions;
 
 use Exception;
 
-class ScanFailedException extends Exception {
+class UnprocessableTrapException extends Exception {
 
     /**
      * @var integer error code.

@@ -24,7 +24,7 @@ return [
         'scanned'          => 'scanned',
         // ncm...
         'backups'          => 'backups',
-        'changes'          => 'changes',
+        'traps'            => 'traps',
     ],
 
     'scan'      => [
