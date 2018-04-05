@@ -3,12 +3,12 @@
 namespace Ntcm\Ntm;
 
 use Exception;
-use Carbon\Carbon;
 use Ntcm\Exceptions\ProcessExecutionFailedException;
+use Ntcm\Ncm\Model\Backup;
 use Ntcm\Ntm\Model\Host;
 use Ntcm\Ntm\Util\ProcessExecutor;
 
-trait Restorable {
+trait Backupable {
 
     /**
      * Restore host configuration.
@@ -17,20 +17,23 @@ trait Restorable {
      *
      * @throws ProcessExecutionFailedException
      */
-    public function restore(ProcessExecutor $executor)
+    public function backup(ProcessExecutor $executor)
     {
-        $command = sprintf("%s %s %s %s %s %s %s",
+        // run the command...
+        $command = sprintf("%s %s %s %s %s %s",
             $this->getExecutable(),
             $this->getRestoreAddress(),
             $this->getRestorePort(),
             $this->getRestoreUsername(),
             $this->getRestorePassword(),
-            $this->getDeviceType(),
-            $this->storeContentIntoFile()
+            $this->getDeviceType()
         );
 
-        // run the restore command...
-        $executor->execute($command, $this->getTimeout());
+        // run the backup command...
+        $output = $executor->execute($command, config('ncm.timeout'));
+
+        // save a new backup entity...
+        $this->saveBackup($output);
     }
 
     /**
@@ -38,7 +41,7 @@ trait Restorable {
      */
     protected function getExecutable()
     {
-        return remote_config_script_path("restore.py");
+        return remote_config_script_path("backup.py");
     }
 
     /**
@@ -46,7 +49,7 @@ trait Restorable {
      */
     private function getHost()
     {
-        return $this->host;
+        return $this;
     }
 
     /**
@@ -90,25 +93,18 @@ trait Restorable {
     }
 
     /**
-     * Store restore content into a file and return filename.
+     * Create a new backup entity for the host.
      *
-     * @return string
+     * @param string $fileName
      */
-    protected function storeContentIntoFile()
+    protected function saveBackup($fileName)
     {
-        $now = Carbon::now()->format('H-s-i');
-        $ip = str_replace(".", "-", $this->getRestoreAddress());
-        $fileName = "/{$ip}-{$now}";
+        // fetch the content...
+        $content = file_get_contents($fileName);
 
-        file_put_contents($fileName, $this->getRestoreContent());
-
-        return $fileName;
+        // create new backup...
+        $this->getHost()->backups()->create([
+            "configurations" => $content,
+        ]);
     }
-
-    /**
-     * Determines content of restoration.
-     *
-     * @return mixed
-     */
-    protected abstract function getRestoreContent();
 }

@@ -26,6 +26,13 @@ class Backup extends Model {
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at'];
+
+    /**
      * Get the table associated with the model.
      *
      * @return string
@@ -33,6 +40,16 @@ class Backup extends Model {
     public function getTable()
     {
         return table_name('backups');
+    }
+
+    /**
+     * Disable updated at attribute for this model.
+     *
+     * @param string $date
+     */
+    public function setUpdatedAtAttribute($date)
+    {
+        // ...
     }
 
     /**

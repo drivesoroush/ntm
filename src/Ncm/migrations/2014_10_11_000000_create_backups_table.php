@@ -37,7 +37,7 @@ class CreateBackupsGenericTable extends Migration {
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
-            $table->timestamps();
+            $table->timestamps("created_at");
         });
 
     }
