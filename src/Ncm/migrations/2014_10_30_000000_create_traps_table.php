@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Carbon\Carbon;
 
 class CreateTrapsTable extends Migration {
 
@@ -31,7 +32,7 @@ class CreateTrapsTable extends Migration {
             $table->string('address');
             $table->mediumText('body');
 
-            $table->timestamps('created_at');
+            $table->timestamp("created_at")->default(Carbon::now());
         });
 
     }
