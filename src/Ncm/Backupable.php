@@ -33,7 +33,7 @@ trait Backupable {
         $output = $executor->execute($command, config('ncm.timeout'));
 
         // save a new backup entity...
-        $this->saveBackup($output);
+        return $this->saveBackup($output);
     }
 
     /**
@@ -96,6 +96,8 @@ trait Backupable {
      * Create a new backup entity for the host.
      *
      * @param string $fileName
+     *
+     * @return Backup
      */
     protected function saveBackup($fileName)
     {
@@ -103,7 +105,7 @@ trait Backupable {
         $content = file_get_contents($fileName);
 
         // create new backup...
-        $this->getHost()->backups()->create([
+        return $this->getHost()->backups()->create([
             "configurations" => $content,
         ]);
     }
