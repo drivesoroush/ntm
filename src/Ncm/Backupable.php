@@ -105,7 +105,7 @@ trait Backupable {
     protected function saveBackup($fileName)
     {
         // fetch the content...
-        $content = file_get_contents($fileName);
+        $content = file_get_contents("/{$fileName}");
 
         // create new backup...
         return $this->getHost()->backups()->create([
