@@ -105,7 +105,7 @@ trait Backupable {
     protected function saveBackup($fileName)
     {
         // fetch the content...
-        $content = file_get_contents("/var/lib/tftboot/{$fileName}");
+        $content = file_get_contents(tftp_path($fileName));
 
         // create new backup...
         return $this->getHost()->backups()->create([

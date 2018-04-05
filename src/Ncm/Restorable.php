@@ -100,7 +100,7 @@ trait Restorable {
         $ip = str_replace(".", "-", $this->getRestoreAddress());
         $fileName = "/{$ip}-{$now}";
 
-        file_put_contents($fileName, $this->getRestoreContent());
+        file_put_contents(tftp_path($fileName), $this->getRestoreContent());
 
         return $fileName;
     }
