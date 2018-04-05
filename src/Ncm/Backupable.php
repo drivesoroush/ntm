@@ -13,12 +13,12 @@ trait Backupable {
     /**
      * Restore host configuration.
      *
-     * @param ProcessExecutor $executor
-     *
      * @throws ProcessExecutionFailedException
      */
-    public function backup(ProcessExecutor $executor)
+    public function backup()
     {
+        $executor = new ProcessExecutor();
+
         // run the command...
         $command = sprintf("%s %s %s %s %s %s",
             $this->getExecutable(),
