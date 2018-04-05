@@ -98,7 +98,7 @@ trait Restorable {
     {
         $now = Carbon::now()->format('H-s-i');
         $ip = str_replace(".", "-", $this->getRestoreAddress());
-        $fileName = "/{$ip}-{$now}";
+        $fileName = "{$ip}-{$now}";
 
         file_put_contents(tftp_path($fileName), $this->getRestoreContent());
 
