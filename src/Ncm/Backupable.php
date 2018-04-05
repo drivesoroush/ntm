@@ -30,7 +30,10 @@ trait Backupable {
         );
 
         // run the backup command...
-        $output = $executor->execute($command, config('ncm.timeout'));
+        $executor->execute($command, config('ncm.timeout'));
+
+        // get output...
+        $output = $executor->getOutput();
 
         // save a new backup entity...
         return $this->saveBackup($output);

@@ -11,6 +11,16 @@ use Symfony\Component\Process\Process;
 class ProcessExecutor {
 
     /**
+     * @var string
+     */
+    protected $output;
+
+    /**
+     * @var integer
+     */
+    protected $exitCode;
+
+    /**
      * Executes a process.
      *
      * @param string  $command The command to execute.
@@ -22,7 +32,9 @@ class ProcessExecutor {
     public function execute($command, $timeout)
     {
         $process = new Process($command, null, null, null, $timeout);
-        $process->run();
+
+        $this->setOutput($process->run());
+        $this->setExitCode($process->getExitCode());
 
         if( ! $process->isSuccessful()) {
             throw new ProcessExecutionFailedException(
@@ -35,5 +47,37 @@ class ProcessExecutor {
         }
 
         return $process->getExitCode();
+    }
+
+    /**
+     * @return string
+     */
+    public function getOutput(): string
+    {
+        return $this->output;
+    }
+
+    /**
+     * @param string $output
+     */
+    public function setOutput(string $output): void
+    {
+        $this->output = $output;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExitCode(): int
+    {
+        return $this->exitCode;
+    }
+
+    /**
+     * @param int $exitCode
+     */
+    public function setExitCode(int $exitCode): void
+    {
+        $this->exitCode = $exitCode;
     }
 }
