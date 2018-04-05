@@ -49,5 +49,6 @@ return [
         'OpenBSD',
         'RouterOS',
         'Fireware',
+        'IOS',
     ],
 ];
