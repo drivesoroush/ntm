@@ -41,7 +41,7 @@ trait Backupable {
      */
     protected function getExecutable()
     {
-        return "python " . remote_config_script_path("backup.py");
+        return "python3.6 " . remote_config_script_path("backup.py");
     }
 
     /**
