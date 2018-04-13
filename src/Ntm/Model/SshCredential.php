@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Ntcm\Ntm\Scope\SshCredentialScope;
+use RuntimeException;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
@@ -133,9 +134,11 @@ class SshCredential extends Model {
             SSH::run(['ls']);
 
             return true;
-        } catch(Exception $e) {
+        } catch(RuntimeException $e) {
             // remote authentication failure...
             return false;
+        } catch(Exception $e) {
+            return true;
         }
     }
 
