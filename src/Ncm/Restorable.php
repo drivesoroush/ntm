@@ -20,7 +20,7 @@ trait Restorable {
         $executor = new ProcessExecutor();
 
         $command = sprintf("%s %s %s %s %s %s %s",
-            $this->getExecutable(),
+            $this->getRestoreExecutable(),
             $this->getRestoreAddress(),
             $this->getRestorePort(),
             $this->getRestoreUsername(),
@@ -36,7 +36,7 @@ trait Restorable {
     /**
      * @return string
      */
-    protected function getExecutable()
+    protected function getRestoreExecutable()
     {
         return "python3.6 " . remote_config_script_path("restore.py");
     }

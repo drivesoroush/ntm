@@ -22,7 +22,7 @@ trait Configable {
         // 192.168.101.7 22 jg @sss123 cisco_ios "show run"
         // run the command...
         $command = sprintf('%s %s %s %s %s %s "%s"',
-            $this->getExecutable(),
+            $this->getConfigExecutable(),
             $this->getConfigAddress(),
             $this->getConfigPort(),
             $this->getConfigUsername(),
@@ -43,7 +43,7 @@ trait Configable {
     /**
      * @return string
      */
-    protected function getExecutable()
+    protected function getConfigExecutable()
     {
         return "python3.6 " . remote_config_script_path("show.py");
     }

@@ -21,7 +21,7 @@ trait Backupable {
 
         // run the command...
         $command = sprintf("%s %s %s %s %s %s",
-            $this->getExecutable(),
+            $this->getBackupExecutable(),
             $this->getBackupAddress(),
             $this->getBackupPort(),
             $this->getBackupUsername(),
@@ -42,7 +42,7 @@ trait Backupable {
     /**
      * @return string
      */
-    protected function getExecutable()
+    protected function getBackupExecutable()
     {
         return "python3.6 " . remote_config_script_path("backup.py");
     }
