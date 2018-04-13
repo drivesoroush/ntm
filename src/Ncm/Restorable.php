@@ -13,12 +13,12 @@ trait Restorable {
     /**
      * Restore host configuration.
      *
-     * @param ProcessExecutor $executor
-     *
      * @throws ProcessExecutionFailedException
      */
-    public function restore(ProcessExecutor $executor)
+    public function restore()
     {
+        $executor = new ProcessExecutor();
+
         $command = sprintf("%s %s %s %s %s %s %s",
             $this->getExecutable(),
             $this->getRestoreAddress(),
