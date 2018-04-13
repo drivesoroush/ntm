@@ -30,7 +30,7 @@ trait Restorable {
         );
 
         // run the restore command...
-        $executor->execute($command, $this->getTimeout());
+        $executor->execute($command, config('ncm.timeout'));
     }
 
     /**
