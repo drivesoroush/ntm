@@ -23,6 +23,7 @@ class Backup extends Model {
         'id',
         'configurations',
         'host_id',
+        'created_at',
     ];
 
     /**
