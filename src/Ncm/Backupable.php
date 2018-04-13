@@ -22,10 +22,10 @@ trait Backupable {
         // run the command...
         $command = sprintf("%s %s %s %s %s %s",
             $this->getExecutable(),
-            $this->getRestoreAddress(),
-            $this->getRestorePort(),
-            $this->getRestoreUsername(),
-            $this->getRestorePassword(),
+            $this->getBackupAddress(),
+            $this->getBackupPort(),
+            $this->getBackupUsername(),
+            $this->getBackupPassword(),
             $this->getDeviceType()
         );
 
@@ -58,7 +58,7 @@ trait Backupable {
     /**
      * @return string
      */
-    protected function getRestoreAddress()
+    protected function getBackupAddress()
     {
         return $this->getHost()->ip;
     }
@@ -66,7 +66,7 @@ trait Backupable {
     /**
      * @return string
      */
-    protected function getRestoreUsername()
+    protected function getBackupUsername()
     {
         return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->username;
     }
@@ -74,7 +74,7 @@ trait Backupable {
     /**
      * @return string
      */
-    protected function getRestorePassword()
+    protected function getBackupPassword()
     {
         return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->password;
     }
@@ -82,7 +82,7 @@ trait Backupable {
     /**
      * @return integer
      */
-    protected function getRestorePort()
+    protected function getBackupPort()
     {
         return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->port;
     }
@@ -90,10 +90,7 @@ trait Backupable {
     /**
      * @return string
      */
-    protected function getDeviceType()
-    {
-        return $this->getHost()->osGeneric->alias;
-    }
+    protected abstract function getDeviceType();
 
     /**
      * Create a new backup entity for the host.

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Ntcm\Enums\HostTypeEnum;
 use Ntcm\Ntm\Backupable;
+use Ntcm\Ntm\Configable;
 use Ntcm\Ntm\Relation\HostRelation;
 use Ntcm\Ntm\Scope\HostScope;
 
@@ -15,7 +16,7 @@ use Ntcm\Ntm\Scope\HostScope;
  */
 class Host extends Model {
 
-    use HostScope, HostRelation, Backupable;
+    use HostScope, HostRelation, Backupable, Configable;
 
     /**
      * The attributes that are mass assignable.
@@ -160,6 +161,14 @@ class Host extends Model {
     public function getIpAttribute()
     {
         return decode_ip($this->attributes['address']);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDeviceType()
+    {
+        return $this->getHost()->osGeneric->alias;
     }
 
 }
