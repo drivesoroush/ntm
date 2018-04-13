@@ -109,7 +109,7 @@ class SshCredential extends Model {
     public function auth()
     {
         $connections[$this->configKey] = [
-            'host'     => $this->ip,
+            'host'     => $this->host->ip,
             'username' => $this->username,
             'password' => $this->password
         ];

@@ -62,7 +62,7 @@ trait Restorable {
      */
     protected function getRestoreUsername()
     {
-        return $this->getHost()->username;
+        return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->username;
     }
 
     /**
@@ -70,7 +70,7 @@ trait Restorable {
      */
     protected function getRestorePassword()
     {
-        return $this->getHost()->password;
+        return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->password;
     }
 
     /**
@@ -78,7 +78,7 @@ trait Restorable {
      */
     protected function getRestorePort()
     {
-        return $this->getHost()->port;
+        return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->port;
     }
 
     /**
