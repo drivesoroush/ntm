@@ -111,7 +111,8 @@ class SshCredential extends Model {
         $connections[$this->configKey] = [
             'host'     => $this->host->ip,
             'username' => $this->username,
-            'password' => $this->password
+            'password' => $this->password,
+            'port'     => $this->port,
         ];
 
         Config::set('remote.connections', $connections);
