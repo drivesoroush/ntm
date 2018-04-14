@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Ntcm\Ncm\Relation\BackupRelation;
 use Ntcm\Ncm\Scope\BackupScope;
 use Ntcm\Ntm\Restorable;
+use Carbon\Carbon;
 
 /**
  * @author Soroush Kazemi <kazemi.soroush@gmail.com>
@@ -61,5 +62,19 @@ class Backup extends Model {
     protected function getRestoreContent()
     {
         return $this->configurations;
+    }
+
+    /**
+     * Get file in which the backup content is stored.
+     *
+     * @return string
+     */
+    public function getBackupFileName()
+    {
+        $now = Carbon::now()->format('H-s-i');
+        $ip = str_replace(".", "-", $this->getRestoreAddress());
+        $fileName = "{$ip}-{$now}";
+
+        return $fileName;
     }
 }

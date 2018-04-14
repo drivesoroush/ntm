@@ -19,6 +19,10 @@ trait Restorable {
     {
         $executor = new ProcessExecutor();
 
+        // store restore content into file and get the stored file name...
+        $fileName = $this->storeContentIntoFile();
+
+        // execute the restore script...
         $command = sprintf("%s %s %s %s %s %s %s",
             $this->getRestoreExecutable(),
             $this->getRestoreAddress(),
@@ -26,11 +30,14 @@ trait Restorable {
             $this->getRestoreUsername(),
             $this->getRestorePassword(),
             $this->getDeviceType(),
-            $this->storeContentIntoFile()
+            $fileName
         );
 
         // run the restore command...
         $executor->execute($command, config('ncm.timeout'));
+
+        // after you ran the script, you can remove the file...
+        unlink_if_exists(tftp_path($fileName));
     }
 
     /**
@@ -96,14 +103,24 @@ trait Restorable {
      */
     protected function storeContentIntoFile()
     {
-        $now = Carbon::now()->format('H-s-i');
-        $ip = str_replace(".", "-", $this->getRestoreAddress());
-        $fileName = "{$ip}-{$now}";
+        // get the file name...
+        $fileName = $this->getBackupFileName();
 
-        file_put_contents(tftp_path($fileName), $this->getRestoreContent());
+        // create the file path...
+        $filePath = tftp_path($fileName);
+
+        // write restore contents into the file...
+        file_put_contents($filePath, $this->getRestoreContent());
 
         return $fileName;
     }
+
+    /**
+     * Get backup file name.
+     *
+     * @return string
+     */
+    public abstract function getBackupFileName();
 
     /**
      * Determines content of restoration.

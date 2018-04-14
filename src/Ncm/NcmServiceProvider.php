@@ -3,6 +3,8 @@
 namespace Ntcm\Ncm;
 
 use Illuminate\Support\ServiceProvider;
+use Ntcm\Ncm\Model\Backup;
+use Ntcm\Ncm\Observers\BackupObserver;
 use Ntcm\Ntm\Commands\TrapHandlerCommand;
 
 class NcmServiceProvider extends ServiceProvider {
@@ -21,6 +23,8 @@ class NcmServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
+        Backup::observe(BackupObserver::class);
+
         // publish configuration files...
         $config = __DIR__ . '/../../config/ncm.php';
         $this->publishes([

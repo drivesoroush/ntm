@@ -73,7 +73,8 @@ if( ! function_exists('get_scanner_address')) {
     function get_scanner_address()
     {
         try {
-            $public = trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
+            //$public = trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
+            $public = trim(shell_exec("hostname -I"));
         } catch(Exception $e) {
             $public = Request::getClientIp();
         }
@@ -249,5 +250,39 @@ if( ! function_exists('is_ip')) {
     function is_ip($ip)
     {
         return filter_var($ip, FILTER_VALIDATE_IP) !== false;
+    }
+}
+
+if( ! function_exists('unlink_if_exists')) {
+
+    /**
+     * Remove file with provided absolute path.
+     *
+     * @param $absolutePathToFile
+     *
+     * @return boolean
+     */
+    function unlink_if_exists($absolutePathToFile)
+    {
+        if(file_exists($absolutePathToFile)) {
+            return unlink($absolutePathToFile);
+        }
+
+        return false;
+    }
+}
+
+if( ! function_exists('tftp_path')) {
+
+    /**
+     * Get string value of absolute scripts path.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    function tftp_path($path = "")
+    {
+        return "/var/lib/tftpboot/{$path}";
     }
 }

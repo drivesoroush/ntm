@@ -33,10 +33,10 @@ trait Backupable {
         $executor->execute($command, config('ncm.timeout'));
 
         // get output...
-        $output = $executor->getOutput();
+        $fileName = $executor->getOutput();
 
         // save a new backup entity...
-        return $this->saveBackup($output);
+        return $this->saveBackup($fileName);
     }
 
     /**
@@ -101,8 +101,14 @@ trait Backupable {
      */
     protected function saveBackup($fileName)
     {
+        // create the full file path...
+        $filePath = tftp_path($fileName);
+
         // fetch the content...
-        $content = file_get_contents(tftp_path($fileName));
+        $content = file_get_contents($filePath);
+
+        // remove the backup file...
+        unlink_if_exists($filePath);
 
         // create new backup...
         return $this->getHost()->backups()->create([
