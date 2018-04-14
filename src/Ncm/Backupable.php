@@ -105,7 +105,7 @@ trait Backupable {
         $filePath = tftp_path($fileName);
 
         // fetch the content...
-        $content = file_get_contents($filePath);
+        $content = str_replace("↵", "\n", file_get_contents($filePath));
 
         // remove the backup file...
         unlink_if_exists($filePath);
