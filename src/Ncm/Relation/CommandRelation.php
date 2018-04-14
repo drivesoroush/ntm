@@ -17,6 +17,8 @@ trait CommandRelation {
      */
     public function vendors()
     {
-        return $this->belongsToMany(OsGeneric::class, 'commands_os_generic');
+        $pivot = table_name('command_os_generic');
+
+        return $this->belongsToMany(OsGeneric::class, $pivot);
     }
 }

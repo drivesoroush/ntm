@@ -31,6 +31,8 @@ trait OsGenericRelation {
      */
     public function commands()
     {
-        return $this->belongsToMany(Command::class, 'commands_os_generic');
+        $pivot = table_name('command_os_generic');
+
+        return $this->belongsToMany(Command::class, $pivot);
     }
 }
