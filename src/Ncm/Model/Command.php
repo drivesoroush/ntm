@@ -46,6 +46,21 @@ class Command extends Model {
     }
 
     /**
+     * Execute this command on host by host id.
+     *
+     * @param int $hostId
+     *
+     * @return string
+     * @throws ProcessExecutionFailedException
+     */
+    public function executeByHostId(int $hostId)
+    {
+        $host = Host::findOrFial($hostId);
+
+        return $this->execute($host);
+    }
+
+    /**
      * Execute this command on host.
      *
      * @param string $ip
