@@ -25,6 +25,7 @@ return [
         // ncm...
         'backups'          => 'backups',
         'traps'            => 'traps',
+        'commands'         => 'commands',
     ],
 
     'scan'      => [
