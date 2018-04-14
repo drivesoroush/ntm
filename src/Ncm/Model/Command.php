@@ -116,7 +116,9 @@ class Command extends Model {
         );
 
         // run the restore command...
-        return $executor->execute($command, config('ncm.timeout'));
+        $executor->execute($command, config('ncm.timeout'));
+
+        return $executor->getOutput();
     }
 
     /**
