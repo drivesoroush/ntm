@@ -55,7 +55,7 @@ class Command extends Model {
      */
     public function executeByHostId(int $hostId)
     {
-        $host = Host::findOrFial($hostId);
+        $host = Host::findOrFail($hostId);
 
         return $this->execute($host);
     }
