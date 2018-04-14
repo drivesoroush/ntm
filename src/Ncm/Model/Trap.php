@@ -22,7 +22,7 @@ class Trap extends Model {
      * @var array
      */
     protected $fillable = [
-        'id',
+        //'id',
         'address',
         'body',
         'created_at',

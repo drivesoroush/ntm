@@ -50,9 +50,14 @@ class TrapHandlerCommand extends Command {
         // extract all ip addresses inside trap content...
         preg_match_all("/[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/", $content, $ipAddresses);
 
-        foreach($ipAddresses as $ip) {
+        foreach($ipAddresses[0] as $ip) {
+            // it must be a valid ip address...
+            if( ! is_ip($ip)) {
+                continue;
+            }
+
             // we need ip addresses other than scanner ip address...
-            if($ipAddresses == get_scanner_address()) {
+            if($ip == get_scanner_address()) {
                 continue;
             }
 
