@@ -45,7 +45,7 @@ trait Configable {
      */
     protected function getConfigExecutable()
     {
-        return "python3.6 " . remote_config_script_path("show.py");
+        return "python" . config("ntm.python.version") . " " . remote_config_script_path("show.py");
     }
 
     /**
