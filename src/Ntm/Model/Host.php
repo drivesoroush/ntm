@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Ntcm\Enums\HostTypeEnum;
+use Ntcm\Exceptions\ProcessExecutionFailedException;
+use Ntcm\Ncm\HelperCommands;
 use Ntcm\Ntm\Backupable;
 use Ntcm\Ntm\Configable;
 use Ntcm\Ntm\Relation\HostRelation;
@@ -16,7 +18,7 @@ use Ntcm\Ntm\Scope\HostScope;
  */
 class Host extends Model {
 
-    use HostScope, HostRelation, Backupable, Configable;
+    use HostScope, HostRelation, Backupable, Configable, HelperCommands;
 
     /**
      * The attributes that are mass assignable.

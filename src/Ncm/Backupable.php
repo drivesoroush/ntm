@@ -11,6 +11,13 @@ use Ntcm\Ntm\Util\ProcessExecutor;
 trait Backupable {
 
     /**
+     * File name for stored backup.
+     *
+     * @var string
+     */
+    protected $filename;
+
+    /**
      * Restore host configuration.
      *
      * @throws ProcessExecutionFailedException
@@ -33,10 +40,19 @@ trait Backupable {
         $executor->execute($command, config('ncm.timeout'));
 
         // get output...
-        $fileName = $executor->getOutput();
+        $this->fileName = $executor->getOutput();
 
-        // save a new backup entity...
-        return $this->saveBackup($fileName);
+        return $this;
+    }
+
+    /**
+     * Save a new backup entity.
+     *
+     * @return Backup
+     */
+    public function store()
+    {
+        return $this->saveBackup($this->fileName);
     }
 
     /**
