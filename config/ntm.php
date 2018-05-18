@@ -1,6 +1,11 @@
 <?php
 
 return [
+    // proper python version...
+    'python' => [
+        'version' => 3.6
+    ],
+
     // you can determine your table names...
     'tables' => [
         // ntm...
