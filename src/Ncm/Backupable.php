@@ -40,7 +40,7 @@ trait Backupable {
         $executor->execute($command, config('ncm.timeout'));
 
         // get output...
-        $this->fileName = $executor->getOutput();
+        $this->filename = $executor->getOutput();
 
         return $this;
     }
