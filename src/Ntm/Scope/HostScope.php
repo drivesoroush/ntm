@@ -34,4 +34,13 @@ trait HostScope {
         return $instance;
     }
 
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeScheduled($query)
+    {
+        return $query->whereNotNull('backup_scheduled');
+    }
 }

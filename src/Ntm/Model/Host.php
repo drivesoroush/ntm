@@ -34,6 +34,7 @@ class Host extends Model {
         'address',
         'type',
         'os_generic_id',
+        'backup_scheduled',
     ];
 
     /**
