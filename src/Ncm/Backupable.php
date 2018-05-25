@@ -52,7 +52,7 @@ trait Backupable {
      */
     public function store()
     {
-        return $this->saveBackup($this->fileName);
+        return $this->saveBackup($this->filename);
     }
 
     /**
