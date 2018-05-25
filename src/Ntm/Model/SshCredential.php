@@ -131,7 +131,8 @@ class SshCredential extends Model {
         try {
             $this->auth();
 
-            SSH::run(['ls']);
+            shell_exec("shpass -p '{$this->password}' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10  -p {$this->port} {$this->username}@{$this->host->ip} exit; echo $?");
+            // SSH::run(['ls']);
 
             return true;
         } catch(RuntimeException $e) {
