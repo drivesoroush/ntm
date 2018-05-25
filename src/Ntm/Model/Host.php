@@ -174,4 +174,13 @@ class Host extends Model {
         return $this->getHost()->osGeneric->alias;
     }
 
+    /**
+     * Check if backup is scheduled for this host.
+     *
+     * @return bool
+     */
+    public function isScheduled()
+    {
+        return $this->backup_scheduled !== null;
+    }
 }
