@@ -131,10 +131,20 @@ class SshCredential extends Model {
         try {
             $this->auth();
 
-            shell_exec("shpass -p '{$this->password}' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10  -p {$this->port} {$this->username}@{$this->host->ip} exit; echo $?");
+            $command = "sshpass -p '{$this->password}' ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10  -p {$this->port} {$this->username}@{$this->host->ip} exit; echo $?";
+
+            $output =
+                intval(
+                    last_line(
+                        trim(
+                            shell_exec($command)
+                        )
+                    )
+                );
+
             // SSH::run(['ls']);
 
-            return true;
+            return $output === 0;
         } catch(RuntimeException $e) {
             // remote authentication failure...
             return false;

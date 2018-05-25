@@ -287,3 +287,23 @@ if( ! function_exists('tftp_path')) {
     }
 }
 
+if( ! function_exists('last_line')) {
+
+    /**
+     * Get last line of a string.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    function last_line($string = "")
+    {
+        $last = "";
+
+        foreach(explode("\n", $string) as $line) {
+            $last = $line;
+        }
+
+        return $last;
+    }
+}
