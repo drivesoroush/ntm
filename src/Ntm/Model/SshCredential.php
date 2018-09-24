@@ -110,7 +110,7 @@ class SshCredential extends Model {
      */
     public function getSecondPasswordAttribute()
     {
-        if ($this->attributes['second_password']) {
+        if ( ! $this->attributes['second_password']) {
             return "~";
         } else {
             return decrypt($this->attributes['second_password']);
