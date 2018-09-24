@@ -104,6 +104,16 @@ class SshCredential extends Model {
     }
 
     /**
+     * Encrypt the second password when you need to store it.
+     *
+     * @return string
+     */
+    public function getSecondPasswordAttribute()
+    {
+        return decrypt($this->attributes['second_password']);
+    }
+
+    /**
      * Get configurations key attribute for this credential.
      *
      * @return string
