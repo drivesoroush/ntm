@@ -111,7 +111,7 @@ class SshCredential extends Model {
     public function getSecondPasswordAttribute()
     {
         if ( ! $this->attributes['second_password']) {
-            return "~";
+            return config('ncm.empty_second_password');
         } else {
             return decrypt($this->attributes['second_password']);
         }
