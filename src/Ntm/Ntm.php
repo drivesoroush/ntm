@@ -369,35 +369,36 @@ class Ntm {
     }
 
     /**
-     * Set environment variables from .env file.
-     *
      * @return void
      */
     private function setEnvironmentVariables()
     {
-        if ($timeout = env('NMAP_TIMEOUT')) {
+        // command execution timeout...
+        if ($timeout = config('nmap.timeout')) {
             $this->setTimeout($timeout);
         }
-        if ($osDetection = env('NMAP_OS_DETECTION')) {
-            $this->setOsDetection($osDetection);
+        if ($osDetection = config('nmap.os_detection')) {
+            $this->setosDetection($osDetection);
         }
-        if ($serviceInfo = env('NMAP_SERVICE_INFO')) {
-            $this->setServiceInfo($serviceInfo);
+        if ($serviceInfo = config('nmap.service_info')) {
+            $this->setserviceInfo($serviceInfo);
         }
-        if ($verbose = env('NMAP_VERBOSE')) {
-            $this->setVerbose($verbose);
+        if ($verbose = config('nmap.verbose')) {
+            $this->setverbose($verbose);
         }
-        if ($treatHostsAsOnline = env('NMAP_TREAT_HOSTS_AS_ONLINE')) {
-            $this->setTreatHostsAsOnline($treatHostsAsOnline);
+        if ($treatHostsAsOnline = config('nmap.treat_hosts_as_online')) {
+            $this->settreatHostsAsOnline($treatHostsAsOnline);
         }
-        if ($portScan = env('NMAP_PORT_SCAN')) {
-            $this->setPortScan($portScan);
+        if ($portScan = config('nmap.port_Scan')) {
+            $this->setportScan($portScan);
         }
-        if ($reverseDns = env('NMAP_REVERSE_DNS')) {
-            $this->setReverseDns($reverseDns);
+        if ($reverseDns = config('nmap.reverse_Dns')) {
+            $this->setreverseDns($reverseDns);
         }
-        if ($traceroute = env('NMAP_TRACEROUTE')) {
-            $this->setTraceroute($traceroute);
+        if ($traceroute = config('nmap.traceroute')) {
+            $this->settraceroute($traceroute);
         }
+
     }
+
 }

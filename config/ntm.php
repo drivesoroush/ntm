@@ -36,10 +36,17 @@ return [
 
     'scan'      => [
         // you can determine scan process execution timeout default value in seconds...
-        'timeout' => 24 * 60 * 60,
+        'timeout'            => 24 * 60 * 60,
 
         // well-known ports...
-        'ports'   => '1-1000',
+        'ports'                 => '1-1000',
+        'os_detection'          => true,
+        'service_info'          => true,
+        'verbose'               => false,
+        'treat_hosts_as_online' => true,
+        'port_Scan'             => true,
+        'reverse_Dns'           => true,
+        'traceroute'            => true,
     ],
 
     // remotable operating systems...
