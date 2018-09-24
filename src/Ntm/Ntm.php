@@ -97,6 +97,9 @@ class Ntm {
             'os'      => $this->osDetection,
         ]);
 
+        // set environment variables from .env file...
+        $this->setEnvironmentVariables();
+
         // add scanner ip to ranges...
         $ranges[] = get_scanner_address();
 
@@ -365,4 +368,36 @@ class Ntm {
         $this->scanCode = $scanCode;
     }
 
+    /**
+     * Set environment variables from .env file.
+     *
+     * @return void
+     */
+    private function setEnvironmentVariables()
+    {
+        if ($timeout = env('NMAP_TIMEOUT')) {
+            $this->setTimeout($timeout);
+        }
+        if ($osDetection = env('NMAP_OS_DETECTION')) {
+            $this->setOsDetection($osDetection);
+        }
+        if ($serviceInfo = env('NMAP_SERVICE_INFO')) {
+            $this->setServiceInfo($serviceInfo);
+        }
+        if ($verbose = env('NMAP_VERBOSE')) {
+            $this->setVerbose($verbose);
+        }
+        if ($treatHostsAsOnline = env('NMAP_TREAT_HOSTS_AS_ONLINE')) {
+            $this->setTreatHostsAsOnline($treatHostsAsOnline);
+        }
+        if ($portScan = env('NMAP_PORT_SCAN')) {
+            $this->setPortScan($portScan);
+        }
+        if ($reverseDns = env('NMAP_REVERSE_DNS')) {
+            $this->setReverseDns($reverseDns);
+        }
+        if ($traceroute = env('NMAP_TRACEROUTE')) {
+            $this->setTraceroute($traceroute);
+        }
+    }
 }
