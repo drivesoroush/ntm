@@ -23,12 +23,13 @@ trait Restorable {
         $fileName = $this->storeContentIntoFile();
 
         // execute the restore script...
-        $command = sprintf("%s %s %s %s %s %s %s",
+        $command = sprintf("%s %s %s %s %s %s %s %s",
             $this->getRestoreExecutable(),
             $this->getRestoreAddress(),
             $this->getRestorePort(),
             $this->getRestoreUsername(),
             $this->getRestorePassword(),
+            $this->getRestoreSecondPassword(),
             $this->getDeviceType(),
             $fileName
         );
@@ -78,6 +79,14 @@ trait Restorable {
     protected function getRestorePassword()
     {
         return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->password;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRestoreSecondPassword()
+    {
+        return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->second_password;
     }
 
     /**

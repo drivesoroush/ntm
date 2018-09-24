@@ -27,12 +27,13 @@ trait Backupable {
         $executor = new ProcessExecutor();
 
         // run the command...
-        $command = sprintf("%s %s %s %s %s %s",
+        $command = sprintf("%s %s %s %s %s %s %s",
             $this->getBackupExecutable(),
             $this->getBackupAddress(),
             $this->getBackupPort(),
             $this->getBackupUsername(),
             $this->getBackupPassword(),
+            $this->getBackupSecondPassword(),
             $this->getDeviceType()
         );
 
@@ -93,6 +94,14 @@ trait Backupable {
     protected function getBackupPassword()
     {
         return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->password;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getBackupSecondPassword()
+    {
+        return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->second_password;
     }
 
     /**
