@@ -374,28 +374,28 @@ class Ntm {
     private function setEnvironmentVariables()
     {
         // command execution timeout...
-        if ($timeout = config('nmap.timeout')) {
+        if ($timeout = config('ntm.scan.timeout')) {
             $this->setTimeout($timeout);
         }
-        if ($osDetection = config('nmap.os_detection')) {
+        if ($osDetection = config('ntm.scan.os_detection')) {
             $this->setosDetection($osDetection);
         }
-        if ($serviceInfo = config('nmap.service_info')) {
+        if ($serviceInfo = config('ntm.scan.service_info')) {
             $this->setserviceInfo($serviceInfo);
         }
-        if ($verbose = config('nmap.verbose')) {
+        if ($verbose = config('ntm.scan.verbose')) {
             $this->setverbose($verbose);
         }
-        if ($treatHostsAsOnline = config('nmap.treat_hosts_as_online')) {
+        if ($treatHostsAsOnline = config('ntm.scan.treat_hosts_as_online')) {
             $this->settreatHostsAsOnline($treatHostsAsOnline);
         }
-        if ($portScan = config('nmap.port_Scan')) {
+        if ($portScan = config('ntm.scan.port_scan')) {
             $this->setportScan($portScan);
         }
-        if ($reverseDns = config('nmap.reverse_Dns')) {
+        if ($reverseDns = config('ntm.scan.reverse_dns')) {
             $this->setreverseDns($reverseDns);
         }
-        if ($traceroute = config('nmap.traceroute')) {
+        if ($traceroute = config('ntm.scan.traceroute')) {
             $this->settraceroute($traceroute);
         }
 
