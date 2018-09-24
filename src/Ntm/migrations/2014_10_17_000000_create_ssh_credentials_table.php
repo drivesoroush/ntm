@@ -31,6 +31,7 @@ class CreateSshCredentialsTable extends Migration {
             //$table->bigInteger('address');
             $table->string('username');
             $table->string('password');
+            $table->string('second_password');
             $table->integer('port')->default(22);
             $table->boolean('is_valid')->default(false);
 

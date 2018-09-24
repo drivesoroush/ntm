@@ -27,6 +27,7 @@ class SshCredential extends Model {
         //'address',
         'username',
         'password',
+        'second_password',
         'port',
         'is_valid',
         'host_id',
@@ -70,6 +71,16 @@ class SshCredential extends Model {
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = encrypt($password);
+    }
+
+    /**
+     * Encrypt the second password when you need to store it.
+     *
+     * @param $password
+     */
+    public function setSecondPasswordAttribute($password)
+    {
+        $this->attributes['second_password'] = encrypt($password);
     }
 
     /**
