@@ -21,12 +21,13 @@ trait Configable {
 
         // 192.168.101.7 22 jg @sss123 cisco_ios "show run"
         // run the command...
-        $command = sprintf('%s %s %s %s %s %s "%s"',
+        $command = sprintf('%s %s %s %s %s %s %s "%s"',
             $this->getConfigExecutable(),
             $this->getConfigAddress(),
             $this->getConfigPort(),
             $this->getConfigUsername(),
             $this->getConfigPassword(),
+            $this->getConfigSecondPassword(),
             $this->getDeviceType(),
             $command
         );
@@ -70,6 +71,14 @@ trait Configable {
     protected function getConfigPassword()
     {
         return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->password;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getConfigSecondPassword()
+    {
+        return $this->getHost()->sshCredentials()->where('is_valid', true)->firstOrFail()->second_password;
     }
 
     /**
