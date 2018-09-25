@@ -191,8 +191,8 @@ class Host extends Model {
      */
     public function hasHops()
     {
-        $fromHops = $this->fromHops();
-        $toHops = $this->toHops();
+        $fromHops = $this->fromHops->count();
+        $toHops = $this->toHops->count();
 
         return ($fromHops + $toHops) !== 0;
     }
