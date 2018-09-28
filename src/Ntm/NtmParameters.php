@@ -8,6 +8,20 @@ namespace Ntcm\Ntm;
 trait NtmParameters {
 
     /**
+     * Script timeout for nmap.
+     *
+     * @var integer
+     */
+    protected $scriptTimeout;
+
+    /**
+     * Host timeout in seconds.
+     *
+     * @var integer
+     */
+    protected $hostTimeout;
+
+    /**
      * @var boolean
      */
     protected $osDetection = true;
@@ -42,6 +56,9 @@ trait NtmParameters {
      */
     protected $traceroute = true;
 
+    /**
+     * @var integer
+     */
     protected $userId;
 
     /**
@@ -149,6 +166,38 @@ trait NtmParameters {
     }
 
     /**
+     * @return int
+     */
+    public function getScriptTimeout()
+    {
+        return $this->scriptTimeout;
+    }
+
+    /**
+     * @param int $scriptTimeout
+     */
+    public function setScriptTimeout(int $scriptTimeout)
+    {
+        $this->scriptTimeout = $scriptTimeout;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHostTimeout()
+    {
+        return $this->hostTimeout;
+    }
+
+    /**
+     * @param int $hostTimeout
+     */
+    public function setHostTimeout(int $hostTimeout)
+    {
+        $this->hostTimeout = $hostTimeout;
+    }
+
+    /**
      * Make parameters array for process.
      *
      * @return array
@@ -156,6 +205,15 @@ trait NtmParameters {
     protected function getParameters()
     {
         $parameters = [];
+
+        if($this->scriptTimeout) {
+            $parameters[] = "--script-timeout {$this->scriptTimeout}";
+        }
+
+        if($this->hostTimeout) {
+            $parameters[] = "--host-timeout {$this->hostTimeout}";
+        }
+
         if($this->osDetection) {
             $parameters[] = '-O';
         }

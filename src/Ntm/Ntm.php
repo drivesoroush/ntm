@@ -374,28 +374,32 @@ class Ntm {
     private function setEnvironmentVariables()
     {
         // command execution timeout...
-        if ($timeout = config('ntm.scan.timeout')) {
+        if($timeout = config('ntm.scan.timeout')) {
             $this->setTimeout($timeout);
+            $this->setScriptTimeout($timeout);
         }
-        if ($osDetection = config('ntm.scan.os_detection')) {
+        if($hostTimeout = config('ntm.scan.host_timeout')) {
+            $this->setHostTimeout($hostTimeout);
+        }
+        if($osDetection = config('ntm.scan.os_detection')) {
             $this->setosDetection($osDetection);
         }
-        if ($serviceInfo = config('ntm.scan.service_info')) {
+        if($serviceInfo = config('ntm.scan.service_info')) {
             $this->setserviceInfo($serviceInfo);
         }
-        if ($verbose = config('ntm.scan.verbose')) {
+        if($verbose = config('ntm.scan.verbose')) {
             $this->setverbose($verbose);
         }
-        if ($treatHostsAsOnline = config('ntm.scan.treat_hosts_as_online')) {
+        if($treatHostsAsOnline = config('ntm.scan.treat_hosts_as_online')) {
             $this->settreatHostsAsOnline($treatHostsAsOnline);
         }
-        if ($portScan = config('ntm.scan.port_scan')) {
+        if($portScan = config('ntm.scan.port_scan')) {
             $this->setportScan($portScan);
         }
-        if ($reverseDns = config('ntm.scan.reverse_dns')) {
+        if($reverseDns = config('ntm.scan.reverse_dns')) {
             $this->setreverseDns($reverseDns);
         }
-        if ($traceroute = config('ntm.scan.traceroute')) {
+        if($traceroute = config('ntm.scan.traceroute')) {
             $this->settraceroute($traceroute);
         }
 
