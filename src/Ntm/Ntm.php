@@ -376,7 +376,7 @@ class Ntm {
         // command execution timeout...
         if($timeout = config('ntm.scan.timeout')) {
             $this->setTimeout($timeout);
-            $this->setScriptTimeout($timeout);
+            // $this->setScriptTimeout($timeout);
         }
         if($hostTimeout = config('ntm.scan.host_timeout')) {
             $this->setHostTimeout($hostTimeout);
