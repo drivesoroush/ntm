@@ -206,9 +206,9 @@ trait NtmParameters {
     {
         $parameters = [];
 
-        if($this->scriptTimeout) {
-            $parameters[] = "--script-timeout {$this->scriptTimeout}";
-        }
+        // if($this->scriptTimeout) {
+            // $parameters[] = "--script-timeout {$this->scriptTimeout}";
+        // }
 
         if($this->hostTimeout) {
             $parameters[] = "--host-timeout {$this->hostTimeout}";
