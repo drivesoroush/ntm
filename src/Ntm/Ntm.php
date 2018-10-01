@@ -163,6 +163,11 @@ class Ntm {
             );
             foreach($xml->host ? : [] as $xmlHost) {
                 $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
+                $state = (string)$xmlHost->status->attributes()->reason;
+
+                if ($state == "user-set") {
+                    continue;
+                }
 
                 // parse and persist hosts...
                 $host = Host::findOrCreate([
