@@ -211,7 +211,8 @@ trait NtmParameters {
         // }
 
         if($this->hostTimeout) {
-            $parameters[] = "--host-timeout {$this->hostTimeout}";
+            $parameters[] = "--host-timeout";
+            $parameters[] = $this->hostTimeout;
         }
 
         if($this->osDetection) {
