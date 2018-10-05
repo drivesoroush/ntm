@@ -183,17 +183,4 @@ class Host extends Model {
     {
         return $this->backup_scheduled !== null;
     }
-
-    /**
-     * Check if host has hops.
-     *
-     * @return bool
-     */
-    public function hasHops()
-    {
-        $fromHops = $this->fromHops->count();
-        $toHops = $this->toHops->count();
-
-        return ($fromHops + $toHops) !== 0;
-    }
 }

@@ -163,6 +163,11 @@ class Ntm {
             );
             foreach($xml->host ? : [] as $xmlHost) {
                 $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
+                $state = (string)$xmlHost->status->attributes()->reason;
+
+                if ($state == "user-set") {
+                    continue;
+                }
 
                 // parse and persist hosts...
                 $host = Host::findOrCreate([
@@ -376,7 +381,7 @@ class Ntm {
         // command execution timeout...
         if($timeout = config('ntm.scan.timeout')) {
             $this->setTimeout($timeout);
-            $this->setScriptTimeout($timeout);
+            // $this->setScriptTimeout($timeout);
         }
         if($hostTimeout = config('ntm.scan.host_timeout')) {
             $this->setHostTimeout($hostTimeout);
