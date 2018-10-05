@@ -36,7 +36,10 @@ return [
 
     'scan'      => [
         // you can determine scan process execution timeout default value in seconds...
-        'timeout'            => 24 * 60 * 60,
+        'timeout'               => 24 * 60 * 60,
+
+        // host timeout in seconds...
+        'host_timeout'          => 30 * 60,
 
         // well-known ports...
         'ports'                 => '1-1000',
