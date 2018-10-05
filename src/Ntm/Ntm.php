@@ -166,15 +166,8 @@ class Ntm {
             foreach($xml->host ? : [] as $xmlHost) {
                 $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
 
-                log_info("__");
-                log_info($xmlHost->trace->hop);
-                log_info($mainAddress);
-                log_info(get_range(env('SCANNER_ADDRESS')));
-                log_info(in_range($mainAddress, get_range(env('SCANNER_ADDRESS'))));
-                log_info("__");
-
                 // if there were no trace hops then do not store the host...
-                if (! $xmlHost->trace->hop || ! in_range($mainAddress, get_range(env('SCANNER_ADDRESS')))) {
+                if (empty($xmlHost->trace) && ! in_range($mainAddress, get_range(env('SCANNER_ADDRESS')))) {
                     continue;
                 }
 

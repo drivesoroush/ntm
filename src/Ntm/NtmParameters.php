@@ -39,7 +39,7 @@ trait NtmParameters {
     /**
      * @var boolean
      */
-    protected $treatHostsAsOnline = true;
+    protected $treatHostsAsOnline = false;
 
     /**
      * @var boolean
