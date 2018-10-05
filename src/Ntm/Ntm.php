@@ -124,6 +124,8 @@ class Ntm {
             $ranges
         );
 
+        log_info($command);
+
         try {
             // run the scan...
             $this->executor->execute($command, $this->getTimeout());
