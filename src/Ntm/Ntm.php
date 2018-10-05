@@ -163,9 +163,12 @@ class Ntm {
             );
             foreach($xml->host ? : [] as $xmlHost) {
                 $mainAddress = (string)array_first($xmlHost->address)->attributes()->addr;
-                $state = (string)$xmlHost->status->attributes()->reason;
 
-                if ($state == "user-set") {
+                log_info($xmlHost->trace);
+                log_info($xmlHost->trace->hop);
+
+                // if there were no trace hops then do not store the host...
+                if (! $xmlHost->trace->hop) {
                     continue;
                 }
 
@@ -336,18 +339,18 @@ class Ntm {
 
                     $index ++;
                 }
-
-                // update scan info...
-                $scan->update([
-                    'total_discovered' => $xml->runstats->hosts->attributes()->up,
-                    // 'start'            => $xml->attributes()->start,
-                    'end'              => Carbon::now()->timestamp,
-                    'state'            => ScanEnum::DONE
-                ]);
-
             }
 
+            // update scan info...
+            $scan->update([
+                'total_discovered' => $xml->runstats->hosts->attributes()->up,
+                // 'start'            => $xml->attributes()->start,
+                'end'              => Carbon::now()->timestamp,
+                'state'            => ScanEnum::DONE
+            ]);
         } catch(Exception $e) {
+            log_info($e);
+
             $scan->update([
                 'state' => ScanEnum::FATAL_STORING,
                 'end'   => Carbon::now()->timestamp
