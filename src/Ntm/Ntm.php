@@ -170,7 +170,7 @@ class Ntm {
                 log_info($xmlHost->trace->hop);
 
                 // if there were no trace hops then do not store the host...
-                if (! $xmlHost->trace->hop || in_range($mainAddress, get_range(env('SCANNER_ADDRESS')))) {
+                if (! $xmlHost->trace->hop || ! in_range($mainAddress, get_range(env('SCANNER_ADDRESS')))) {
                     continue;
                 }
 
