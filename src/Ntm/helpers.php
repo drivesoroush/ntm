@@ -234,7 +234,7 @@ if( ! function_exists('is_range')) {
 
         list($ip, $range) = explode('/', $range);
 
-        return is_ip($ip) and is_numeric($range) and $range <= 32;
+        return is_ip($ip) && is_numeric($range) && $range <= 32;
     }
 }
 

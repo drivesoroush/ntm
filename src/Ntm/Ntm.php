@@ -170,7 +170,7 @@ class Ntm {
                 log_info($xmlHost->trace->hop);
 
                 // if there were no trace hops then do not store the host...
-                if (! $xmlHost->trace->hop) {
+                if (! $xmlHost->trace->hop || in_range($mainAddress, get_range(env('SCANNER_ADDRESS')))) {
                     continue;
                 }
 
@@ -212,7 +212,7 @@ class Ntm {
 
                 // parse and persist ports...
                 foreach($xmlHost->os->osmatch ? : [] as $xmlOs) {
-                    if($index == 0 and strtolower((string)$xmlOs->osclass->attributes()->type) == "router") {
+                    if($index == 0 && strtolower((string)$xmlOs->osclass->attributes()->type) == "router") {
                         $host->update(['type' => HostTypeEnum::ROUTER_HOST]);
                     }
 
@@ -232,7 +232,7 @@ class Ntm {
 
                     $generic = OsGeneric::where('family', 'like', "%" . strtolower($osFamily) . "%")->first();
 
-                    if( ! $host->os_generic_id and $generic) {
+                    if( ! $host->os_generic_id && $generic) {
                         $host->update([
                             'os_generic_id' => $generic->id
                         ]);
@@ -305,7 +305,7 @@ class Ntm {
                     $scan->attachHost($second->id);
 
                     // first or last hop...
-                    if($index == 0 or $index == sizeof($xmlHost->trace->hop) - 1) {
+                    if($index == 0 || $index == sizeof($xmlHost->trace->hop) - 1) {
 
                         // make a switch...
                         $switch = Host::findOrCreate([
