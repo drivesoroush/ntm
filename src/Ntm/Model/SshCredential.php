@@ -80,7 +80,7 @@ class SshCredential extends Model {
      */
     public function setSecondPasswordAttribute($password)
     {
-        $this->attributes['second_password'] = encrypt($password);
+        $this->attributes['second_password'] = $password ? encrypt($password) : null;
     }
 
     /**
