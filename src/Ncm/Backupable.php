@@ -27,7 +27,7 @@ trait Backupable {
         $executor = new ProcessExecutor();
 
         // run the command...
-        $command = sprintf("%s %s %s %s %s %s %s",
+        $command = sprintf("%s %s %s %s \"%s\" \"%s\" %s",
             $this->getBackupExecutable(),
             $this->getBackupAddress(),
             $this->getBackupPort(),

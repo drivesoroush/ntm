@@ -23,7 +23,7 @@ trait Restorable {
         $fileName = $this->storeContentIntoFile();
 
         // execute the restore script...
-        $command = sprintf("%s %s %s %s %s %s %s %s",
+        $command = sprintf("%s %s %s %s %s \"%s\" \"%s\" %s",
             $this->getRestoreExecutable(),
             $this->getRestoreAddress(),
             $this->getRestorePort(),
